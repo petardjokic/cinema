@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="rs.ac.bg.fon.cinema.mapper.HallSeatMapper">
+
+	<resultMap type="HallSeat" id="HallSeatMap">
+		<id column="id" property="id" />
+		<result column="hall_id" property="hallId" />
+		<result column="seat_type_id" property="seatTypeId" />
+		<result column="seat_row" property="row" />
+		<result column="seat_column" property="column" />
+	</resultMap>
+
+	<!-- public long count(); -->
+	<select id="count" resultType="Long">
+		SELECT count(*) FROM hall_seats
+	</select>
+
+
+	<!-- public HallSeat getById(Long id); -->
+	<select id="getById" parameterType="long" resultMap="HallSeatMap">
+		SELECT hs.*
+		FROM hall_seats hs
+		WHERE hs.id = #{id}
+	</select>
+
+	<!-- public int insert(HallSeat entity); -->
+	<insert id="insert" parameterType="HallSeat">
+		<selectKey order="BEFORE" resultType="long" keyProperty="id">
+			select sq_hall_seats.nextval from dual
+		</selectKey>
+		INSERT INTO hall_seats(id, hall_id, seat_type_id, seat_row, seat_column)
+				VALUES (#{id}, #{hallId}, #{seatTypeId}, #{row}, #{column})
+	</insert>
+
+	<!-- public int update(HallSeat entity); -->
+	<update id="update" parameterType="HallSeat">
+		UPDATE hall_seats
+		SET
+		hall_id = #{hallId},
+		seat_type_id = #{seatTypeId},
+		seat_row = #{row},
+		seat_column = #{column}
+		WHERE
+		id = #{id}
+	</update>
+
+	<!-- public int deleteById(Long id); -->
+	<delete id="deleteById" parameterType="long">
+		DELETE
+		FROM hall_seats 
+		WHERE
+		id = #{id}
+	</delete>
+
+
+</mapper>

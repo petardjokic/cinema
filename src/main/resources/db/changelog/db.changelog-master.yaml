@@ -1,0 +1,35 @@
+databaseChangeLog:
+  
+  - changeSet:
+      id: halls
+      author: petar.djokic0@gmail.com
+      
+      changes:
+        - sql:
+          comment: Halls
+          strip-comments: true
+          sql: |
+
+            create table halls(
+                id number primary key,
+                name varchar2(100) not null
+                );
+            create sequence sq_halls;
+            
+            create table seat_types(
+                id number primary key,
+                name varchar2(100) not null
+                );
+            create sequence sq_seat_types;
+            
+            create table hall_seats(
+                id number primary key,
+                hall_id number not null,
+                seat_type_id number not null,
+                seat_row number not null,
+                seat_column number not null
+                );
+            create sequence sq_hall_seats;
+            alter table hall_seats add constraint fk_hall_seats_hall foreign key(hall_id) references halls on delete cascade;            
+            alter table hall_seats add constraint fk_hall_seats_seattype foreign key(seat_type_id) references seat_types on delete restrict;            
+            alter table hall_seats add constraint uq_hall_seats_hallid_row_col unique(id, seat_row, seat_column);            

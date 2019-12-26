@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="rs.ac.bg.fon.cinema.mapper.SeatTypeMapper">
+
+	<resultMap type="SeatType" id="SeatTypeMap">
+		<id column="id" property="id" />
+		<result column="name" property="name" />
+	</resultMap>
+
+	<!-- public long count(); -->
+	<select id="count" resultType="Long">
+		SELECT count(*) FROM seat_types
+	</select>
+
+
+	<!-- public SeatType getById(Long id); -->
+	<select id="getById" parameterType="long" resultMap="SeatTypeMap">
+		SELECT st.*
+		FROM seat_types st
+		WHERE st.id = #{id}
+	</select>
+
+	<!-- public int insert(SeatType entity); -->
+	<insert id="insert" parameterType="SeatType">
+		<selectKey order="BEFORE" resultType="long" keyProperty="id">
+			select sq_seat_types.nextval from dual
+		</selectKey>
+		INSERT INTO seat_types(id, name)
+				VALUES (#{id}, #{name})
+	</insert>
+
+	<!-- public int update(SeatType entity); -->
+	<update id="update" parameterType="SeatType">
+		UPDATE seat_types
+		SET
+		name = #{name}
+		WHERE
+		id = #{id}
+	</update>
+
+	<!-- public int deleteById(Long id); -->
+	<delete id="deleteById" parameterType="long">
+		DELETE
+		FROM seat_types 
+		WHERE
+		id = #{id}
+	</delete>
+
+
+</mapper>
