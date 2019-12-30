@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="rs.ac.bg.fon.cinema.mapper.ProductionCompanyMapper">
+
+	<resultMap type="ProductionCompany" id="ProductionCompanyMap">
+		<id column="id" property="id" />
+		<result column="name" property="name" />
+	</resultMap>
+
+	<!-- public long count(); -->
+	<select id="count" resultType="Long">
+		SELECT count(*) FROM production_companies
+	</select>
+	
+	<!-- public ProductionCompany getById(Long id); -->
+	<select id="getById" parameterType="long" resultMap="ProductionCompanyMap">
+		SELECT pc.*
+		FROM production_companies pc
+		WHERE pc.id = #{id}
+	</select>
+
+	<!-- public int insert(ProductionCompany entity); -->
+	<insert id="insert" parameterType="ProductionCompany">
+		<selectKey order="BEFORE" resultType="long" keyProperty="id">
+			select sq_production_companies.nextval from dual
+		</selectKey>
+		INSERT INTO production_companies(id, name)
+				VALUES (#{id}, #{name})
+	</insert>
+
+	<!-- public int update(ProductionCompany entity); -->
+	<update id="update" parameterType="ProductionCompany">
+		UPDATE production_companies
+		SET
+		name = #{name}
+		WHERE
+		id = #{id}
+	</update>
+
+	<!-- public int deleteById(Long id); -->
+	<delete id="deleteById" parameterType="long">
+		DELETE
+		FROM production_companies 
+		WHERE
+		id = #{id}
+	</delete>
+
+</mapper>

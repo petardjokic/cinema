@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="rs.ac.bg.fon.cinema.mapper.DisplayMapper">
+
+	<resultMap type="Display" id="DisplayMap">
+		<id column="id" property="id" />
+		<result column="movie_id" property="movieId" />
+		<result column="hall_id" property="hallId" />
+		<result column="starts_at" property="startsAt" />
+		<result column="ends_at" property="endsAt" />
+	</resultMap>
+
+	<!-- public long count(); -->
+	<select id="count" resultType="Long">
+		SELECT count(*) FROM displays
+	</select>
+
+
+	<!-- public Display getById(Long id); -->
+	<select id="getById" parameterType="long" resultMap="DisplayMap">
+		SELECT d.*
+		FROM displays d
+		WHERE d.id = #{id}
+	</select>
+
+	<!-- public int insert(Display entity); -->
+	<insert id="insert" parameterType="Display">
+		<selectKey order="BEFORE" resultType="long" keyProperty="id">
+			select sq_displays.nextval from dual
+		</selectKey>
+		INSERT INTO displays(id, movie_id, hall_id, starts_at, ends_at)
+						VALUES (#{id}, #{movieId}, #{hallId}, #{startsAt}, #{endsAt})
+	</insert>
+
+	<!-- public int update(Display entity); -->
+	<update id="update" parameterType="Display">
+		UPDATE displays
+		SET
+		movie_id = #{movieId},
+		hall_id = #{hallId},
+		starts_at = #{startsAt},
+		ends_at = #{endsAt}
+		WHERE
+		id = #{id}
+	</update>
+
+	<!-- public int deleteById(Long id); -->
+	<delete id="deleteById" parameterType="long">
+		DELETE
+		FROM displays 
+		WHERE
+		id = #{id}
+	</delete>
+
+
+</mapper>

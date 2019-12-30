@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="rs.ac.bg.fon.cinema.mapper.MovieMapper">
+
+	<resultMap type="Movie" id="MovieMap">
+		<id column="id" property="id" />
+		<result column="title" property="title" />
+		<result column="description" property="description" />
+		<result column="duration" property="duration" />
+		<result column="release_year" property="releaseYear" />
+	</resultMap>
+
+	<!-- public long count(); -->
+	<select id="count" resultType="Long">
+		SELECT count(*) FROM movies
+	</select>
+
+
+	<!-- public Movie getById(Long id); -->
+	<select id="getById" parameterType="long" resultMap="MovieMap">
+		SELECT m.*
+		FROM movies m
+		WHERE m.id = #{id}
+	</select>
+
+	<!-- public int insert(Movie entity); -->
+	<insert id="insert" parameterType="Movie">
+		<selectKey order="BEFORE" resultType="long" keyProperty="id">
+			select sq_movies.nextval from dual
+		</selectKey>
+		INSERT INTO movies(id, title, description, duration, release_year)
+				VALUES (#{id}, #{title}, #{description}, #{duration}, #{releaseYear})
+	</insert>
+
+	<!-- public int update(Movie entity); -->
+	<update id="update" parameterType="Movie">
+		UPDATE movies
+		SET
+		title = #{title},
+		description = #{description},
+		duration = #{duration},
+		release_year = #{releaseYear}
+		WHERE
+		id = #{id}
+	</update>
+
+	<!-- public int deleteById(Long id); -->
+	<delete id="deleteById" parameterType="long">
+		DELETE
+		FROM movies 
+		WHERE
+		id = #{id}
+	</delete>
+
+
+</mapper>

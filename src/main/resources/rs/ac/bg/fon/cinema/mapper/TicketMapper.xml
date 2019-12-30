@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="rs.ac.bg.fon.cinema.mapper.TicketMapper">
+
+	<resultMap type="Ticket" id="TicketMap">
+		<id column="id" property="id" />
+		<result column="display_id" property="displayId" />
+		<result column="seat_id" property="seatId" />
+	</resultMap>
+
+	<!-- public long count(); -->
+	<select id="count" resultType="Long">
+		SELECT count(*) FROM tickets
+	</select>
+
+
+	<!-- public Ticket getById(Long id); -->
+	<select id="getById" parameterType="long" resultMap="TicketMap">
+		SELECT t.*
+		FROM tickets t
+		WHERE t.id = #{id}
+	</select>
+
+	<!-- public int insert(Ticket entity); -->
+	<insert id="insert" parameterType="Ticket">
+		<selectKey order="BEFORE" resultType="long" keyProperty="id">
+			select sq_tickets.nextval from dual
+		</selectKey>
+		INSERT INTO tickets(id, display_id, seat_id)
+						VALUES (#{id}, #{displayId}, #{seatId})
+	</insert>
+
+	<!-- public int update(Ticket entity); -->
+	<update id="update" parameterType="Ticket">
+		UPDATE tickets
+		SET
+		display_id = #{displayId},
+		seat_id = #{seatId}
+		WHERE
+		id = #{id}
+	</update>
+
+	<!-- public int deleteById(Long id); -->
+	<delete id="deleteById" parameterType="long">
+		DELETE
+		FROM tickets 
+		WHERE
+		id = #{id}
+	</delete>
+
+
+</mapper>

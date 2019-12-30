@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="rs.ac.bg.fon.cinema.mapper.MovieProductionCompanyMapper">
+
+	<resultMap type="MovieProductionCompany" id="MovieProductionCompanyMap">
+		<id column="id" property="id" />
+		<result column="movie_id" property="movieId" />
+		<result column="production_company_id" property="productionCompanyId" />
+	</resultMap>
+
+	<!-- public long count(); -->
+	<select id="count" resultType="Long">
+		SELECT count(*) FROM movie_production_companies
+	</select>
+
+
+	<!-- public MovieProductionCompany getById(Long id); -->
+	<select id="getById" parameterType="long" resultMap="MovieProductionCompanyMap">
+		SELECT mpc.*
+		FROM movie_production_companies mpc
+		WHERE mpc.id = #{id}
+	</select>
+
+	<!-- public int insert(MovieProductionCompany entity); -->
+	<insert id="insert" parameterType="MovieProductionCompany">
+		<selectKey order="BEFORE" resultType="long" keyProperty="id">
+			select sq_movie_production_companies.nextval from dual
+		</selectKey>
+		INSERT INTO movie_production_companies(id, movie_id, production_company_id)
+						VALUES (#{id}, #{movieId}, #{productionCompanyId})
+	</insert>
+
+	<!-- public int update(MovieProductionCompany entity); -->
+	<update id="update" parameterType="MovieProductionCompany">
+		UPDATE movie_production_companies
+		SET
+		movie_id = #{movieId},
+		production_company_id = #{productionCompanyId}
+		WHERE
+		id = #{id}
+	</update>
+
+	<!-- public int deleteById(Long id); -->
+	<delete id="deleteById" parameterType="long">
+		DELETE
+		FROM movie_production_companies 
+		WHERE
+		id = #{id}
+	</delete>
+
+
+</mapper>

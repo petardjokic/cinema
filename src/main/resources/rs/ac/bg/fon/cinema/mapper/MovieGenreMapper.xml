@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="rs.ac.bg.fon.cinema.mapper.MovieGenreMapper">
+
+	<resultMap type="MovieGenre" id="MovieGenreMap">
+		<id column="id" property="id" />
+		<result column="movie_id" property="movieId" />
+		<result column="genre_id" property="genreId" />
+	</resultMap>
+
+	<!-- public long count(); -->
+	<select id="count" resultType="Long">
+		SELECT count(*) FROM movie_genres
+	</select>
+
+
+	<!-- public MovieGenre getById(Long id); -->
+	<select id="getById" parameterType="long" resultMap="MovieGenreMap">
+		SELECT mg.*
+		FROM movie_genres mg
+		WHERE mg.id = #{id}
+	</select>
+
+	<!-- public int insert(MovieGenre entity); -->
+	<insert id="insert" parameterType="MovieGenre">
+		<selectKey order="BEFORE" resultType="long" keyProperty="id">
+			select sq_movie_genres.nextval from dual
+		</selectKey>
+		INSERT INTO movie_genres(id, movie_id, genre_id)
+						VALUES (#{id}, #{movieId}, #{genreId})
+	</insert>
+
+	<!-- public int update(MovieGenre entity); -->
+	<update id="update" parameterType="MovieGenre">
+		UPDATE movie_genres
+		SET
+		movie_id = #{movieId},
+		genre_id = #{genreId}
+		WHERE
+		id = #{id}
+	</update>
+
+	<!-- public int deleteById(Long id); -->
+	<delete id="deleteById" parameterType="long">
+		DELETE
+		FROM movie_genres 
+		WHERE
+		id = #{id}
+	</delete>
+
+
+</mapper>

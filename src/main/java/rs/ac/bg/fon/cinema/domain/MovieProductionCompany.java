@@ -11,13 +11,10 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @Setter
 @SuperBuilder
-public class Ticket implements BaseEntity {
-	private Long id;
-	private Long displayId;
-	private Long seatId;
+public class MovieProductionCompany implements BaseEntity {
 
-	@Override
-	public String toString() {
-		return "ID: " + id + " DISP.ID: " + displayId + " SEAT.ID: " + seatId;
-	}
+	private Long id;
+	private Long movieId;
+	private Long productionCompanyId;
+
 }

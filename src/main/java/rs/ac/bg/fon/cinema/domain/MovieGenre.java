@@ -11,13 +11,8 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @Setter
 @SuperBuilder
-public class Ticket implements BaseEntity {
+public class MovieGenre implements BaseEntity{
 	private Long id;
-	private Long displayId;
-	private Long seatId;
-
-	@Override
-	public String toString() {
-		return "ID: " + id + " DISP.ID: " + displayId + " SEAT.ID: " + seatId;
-	}
+	private Long movieId;
+	private Long genreId;
 }

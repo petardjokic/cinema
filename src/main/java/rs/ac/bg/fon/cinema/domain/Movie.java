@@ -16,4 +16,5 @@ public class Movie implements BaseEntity {
 	private String title;
 	private String description;
 	private int duration;
+	private int releaseYear;
 }

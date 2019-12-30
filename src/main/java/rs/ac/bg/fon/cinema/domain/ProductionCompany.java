@@ -11,8 +11,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @Setter
 @SuperBuilder
-public class MovieGenres implements BaseEntity{
-	private Long id;
-	private Long movieId;
-	private Long genreId;
+public class ProductionCompany implements BaseEntity{
+	public Long id;
+	public String name;
 }
