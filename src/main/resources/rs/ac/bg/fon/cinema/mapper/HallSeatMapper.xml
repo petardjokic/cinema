@@ -23,6 +23,13 @@
 		FROM hall_seats hs
 		WHERE hs.id = #{id}
 	</select>
+	
+	<!-- public List<HallSeat> getByHallId(Long hallId); -->
+	<select id="getByHallId" parameterType="long" resultMap="HallSeatMap">
+		SELECT hs.*
+		FROM hall_seats hs
+		WHERE hs.hall_id = #{hallId}
+	</select>
 
 	<!-- public int insert(HallSeat entity); -->
 	<insert id="insert" parameterType="HallSeat">

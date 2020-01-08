@@ -14,12 +14,18 @@
 		SELECT count(*) FROM movie_genres
 	</select>
 
-
 	<!-- public MovieGenre getById(Long id); -->
 	<select id="getById" parameterType="long" resultMap="MovieGenreMap">
 		SELECT mg.*
 		FROM movie_genres mg
 		WHERE mg.id = #{id}
+	</select>
+	
+	<!-- public List<MovieGenre> getByMovieId(Long movieId); -->
+	<select id="getByMovieId" parameterType="long" resultMap="MovieGenreMap">
+		SELECT mg.*
+		FROM movie_genres mg
+		WHERE mg.movie_id = #{movieId}
 	</select>
 
 	<!-- public int insert(MovieGenre entity); -->
@@ -48,6 +54,5 @@
 		WHERE
 		id = #{id}
 	</delete>
-
 
 </mapper>

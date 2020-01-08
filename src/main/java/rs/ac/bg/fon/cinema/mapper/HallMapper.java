@@ -1,5 +1,7 @@
 package rs.ac.bg.fon.cinema.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import rs.ac.bg.fon.cinema.domain.Hall;
@@ -16,4 +18,6 @@ public interface HallMapper extends BaseMapper<Hall> {
 	public int update(Hall entity);
 
 	public int deleteById(Long id);
+	
+	public List<Hall> getAll();
 }

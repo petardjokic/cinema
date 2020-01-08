@@ -20,6 +20,12 @@
 		FROM seat_types st
 		WHERE st.id = #{id}
 	</select>
+	
+	<!-- public List<SeatType> getAll(); -->
+	<select id="getAll" resultMap="SeatTypeMap">
+		SELECT st.*
+		FROM seat_types st
+	</select>
 
 	<!-- public int insert(SeatType entity); -->
 	<insert id="insert" parameterType="SeatType">

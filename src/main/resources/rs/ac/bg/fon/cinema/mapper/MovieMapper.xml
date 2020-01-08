@@ -23,6 +23,12 @@
 		FROM movies m
 		WHERE m.id = #{id}
 	</select>
+	
+	<!-- public List<Movie> getAll(); -->
+	<select id="getAll" resultMap="MovieMap">
+		SELECT m.*
+		FROM movies m
+	</select>
 
 	<!-- public int insert(Movie entity); -->
 	<insert id="insert" parameterType="Movie">

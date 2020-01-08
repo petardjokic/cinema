@@ -23,6 +23,12 @@
 		FROM displays d
 		WHERE d.id = #{id}
 	</select>
+	
+	<!-- public List<Display> getAll(); -->
+	<select id="getAll" resultMap="DisplayMap">
+		SELECT d.*
+		FROM displays d
+	</select>
 
 	<!-- public int insert(Display entity); -->
 	<insert id="insert" parameterType="Display">

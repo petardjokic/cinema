@@ -19,6 +19,12 @@
 		FROM production_companies pc
 		WHERE pc.id = #{id}
 	</select>
+	
+	<!-- public List<ProductionCompany> getAll(); -->
+	<select id="getAll" resultMap="ProductionCompanyMap">
+		SELECT pc.*
+		FROM production_companies pc
+	</select>
 
 	<!-- public int insert(ProductionCompany entity); -->
 	<insert id="insert" parameterType="ProductionCompany">

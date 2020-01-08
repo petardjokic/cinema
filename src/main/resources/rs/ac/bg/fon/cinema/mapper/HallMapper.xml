@@ -20,6 +20,12 @@
 		FROM halls h
 		WHERE h.id = #{id}
 	</select>
+	
+	<!-- public List<Hall> getAll(); -->
+	<select id="getAll" resultMap="HallMap">
+		SELECT h.*
+		FROM halls h
+	</select>
 
 	<!-- public int insert(Hall entity); -->
 	<insert id="insert" parameterType="Hall">

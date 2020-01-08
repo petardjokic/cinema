@@ -20,6 +20,12 @@
 		FROM genres g
 		WHERE g.id = #{id}
 	</select>
+	
+	<!-- public List<Genre> getAll(); -->
+	<select id="getAll" resultMap="GenreMap">
+		SELECT g.*
+		FROM genres g
+	</select>
 
 	<!-- public int insert(Genre entity); -->
 	<insert id="insert" parameterType="Genre">

@@ -21,6 +21,13 @@
 		FROM movie_production_companies mpc
 		WHERE mpc.id = #{id}
 	</select>
+	
+	<!-- public List<MovieProductionCompany> getByMovieId(Long movieId); -->
+	<select id="getByMovieId" parameterType="long" resultMap="MovieProductionCompanyMap">
+		SELECT mpc.*
+		FROM movie_production_companies mpc
+		WHERE mpc.movie_id = #{movieId}
+	</select>
 
 	<!-- public int insert(MovieProductionCompany entity); -->
 	<insert id="insert" parameterType="MovieProductionCompany">

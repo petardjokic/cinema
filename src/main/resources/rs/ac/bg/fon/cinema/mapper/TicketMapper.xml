@@ -21,6 +21,13 @@
 		FROM tickets t
 		WHERE t.id = #{id}
 	</select>
+	
+	<!-- public List<Ticket> getByDisplayId(Long displayId); -->
+	<select id="getByDisplayId" parameterType="long" resultMap="TicketMap">
+		SELECT t.*
+		FROM tickets t
+		WHERE t.display_id = #{displayId}
+	</select>
 
 	<!-- public int insert(Ticket entity); -->
 	<insert id="insert" parameterType="Ticket">
