@@ -26,12 +26,14 @@ public class HallServiceImpl implements HallService {
 	@Autowired
 	private SeatTypeMapper seatTypeMapper;
 
+	@Override
 	public HallDto getHallById(Long hallId) {
 		Hall hallDao = hallMapper.getById(hallId);
 		HallDto hallDto = convertToDto(hallDao);
 		return hallDto;
 	}
 
+	@Override
 	public List<HallDto> getAllHalls() {
 		List<HallDto> halls = new ArrayList<>();
 		List<Hall> hallsDao = hallMapper.getAll();
@@ -41,7 +43,7 @@ public class HallServiceImpl implements HallService {
 		});
 		return halls;
 	}
-	
+
 	private HallDto convertToDto(Hall hallDao) {
 		List<HallSeat> hallseatsDao = hallSeatMapper.getByHallId(hallDao.getId());
 		List<HallSeatDto> hallseats = new ArrayList<>();
@@ -51,7 +53,5 @@ public class HallServiceImpl implements HallService {
 		});
 		return new HallDto(hallDao.getId(), hallDao.getName(), hallseats);
 	}
-	
-	
 
 }
