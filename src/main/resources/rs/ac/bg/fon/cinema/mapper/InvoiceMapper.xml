@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="rs.ac.bg.fon.cinema.mapper.InvoiceMapper">
+
+	<resultMap type="Invoice" id="InvoiceMap">
+		<id column="id" property="id" />
+		<result column="issued_at" property="issuedAt" />
+		<result column="active" property="active" />
+	</resultMap>
+
+	<!-- public long count(); -->
+	<select id="count" resultType="Long">
+		SELECT count(*) FROM invoices
+	</select>
+
+
+	<!-- public Invoice getById(Long id); -->
+	<select id="getById" parameterType="long" resultMap="InvoiceMap">
+		SELECT i.*
+		FROM invoices i
+		WHERE i.id = #{id}
+	</select>
+	
+	<!-- public List<Invoice> getAll(); -->
+	<select id="getAll" resultMap="InvoiceMap">
+		SELECT i.*
+		FROM invoices i
+	</select>
+
+	<!-- public int insert(Invoice entity); -->
+	<insert id="insert" parameterType="Invoice">
+		<selectKey order="BEFORE" resultType="long" keyProperty="id">
+			select sq_invoices.nextval from dual
+		</selectKey>
+		INSERT INTO invoices(id, issued_at, active)
+				VALUES (#{id}, current_timestamp, #{active})
+	</insert>
+
+	<!-- public int update(Invoice entity); -->
+	<update id="update" parameterType="Invoice">
+		UPDATE invoices
+		SET
+		issued_at = #{issuedAt},
+		active = #{active}
+		WHERE
+		id = #{id}
+	</update>
+
+	<!-- public int deleteById(Long id); -->
+	<delete id="deleteById" parameterType="long">
+		DELETE
+		FROM invoices 
+		WHERE
+		id = #{id}
+	</delete>
+
+
+</mapper>

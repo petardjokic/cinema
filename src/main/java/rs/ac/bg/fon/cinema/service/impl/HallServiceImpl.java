@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import rs.ac.bg.fon.cinema.domain.Hall;
 import rs.ac.bg.fon.cinema.domain.HallSeat;
@@ -15,6 +16,7 @@ import rs.ac.bg.fon.cinema.service.HallService;
 import rs.ac.bg.fon.cinema.service.dto.HallDto;
 import rs.ac.bg.fon.cinema.service.dto.HallSeatDto;
 
+@Service
 public class HallServiceImpl implements HallService {
 
 	@Autowired

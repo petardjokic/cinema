@@ -84,14 +84,32 @@ databaseChangeLog:
             alter table displays add constraint fk_displays_movie foreign key(movie_id) references movies on delete cascade;            
             alter table displays add constraint fk_displays_hall foreign key(hall_id) references halls on delete restrict;
             
+             create table invoices(
+                id number primary key,
+                active number(1,0) not null
+            );
+            create sequence sq_invoices;
+            
             create table tickets(
                 id number primary key,
+                invoice_id number not null,
                 display_id number not null,
                 seat_id number not null
             );
             create sequence sq_tickets;
+            alter table tickets add constraint fk_tickets_invoice foreign key(invoice_id) references invoices on delete cascade;            
             alter table tickets add constraint fk_tickets_display foreign key(display_id) references displays on delete cascade;            
             alter table tickets add constraint fk_tickets_seat foreign key(seat_id) references hall_seats on delete restrict;
+            
+            create table display_prices(
+                id number primary key,
+                display_id number not null,
+                seat_type_id number not null,
+                price number not null
+            );
+            create sequence sq_display_prices;
+            alter table display_prices add constraint fk_display_price_display foreign key(display_id) references displays on delete cascade;            
+            alter table display_prices add constraint fk_display_price_seat_type foreign key(seat_type_id) references seat_types on delete restrict;
             
             
             
