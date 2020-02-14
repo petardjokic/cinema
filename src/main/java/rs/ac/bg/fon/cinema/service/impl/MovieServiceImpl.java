@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import rs.ac.bg.fon.cinema.domain.Genre;
 import rs.ac.bg.fon.cinema.domain.Movie;
@@ -14,6 +15,7 @@ import rs.ac.bg.fon.cinema.service.MovieService;
 import rs.ac.bg.fon.cinema.service.ProductionCompanyService;
 import rs.ac.bg.fon.cinema.service.dto.MovieDto;
 
+@Service
 public class MovieServiceImpl implements MovieService {
 
 	@Autowired
@@ -27,10 +29,8 @@ public class MovieServiceImpl implements MovieService {
 
 	@Override
 	public MovieDto getMovieById(Long movieId) {
-		List<Genre> genres = genreService.getGenresByMovieId(movieId);
-		List<ProductionCompany> prodCompanies = prodCompanyService.getProductionCompaniesByMovieId(movieId);
 		Movie movie = movieMapper.getById(movieId);
-		MovieDto movieDto = convertMovieToDto(movie, genres, prodCompanies);
+		MovieDto movieDto = getMovieDto(movie);
 		return movieDto;
 	}
 
@@ -39,13 +39,17 @@ public class MovieServiceImpl implements MovieService {
 		List<MovieDto> moviesDto = new ArrayList<>();
 		List<Movie> movies = movieMapper.getAll();
 		movies.forEach(movie -> {
-			List<Genre> genres = genreService.getGenresByMovieId(movie.getId());
-			List<ProductionCompany> prodCompanies = prodCompanyService.getProductionCompaniesByMovieId(movie.getId());
-			MovieDto movieDto = convertMovieToDto(movie, genres, prodCompanies);
+			MovieDto movieDto = getMovieDto(movie);
 			moviesDto.add(movieDto);
 		});
 		return moviesDto;
 	}
+	
+	private MovieDto getMovieDto(Movie movie) {
+		List<Genre> genres = genreService.getGenresByMovieId(movie.getId());
+		List<ProductionCompany> prodCompanies = prodCompanyService.getProductionCompaniesByMovieId(movie.getId());
+		return convertMovieToDto(movie, genres, prodCompanies);
+	} 
 
 	private MovieDto convertMovieToDto(Movie movie, List<Genre> genres, List<ProductionCompany> prodCompanies) {
 		return MovieDto.builder().id(movie.getId()).title(movie.getTitle()).description(movie.getDescription())

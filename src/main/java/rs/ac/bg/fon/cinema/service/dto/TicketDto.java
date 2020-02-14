@@ -1,20 +1,22 @@
-package rs.ac.bg.fon.cinema.domain;
+package rs.ac.bg.fon.cinema.service.dto;
 
 import java.time.LocalDateTime;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import lombok.Setter;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @SuperBuilder
-public class Invoice implements BaseEntity {
+public class TicketDto {
+
 	private Long id;
-	private LocalDateTime issuedAt;
-	private Boolean active;
+	private Long displayId;
+	private String movieTitle;
+	private String hallName;
 }

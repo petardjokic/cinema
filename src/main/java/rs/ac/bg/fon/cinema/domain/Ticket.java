@@ -13,13 +13,9 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class Ticket implements BaseEntity {
 	private Long id;
-	private Long receiptId;
+	private Long invoiceId;
 	private Long displayId;
 	private Long seatId;
 	private Boolean active;
 
-	@Override
-	public String toString() {
-		return "ID: " + id + " DISP.ID: " + displayId + " SEAT.ID: " + seatId;
-	}
 }

@@ -86,6 +86,7 @@ databaseChangeLog:
             
              create table invoices(
                 id number primary key,
+                issued_at timestamp not null,
                 active number(1,0) not null
             );
             create sequence sq_invoices;

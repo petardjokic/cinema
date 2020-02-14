@@ -1,6 +1,6 @@
 package rs.ac.bg.fon.cinema.domain;
 
-import java.time.LocalDateTime;
+import java.math.BigDecimal;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,8 +13,9 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @Setter
 @SuperBuilder
-public class Invoice implements BaseEntity {
+public class DisplayPrice implements BaseEntity {
 	private Long id;
-	private LocalDateTime issuedAt;
-	private Boolean active;
+	private Long displayId;
+	private Long seatTypeId;
+	private BigDecimal price;
 }

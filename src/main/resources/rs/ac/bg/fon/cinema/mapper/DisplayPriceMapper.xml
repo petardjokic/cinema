@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="rs.ac.bg.fon.cinema.mapper.DisplayPriceMapper">
+
+	<resultMap type="DisplayPrice" id="DisplayPriceMap">
+		<id column="id" property="id" />
+		<result column="display_id" property="displayId" />
+		<result column="seat_type_id" property="seatTypeId" />
+		<result column="price" property="price" />
+	</resultMap>
+
+	<!-- public long count(); -->
+	<select id="count" resultType="Long">
+		SELECT count(*) FROM display_prices
+	</select>
+
+
+	<!-- public DisplayPrice getById(Long id); -->
+	<select id="getById" parameterType="long" resultMap="DisplayPriceMap">
+		SELECT dp.*
+		FROM display_prices dp
+		WHERE dp.id = #{id}
+	</select>
+	
+	<!-- public List<DisplayPrice> getByHallId(Long displayId); -->
+	<select id="getByDisplayId" parameterType="long" resultMap="DisplayPriceMap">
+		SELECT dp.*
+		FROM display_prices dp
+		WHERE dp.display_id = #{displayId}
+	</select>
+
+	<!-- public int insert(DisplayPrice entity); -->
+	<insert id="insert" parameterType="DisplayPrice">
+		<selectKey order="BEFORE" resultType="long" keyProperty="id">
+			select sq_display_prices.nextval from dual
+		</selectKey>
+		INSERT INTO display_prices(id, display_id, seat_type_id, price)
+				VALUES (#{id}, #{displayId}, #{seatTypeId}, #{price})
+	</insert>
+
+	<!-- public int update(DisplayPrice entity); -->
+	<update id="update" parameterType="DisplayPrice">
+		UPDATE display_prices
+		SET
+		display_id = #{displayId},
+		seat_type_id = #{seatTypeId},
+		price = #{price}
+		WHERE
+		id = #{id}
+	</update>
+
+	<!-- public int deleteById(Long id); -->
+	<delete id="deleteById" parameterType="long">
+		DELETE
+		FROM display_prices 
+		WHERE
+		id = #{id}
+	</delete>
+
+
+</mapper>
