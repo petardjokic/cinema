@@ -1,12 +1,10 @@
 package rs.ac.bg.fon.cinema.service.impl;
 
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import rs.ac.bg.fon.cinema.domain.Invoice;
-import rs.ac.bg.fon.cinema.domain.Ticket;
 import rs.ac.bg.fon.cinema.mapper.InvoiceMapper;
 import rs.ac.bg.fon.cinema.service.DisplayService;
 import rs.ac.bg.fon.cinema.service.InvoiceService;

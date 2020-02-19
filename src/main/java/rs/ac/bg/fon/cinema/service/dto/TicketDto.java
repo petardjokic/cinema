@@ -1,7 +1,5 @@
 package rs.ac.bg.fon.cinema.service.dto;
 
-import java.time.LocalDateTime;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
