@@ -18,6 +18,8 @@ public interface MovieGenreMapper extends BaseMapper<MovieGenre>{
 	public int update(MovieGenre entity);
 
 	public int deleteById(Long id);
+
+	public int deleteMovieGenre(MovieGenre movieGenre);
 	
 	public List<MovieGenre> getByMovieId(Long movieId);
 }

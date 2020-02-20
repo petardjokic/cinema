@@ -54,5 +54,13 @@
 		WHERE
 		id = #{id}
 	</delete>
+	
+	<!-- public deleteMovieGenre(MovieGenre movieGenre); -->
+	<delete id="deleteMovieGenre">
+		DELETE
+		FROM movie_genres 
+		WHERE
+		movie_id = #{movieId} AND genre_id = #{genreId}
+	</delete>
 
 </mapper>

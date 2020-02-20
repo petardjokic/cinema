@@ -69,5 +69,24 @@ class MovieGenreMapperTest extends BaseMapperTest {
 		assertEquals(0, movieGenreMapper.count());
 
 	}
+	
+	@Test
+	public void testDeleteMovieGenre() {
+		
+		log.info("Adding a new genre 1");
+		Genre genre = Genre.builder().name("KGenre").build();
+		genreMapper.insert(genre);
+		
+		log.info("Adding a new movie 1");
+		Movie movie = Movie.builder().title("Trainspotting").description("Desc").duration(134).releaseYear(1996).build();
+		movieMapper.insert(movie);
+		
+		log.info("Adding a new movie genre");
+		MovieGenre movieGenre = MovieGenre.builder().movieId(movie.getId()).genreId(genre.getId()).build();
+		assertEquals(1, movieGenreMapper.insert(movieGenre));
+		
+		log.info("Deleting genre");
+		assertEquals(1, movieGenreMapper.deleteMovieGenre(movieGenre));
+	}
 
 }

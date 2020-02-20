@@ -1,22 +1,19 @@
 package rs.ac.bg.fon.cinema.service.dto;
 
+
 import java.time.LocalDateTime;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
-import lombok.Setter;
+import lombok.Data;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
-@SuperBuilder
+@Data
 public class TicketDto {
 
-	private Long id;
+	private Long ticketId;
 	private Long displayId;
+	private LocalDateTime startsAt;
 	private String movieTitle;
 	private String hallName;
+	private int seatRow;
+	private int seatColumn;
+	private String seatType;
 }

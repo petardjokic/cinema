@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import rs.ac.bg.fon.cinema.domain.Genre;
 import rs.ac.bg.fon.cinema.domain.Movie;
@@ -26,6 +27,15 @@ public class MovieServiceImpl implements MovieService {
 
 	@Autowired
 	private ProductionCompanyService prodCompanyService;
+	
+	@Override
+	@Transactional
+	public Movie saveMovie(MovieDto movieDto) {
+		Movie movie = Movie.builder().id(movieDto.getId()).title(movieDto.getTitle()).description(movieDto.getDescription()).duration(movieDto.getDuration()).releaseYear(movieDto.getReleaseYear()).build();
+		movieMapper.save(movie);
+		genreService.saveMovieGenres(movieDto.getId(), movieDto.getGenres());
+		return movie;
+	}
 
 	@Override
 	public MovieDto getMovieById(Long movieId) {
@@ -45,6 +55,12 @@ public class MovieServiceImpl implements MovieService {
 		return moviesDto;
 	}
 	
+	@Override
+	public void deleteMovie(Long movieId) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 	private MovieDto getMovieDto(Movie movie) {
 		List<Genre> genres = genreService.getGenresByMovieId(movie.getId());
 		List<ProductionCompany> prodCompanies = prodCompanyService.getProductionCompaniesByMovieId(movie.getId());
@@ -53,6 +69,6 @@ public class MovieServiceImpl implements MovieService {
 
 	private MovieDto convertMovieToDto(Movie movie, List<Genre> genres, List<ProductionCompany> prodCompanies) {
 		return MovieDto.builder().id(movie.getId()).title(movie.getTitle()).description(movie.getDescription())
-				.duration(movie.getDuration()).releaseYear(movie.getReleaseYear()).build();
+				.duration(movie.getDuration()).releaseYear(movie.getReleaseYear()).genres(genres).productionCompanies(prodCompanies).build();
 	}
 }

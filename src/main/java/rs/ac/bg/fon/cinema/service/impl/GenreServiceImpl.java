@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import rs.ac.bg.fon.cinema.domain.Genre;
 import rs.ac.bg.fon.cinema.domain.MovieGenre;
@@ -37,6 +38,26 @@ public class GenreServiceImpl implements GenreService {
 		return movieGenres.stream().map(movieGenre -> {
 			return genreMapper.getById(movieGenre.getGenreId());
 		}).collect(Collectors.toList());
+	}
+
+	@Override
+	@Transactional
+	public void saveMovieGenres(Long movieId, List<Genre> movieGenres) {
+		List<Genre> movieGenresDb = getGenresByMovieId(movieId);
+		List<Genre> genresToDelete = movieGenresDb.stream().filter(movieGenreDb -> !movieGenres.contains(movieGenreDb)).collect(Collectors.toList());
+		List<Genre> genresToAdd = movieGenres.stream().filter(movieGenre -> !movieGenresDb.contains(movieGenre)).collect(Collectors.toList());
+		genresToDelete.stream().forEach(genre -> {
+			MovieGenre movieGenre = convertToMovieGenre(movieId, genre);
+			movieGenreMapper.deleteMovieGenre(movieGenre);
+		});
+		genresToAdd.stream().forEach(genre -> {
+			MovieGenre movieGenre = convertToMovieGenre(movieId, genre);
+			movieGenreMapper.save(movieGenre);
+		});
+	}
+
+	private MovieGenre convertToMovieGenre(Long movieId, Genre genre) {
+		return MovieGenre.builder().movieId(movieId).genreId(genre.getId()).build();
 	}
 
 }

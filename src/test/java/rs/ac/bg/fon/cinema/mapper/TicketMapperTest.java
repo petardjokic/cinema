@@ -128,15 +128,20 @@ class TicketMapperTest extends BaseMapperTest{
 		Ticket ticket = Ticket.builder().invoiceId(invoice.getId()).displayId(display.getId()).seatId(hallseat.getId()).build();
 		assertEquals(1,ticketMapper.insert(ticket));
 		
+		log.info("Adding a new ticket");
+		Ticket ticket2 = Ticket.builder().invoiceId(invoice.getId()).displayId(display.getId()).seatId(hallseat.getId()).build();
+		assertEquals(1,ticketMapper.insert(ticket2));
+		
 		log.info("Getting ticket");
 		List<TicketDto> ticketsDb = ticketMapper.getByInvoiceId(invoice.getId());
-		System.out.println(ticketsDb);
-//		ticketsDb.forEach(tick -> {
-//			System.out.println(tick.toString());
-//		});
-		
-//		List<TicketDto> ticketsDb = ticketMapper.getByInvoiceId(invoice.getId());
-//		System.out.println(ticketsDb.get(0).toString());
+		assertEquals(ticket.getId(), ticketsDb.get(0).getTicketId());
+		assertEquals(ticket.getDisplayId(), ticketsDb.get(0).getDisplayId());
+		assertEquals(display.getStartsAt(), ticketsDb.get(0).getStartsAt());
+		assertEquals(movie.getTitle(), ticketsDb.get(0).getMovieTitle());
+		assertEquals(hall.getName(), ticketsDb.get(0).getHallName());
+		assertEquals(hallseat.getRow(), ticketsDb.get(0).getSeatRow());
+		assertEquals(hallseat.getColumn(), ticketsDb.get(0).getSeatColumn());
+		assertEquals(seatType1.getName(), ticketsDb.get(0).getSeatType());
 	}
 	
 
