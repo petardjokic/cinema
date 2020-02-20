@@ -34,6 +34,7 @@ public class MovieServiceImpl implements MovieService {
 		Movie movie = Movie.builder().id(movieDto.getId()).title(movieDto.getTitle()).description(movieDto.getDescription()).duration(movieDto.getDuration()).releaseYear(movieDto.getReleaseYear()).build();
 		movieMapper.save(movie);
 		genreService.saveMovieGenres(movieDto.getId(), movieDto.getGenres());
+		prodCompanyService.saveMovieProductionCompanies(movieDto.getId(), movieDto.getProductionCompanies());
 		return movie;
 	}
 

@@ -29,4 +29,10 @@ public class InvoiceServiceImpl implements InvoiceService {
 		return null;
 	}
 
+	@Override
+	public Invoice saveInvoice() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

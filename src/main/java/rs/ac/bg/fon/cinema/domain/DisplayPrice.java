@@ -17,5 +17,6 @@ public class DisplayPrice implements BaseEntity {
 	private Long id;
 	private Long displayId;
 	private Long seatTypeId;
+	private String seatTypeName;
 	private BigDecimal price;
 }

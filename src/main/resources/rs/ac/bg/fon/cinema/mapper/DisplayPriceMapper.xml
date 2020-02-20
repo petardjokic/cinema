@@ -7,6 +7,7 @@
 		<id column="id" property="id" />
 		<result column="display_id" property="displayId" />
 		<result column="seat_type_id" property="seatTypeId" />
+		<result column="name" property="seatTypeName" />
 		<result column="price" property="price" />
 	</resultMap>
 
@@ -18,15 +19,15 @@
 
 	<!-- public DisplayPrice getById(Long id); -->
 	<select id="getById" parameterType="long" resultMap="DisplayPriceMap">
-		SELECT dp.*
-		FROM display_prices dp
+		SELECT dp.*, st.name
+		FROM display_prices dp INNER JOIN seat_types st ON dp.seat_type_id = st.id
 		WHERE dp.id = #{id}
 	</select>
 	
 	<!-- public List<DisplayPrice> getByHallId(Long displayId); -->
 	<select id="getByDisplayId" parameterType="long" resultMap="DisplayPriceMap">
-		SELECT dp.*
-		FROM display_prices dp
+		SELECT dp.*, st.name
+		FROM display_prices dp INNER JOIN seat_types st ON dp.seat_type_id = st.id
 		WHERE dp.display_id = #{displayId}
 	</select>
 

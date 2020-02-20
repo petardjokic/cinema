@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import rs.ac.bg.fon.cinema.domain.MovieProductionCompany;
 import rs.ac.bg.fon.cinema.domain.ProductionCompany;
@@ -40,13 +41,23 @@ public class ProductionCompanyServiceImpl implements ProductionCompanyService {
 	}
 
 	@Override
-	public MovieProductionCompany saveMovieProductionCompany(MovieProductionCompany movieProductionCompany) {
-		return movieProductionCompanyMapper.save(movieProductionCompany);
+	@Transactional
+	public void saveMovieProductionCompanies(Long movieId, List<ProductionCompany> productionCompanies) {
+		List<ProductionCompany> movieProductionCompaniesDb = getProductionCompaniesByMovieId(movieId);
+		List<ProductionCompany> productionCompaniesToDelete = movieProductionCompaniesDb.stream().filter(productionCompanyDb -> !productionCompanies.contains(productionCompanyDb)).collect(Collectors.toList());
+		List<ProductionCompany> productionCompaniesToAdd = productionCompanies.stream().filter(productionCompany -> !movieProductionCompaniesDb.contains(productionCompany)).collect(Collectors.toList());
+		productionCompaniesToDelete.stream().forEach(productionCompany -> {
+			MovieProductionCompany movieProductionCompany = convertToMovieProductionCompany(movieId, productionCompany);
+			movieProductionCompanyMapper.deleteMovieProductionCompany(movieProductionCompany);
+		});
+		productionCompaniesToAdd.stream().forEach(productionCompany -> {
+			MovieProductionCompany movieProductionCompany = convertToMovieProductionCompany(movieId, productionCompany);
+			movieProductionCompanyMapper.save(movieProductionCompany);
+		});
 	}
 
-	@Override
-	public int deleteMovieProductionCompany(MovieProductionCompany movieProductionCompany) {
-		return movieProductionCompanyMapper.deleteById(movieProductionCompany);
+	private MovieProductionCompany convertToMovieProductionCompany(Long movieId, ProductionCompany productionCompany) {
+		return MovieProductionCompany.builder().movieId(movieId).productionCompanyId(productionCompany.getId()).build();
 	}
 
 }

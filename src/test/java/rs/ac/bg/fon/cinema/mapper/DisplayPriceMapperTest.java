@@ -63,6 +63,7 @@ class DisplayPriceMapperTest extends BaseMapperTest{
 		assertEquals(displayPrice.getId(), displayPriceDb.getId());
 		assertEquals(displayPrice.getDisplayId(), displayPriceDb.getDisplayId());
 		assertEquals(displayPrice.getSeatTypeId(), displayPriceDb.getSeatTypeId());
+		assertEquals(seatType1.getName(), displayPriceDb.getSeatTypeName());
 		assertEquals(displayPrice.getPrice(), displayPriceDb.getPrice());
 		
 		log.info("Updating hall seat");

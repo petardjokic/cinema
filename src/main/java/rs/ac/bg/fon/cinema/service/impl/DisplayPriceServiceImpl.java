@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import rs.ac.bg.fon.cinema.domain.DisplayPrice;
 import rs.ac.bg.fon.cinema.mapper.DisplayPriceMapper;
@@ -26,15 +27,14 @@ public class DisplayPriceServiceImpl implements DisplayPriceService {
 	}
 
 	@Override
+	@Transactional
 	public DisplayPrice saveDisplayPrice(DisplayPrice displayPrice) {
-		// TODO Auto-generated method stub
-		return null;
+		return displayPriceMapper.save(displayPrice);
 	}
 
 	@Override
 	public int deleteDisplayPrice(Long id) {
-		// TODO Auto-generated method stub
-		return 0;
+		return displayPriceMapper.deleteById(id);
 	}
 
 }

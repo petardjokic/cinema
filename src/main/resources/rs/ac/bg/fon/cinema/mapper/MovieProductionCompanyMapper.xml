@@ -57,7 +57,7 @@
 	</delete>
 	
 	<!-- public public int deleteById(MovieProductionCompany movieProductionCompany); -->
-	<delete id="deleteById">
+	<delete id="deleteMovieProductionCompany">
 		DELETE
 		FROM movie_production_companies 
 		WHERE
