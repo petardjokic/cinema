@@ -14,4 +14,6 @@ public interface ProductionCompanyService {
 	public List<ProductionCompany> getProductionCompaniesByMovieId(Long movieId);
 	
 	public void saveMovieProductionCompanies(Long id, List<ProductionCompany> productionCompanies);
+	
+	public ProductionCompany save(ProductionCompany productionCompany);
 }

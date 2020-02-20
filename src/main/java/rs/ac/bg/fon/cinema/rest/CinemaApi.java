@@ -3,27 +3,32 @@ package rs.ac.bg.fon.cinema.rest;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.AllArgsConstructor;
 import rs.ac.bg.fon.cinema.domain.Display;
 import rs.ac.bg.fon.cinema.domain.Genre;
 import rs.ac.bg.fon.cinema.domain.Hall;
 import rs.ac.bg.fon.cinema.domain.Movie;
+import rs.ac.bg.fon.cinema.domain.ProductionCompany;
 import rs.ac.bg.fon.cinema.service.DisplayService;
 import rs.ac.bg.fon.cinema.service.GenreService;
 import rs.ac.bg.fon.cinema.service.HallService;
 import rs.ac.bg.fon.cinema.service.InvoiceService;
 import rs.ac.bg.fon.cinema.service.MovieService;
+import rs.ac.bg.fon.cinema.service.ProductionCompanyService;
 import rs.ac.bg.fon.cinema.service.dto.DisplayDto;
 import rs.ac.bg.fon.cinema.service.dto.HallDto;
 import rs.ac.bg.fon.cinema.service.dto.InvoiceDto;
 import rs.ac.bg.fon.cinema.service.dto.MovieDto;
 
 @RestController
+@CrossOrigin
 public class CinemaApi {
 	
 	@Autowired
@@ -40,6 +45,9 @@ public class CinemaApi {
 	
 	@Autowired
 	private GenreService genreService;
+	
+	@Autowired
+	private ProductionCompanyService productionCompanyService;
 	
 	
 	@RequestMapping(value = "/api/movies/{id}", method = RequestMethod.GET)
@@ -100,6 +108,21 @@ public class CinemaApi {
 	@RequestMapping(value = "/api/genres/save", method = RequestMethod.POST)
 	public Genre saveGenre(@RequestBody Genre genre) {
 		return genreService.save(genre);
+	}
+	
+	@RequestMapping(value = "/api/productionCompanies", method = RequestMethod.GET)
+	public List<ProductionCompany> getAllProductionCompanies() {
+	return productionCompanyService.getAllProductionCompanies();
+	}
+	
+	@RequestMapping(value = "/api/productionCompanies/{id}", method = RequestMethod.GET)
+	public ProductionCompany getProductionCompanyById(@PathVariable Long id) {
+		return productionCompanyService.getProductionCompanyById(id);
+	}
+	
+	@RequestMapping(value = "/api/productionCompanies/save", method = RequestMethod.POST)
+	public ProductionCompany saveProductionCompany(@RequestBody ProductionCompany productionCompany) {
+		return productionCompanyService.save(productionCompany);
 	}
 	
 	

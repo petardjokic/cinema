@@ -60,4 +60,9 @@ public class ProductionCompanyServiceImpl implements ProductionCompanyService {
 		return MovieProductionCompany.builder().movieId(movieId).productionCompanyId(productionCompany.getId()).build();
 	}
 
+	@Override
+	public ProductionCompany save(ProductionCompany productionCompany) {
+		return productionCompanyMapper.save(productionCompany);
+	}
+
 }
