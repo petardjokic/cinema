@@ -4,8 +4,10 @@ package rs.ac.bg.fon.cinema.service.dto;
 import java.time.LocalDateTime;
 
 import lombok.Data;
+import lombok.experimental.SuperBuilder;
 
 @Data
+@SuperBuilder
 public class TicketDto {
 
 	private Long ticketId;

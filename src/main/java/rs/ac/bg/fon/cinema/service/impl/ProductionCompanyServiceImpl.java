@@ -39,4 +39,14 @@ public class ProductionCompanyServiceImpl implements ProductionCompanyService {
 		}).collect(Collectors.toList());
 	}
 
+	@Override
+	public MovieProductionCompany saveMovieProductionCompany(MovieProductionCompany movieProductionCompany) {
+		return movieProductionCompanyMapper.save(movieProductionCompany);
+	}
+
+	@Override
+	public int deleteMovieProductionCompany(MovieProductionCompany movieProductionCompany) {
+		return movieProductionCompanyMapper.deleteById(movieProductionCompany);
+	}
+
 }

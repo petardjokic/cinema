@@ -19,5 +19,7 @@ public interface MovieProductionCompanyMapper extends BaseMapper<MovieProduction
 
 	public int deleteById(Long id);
 	
+	public int deleteById(MovieProductionCompany movieProductionCompany);
+	
 	public List<MovieProductionCompany> getByMovieId(Long movieId);
 }

@@ -55,6 +55,13 @@
 		WHERE
 		id = #{id}
 	</delete>
-
+	
+	<!-- public public int deleteById(MovieProductionCompany movieProductionCompany); -->
+	<delete id="deleteById">
+		DELETE
+		FROM movie_production_companies 
+		WHERE
+		movie_id = #{movieId} AND production_company_id = #{productionCompanyId}
+	</delete>
 
 </mapper>

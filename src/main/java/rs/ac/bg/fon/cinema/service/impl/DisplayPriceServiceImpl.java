@@ -25,4 +25,16 @@ public class DisplayPriceServiceImpl implements DisplayPriceService {
 		return displayPriceMapper.getByDisplayId(displayId);
 	}
 
+	@Override
+	public DisplayPrice saveDisplayPrice(DisplayPrice displayPrice) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int deleteDisplayPrice(Long id) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

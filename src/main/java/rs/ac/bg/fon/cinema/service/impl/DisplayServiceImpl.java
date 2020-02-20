@@ -1,10 +1,12 @@
 package rs.ac.bg.fon.cinema.service.impl;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import rs.ac.bg.fon.cinema.domain.Display;
 import rs.ac.bg.fon.cinema.domain.DisplayPrice;
@@ -61,6 +63,22 @@ public class DisplayServiceImpl implements DisplayService {
 			List<DisplayPrice> displayPrices) {
 		return DisplayDto.builder().id(display.getId()).startsAt(display.getStartsAt()).endsAt(display.getEndsAt())
 				.movie(movieDto).hall(hallDto).displayPrices(displayPrices).build();
+	}
+
+	@Override
+	@Transactional
+	public Display saveDisplay(DisplayDto displayDto) {
+		MovieDto movieDb = movieService.getMovieById(displayDto.getMovie().getId());
+		LocalDateTime endsAt = displayDto.getStartsAt().plusMinutes(movieDb.getDuration());
+		Display display = Display.builder().id(displayDto.getId()).movieId(displayDto.getMovie().getId())
+				.hallId(displayDto.getHall().getId()).startsAt(displayDto.getStartsAt()).endsAt(endsAt).build();
+		displayMapper.save(display);
+		return null;
+	}
+
+	@Override
+	public int deleteDisplayById(Long displayId) {
+		return displayMapper.deleteById(displayId);
 	}
 
 }
