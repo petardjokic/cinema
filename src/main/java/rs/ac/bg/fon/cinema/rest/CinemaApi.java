@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import rs.ac.bg.fon.cinema.domain.Display;
 import rs.ac.bg.fon.cinema.domain.Genre;
+import rs.ac.bg.fon.cinema.domain.Hall;
 import rs.ac.bg.fon.cinema.domain.Movie;
 import rs.ac.bg.fon.cinema.service.DisplayService;
 import rs.ac.bg.fon.cinema.service.GenreService;
@@ -96,6 +97,10 @@ public class CinemaApi {
 		return genreService.getGenreById(id);
 	}
 	
+	@RequestMapping(value = "/api/genres/save", method = RequestMethod.POST)
+	public Genre saveGenre(@RequestBody Genre genre) {
+		return genreService.save(genre);
+	}
 	
 	
 }

@@ -60,4 +60,9 @@ public class GenreServiceImpl implements GenreService {
 		return MovieGenre.builder().movieId(movieId).genreId(genre.getId()).build();
 	}
 
+	@Override
+	public Genre save(Genre genre) {
+		return genreMapper.save(genre);
+	}
+
 }

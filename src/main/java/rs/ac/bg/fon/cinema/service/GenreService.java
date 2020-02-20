@@ -14,5 +14,7 @@ public interface GenreService {
 	public List<Genre> getGenresByMovieId(Long movieId);
 
 	public void saveMovieGenres(Long movieId, List<Genre> genres);
+
+	public Genre save(Genre genre);
 	
 }
