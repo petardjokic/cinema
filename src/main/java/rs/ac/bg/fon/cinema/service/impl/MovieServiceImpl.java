@@ -32,9 +32,9 @@ public class MovieServiceImpl implements MovieService {
 	@Transactional
 	public Movie saveMovie(MovieDto movieDto) {
 		Movie movie = Movie.builder().id(movieDto.getId()).title(movieDto.getTitle()).description(movieDto.getDescription()).duration(movieDto.getDuration()).releaseYear(movieDto.getReleaseYear()).build();
-		movieMapper.save(movie);
-		genreService.saveMovieGenres(movieDto.getId(), movieDto.getGenres());
-		prodCompanyService.saveMovieProductionCompanies(movieDto.getId(), movieDto.getProductionCompanies());
+		movie = movieMapper.save(movie);
+		genreService.saveMovieGenres(movie.getId(), movieDto.getGenres());
+		prodCompanyService.saveMovieProductionCompanies(movie.getId(), movieDto.getProductionCompanies());
 		return movie;
 	}
 
