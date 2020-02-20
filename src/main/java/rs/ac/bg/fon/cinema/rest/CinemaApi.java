@@ -10,11 +10,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import rs.ac.bg.fon.cinema.domain.Display;
+import rs.ac.bg.fon.cinema.domain.Genre;
 import rs.ac.bg.fon.cinema.domain.Movie;
 import rs.ac.bg.fon.cinema.service.DisplayService;
+import rs.ac.bg.fon.cinema.service.GenreService;
+import rs.ac.bg.fon.cinema.service.HallService;
 import rs.ac.bg.fon.cinema.service.InvoiceService;
 import rs.ac.bg.fon.cinema.service.MovieService;
 import rs.ac.bg.fon.cinema.service.dto.DisplayDto;
+import rs.ac.bg.fon.cinema.service.dto.HallDto;
 import rs.ac.bg.fon.cinema.service.dto.InvoiceDto;
 import rs.ac.bg.fon.cinema.service.dto.MovieDto;
 
@@ -30,6 +34,12 @@ public class CinemaApi {
 	@Autowired
 	private InvoiceService invoiceService;
 	
+	@Autowired
+	private HallService hallService;
+	
+	@Autowired
+	private GenreService genreService;
+	
 	
 	@RequestMapping(value = "/api/movies/{id}", method = RequestMethod.GET)
 	public MovieDto getMovieById(@PathVariable Long id) {
@@ -41,7 +51,7 @@ public class CinemaApi {
 		return movieService.getAllMovies();
 	}
 	
-	@RequestMapping(value = "/api/movies", method = RequestMethod.POST)
+	@RequestMapping(value = "/api/movies/save", method = RequestMethod.POST)
 	public Movie saveMovie(@RequestBody MovieDto movie) {
 		return movieService.saveMovie(movie);
 	}
@@ -66,10 +76,25 @@ public class CinemaApi {
 		return invoiceService.getInvoiceById(id);
 	}
 	
-//	@RequestMapping(value = "/api/display", method = RequestMethod.GET)
-//	public List<DisplayDto> getAllDisplays() {
-//		return ticketService.getAllDisplays();
-//	}
+	@RequestMapping(value = "/api/halls", method = RequestMethod.GET)
+	public List<HallDto> getAllHalls() {
+		return hallService.getAllHalls();
+	}
+	
+	@RequestMapping(value = "/api/halls/{id}", method = RequestMethod.GET)
+	public HallDto getHallById(@PathVariable Long id) {
+		return hallService.getHallById(id);
+	}
+	
+	@RequestMapping(value = "/api/genres", method = RequestMethod.GET)
+	public List<Genre> getAllGenre() {
+		return genreService.getAllGenres();
+	}
+	
+	@RequestMapping(value = "/api/genres/{id}", method = RequestMethod.GET)
+	public Genre getGenreById(@PathVariable Long id) {
+		return genreService.getGenreById(id);
+	}
 	
 	
 	

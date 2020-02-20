@@ -12,4 +12,6 @@ public interface TicketService {
 	public List<Ticket> getTicketByDisplayId(Long displayId);
 	
 	public List<TicketDto> getTicketByInvoiceId(Long invoiceId);
+
+	public void saveInvoiceTickets(Long invoiceId, List<TicketDto> tickets);
 }

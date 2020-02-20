@@ -8,6 +8,7 @@
 		<result column="invoice_id" property="invoiceId" />
 		<result column="display_id" property="displayId" />
 		<result column="seat_id" property="seatId" />
+		<result column="active" property="active" />
 	</resultMap>
 
 	<resultMap type="TicketDto" id="TicketDtoMap">
@@ -16,9 +17,11 @@
 		<result column="starts_at" property="startsAt" />
 		<result column="movie_title" property="movieTitle" />
 		<result column="hall_name" property="hallName" />
+		<result column="seat_id" property="seatId" />
 		<result column="seat_row" property="seatRow" />
 		<result column="seat_column" property="seatColumn" />
 		<result column="seat_type_name" property="seatType" />
+		<result column="active" property="active" />
 	</resultMap>
 
 	<!-- public long count(); -->
@@ -45,7 +48,7 @@
 	<select id="getByInvoiceId" parameterType="long"
 		resultMap="TicketDtoMap">
 		SELECT t.id ticket_id, t.display_id display_id, d.starts_at starts_at, m.title movie_title, h.name hall_name,
-		hs.seat_row seat_row, hs.seat_column seat_column, st.name seat_type_name
+		hs.id seat_id, hs.seat_row seat_row, hs.seat_column seat_column, st.name seat_type_name
 		FROM tickets t INNER JOIN displays
 		d ON t.display_id = d.id INNER JOIN movies m ON d.movie_id = m.id
 		INNER JOIN halls h ON d.hall_id = h.id INNER JOIN hall_seats hs ON
@@ -58,8 +61,8 @@
 		<selectKey order="BEFORE" resultType="long" keyProperty="id">
 			select sq_tickets.nextval from dual
 		</selectKey>
-		INSERT INTO tickets(id, invoice_id, display_id, seat_id)
-		VALUES (#{id}, #{invoiceId} , #{displayId}, #{seatId})
+		INSERT INTO tickets(id, invoice_id, display_id, seat_id, active)
+		VALUES (#{id}, #{invoiceId} , #{displayId}, #{seatId}, #{active})
 	</insert>
 
 	<!-- public int update(Ticket entity); -->
@@ -69,7 +72,8 @@
 		invoice_id =
 		#{invoiceId},
 		display_id = #{displayId},
-		seat_id = #{seatId}
+		seat_id = #{seatId},
+		active = #{active}
 		WHERE
 		id =
 		#{id}

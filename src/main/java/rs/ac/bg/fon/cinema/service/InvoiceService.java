@@ -7,5 +7,5 @@ public interface InvoiceService {
 	
 	public InvoiceDto getInvoiceById(Long invoiceId);
 	
-	public Invoice saveInvoice();
+	public Invoice saveInvoice(InvoiceDto invoiceDto);
 }

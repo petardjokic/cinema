@@ -8,7 +8,7 @@ import rs.ac.bg.fon.cinema.domain.Ticket;
 import rs.ac.bg.fon.cinema.service.dto.TicketDto;
 
 @Mapper
-public interface TicketMapper {
+public interface TicketMapper extends BaseMapper<Ticket> {
 	public Long count();
 
 	public Ticket getById(Long id);

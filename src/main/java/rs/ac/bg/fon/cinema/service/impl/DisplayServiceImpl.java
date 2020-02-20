@@ -3,7 +3,6 @@ package rs.ac.bg.fon.cinema.service.impl;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -74,15 +73,7 @@ public class DisplayServiceImpl implements DisplayService {
 		Display display = Display.builder().id(displayDto.getId()).movieId(displayDto.getMovie().getId())
 				.hallId(displayDto.getHall().getId()).startsAt(displayDto.getStartsAt()).endsAt(endsAt).build();
 		displayMapper.save(display);
-		List<DisplayPrice> displayPricesDb = displayPriceService.getByDisplayId(displayDto.getId());
-		List<DisplayPrice> displayPricesToDelete = displayPricesDb.stream().filter(displayPriceDb -> !displayDto.getDisplayPrices().contains(displayPriceDb)).collect(Collectors.toList());
-		displayPricesToDelete.stream().forEach(displayPrice -> {
-			displayPriceService.deleteDisplayPrice(displayPrice.getId());
-		});
-		displayDto.getDisplayPrices().stream().filter(displayPrice -> !displayPricesDb.contains(displayPrice)).forEach(displayPrice -> {
-			displayPriceService.saveDisplayPrice(displayPrice);
-		});
-		return display;
+		return null;
 	}
 
 	@Override

@@ -1,10 +1,16 @@
 package rs.ac.bg.fon.cinema.domain;
 
-import lombok.Data;
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
-@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 @SuperBuilder
 public class Genre implements BaseEntity {
 	@EqualsAndHashCode.Include
