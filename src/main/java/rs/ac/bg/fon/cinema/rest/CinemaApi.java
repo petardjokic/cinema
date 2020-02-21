@@ -10,10 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import lombok.AllArgsConstructor;
 import rs.ac.bg.fon.cinema.domain.Display;
 import rs.ac.bg.fon.cinema.domain.Genre;
-import rs.ac.bg.fon.cinema.domain.Hall;
 import rs.ac.bg.fon.cinema.domain.Movie;
 import rs.ac.bg.fon.cinema.domain.ProductionCompany;
 import rs.ac.bg.fon.cinema.service.DisplayService;

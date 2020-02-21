@@ -1,0 +1,44 @@
+server:
+    port: ${myserverport:8087}
+spring:
+  application:
+    name: cinema-service
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.yml
+    drop-first: false
+mybatis:
+  type-aliases-package: rs.ac.bg.fon.cinema
+  configuration:
+    jdbc-type-for-null: 'NULL'
+    
+---
+ 
+spring:
+  profiles: development-w
+  datasource:
+    url: jdbc:h2:mem:db;DB_CLOSE_DELAY=-1
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: sa
+  logging: 
+    level: 
+      rs.ac.bg.fon.cinema.mapper: TRACE
+      org.mybatis: TRACE
+      org.springframework.boot.autoconfigure.jdbc: TRACE
+      org.springframework.jdbc: TRACE
+
+---
+ 
+spring:
+  profiles: test
+  datasource:
+    url: jdbc:h2:mem:db;DB_CLOSE_DELAY=-1
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: sa
+  logging: 
+    level: 
+      rs.ac.bg.fon.cinema.mapper: TRACE
+      org.mybatis: TRACE
+      org.springframework.boot.autoconfigure.jdbc: TRACE
+      org.springframework.jdbc: TRACE

@@ -1,0 +1,21 @@
+databaseChangeLog:
+ - changeSet:
+    id: 0
+    author: petar.djokic
+    comment: initial version
+ - changeSet:
+    id: 1.1
+    author: petar.djokic
+    comment: basic, movie-display-invoice
+    changes:
+     - sqlFile:
+        path: sql/v1/1.1.sql
+        relativeToChangelogFile: true
+ - changeSet:
+    id: 1.2
+    author: petar.djokic
+    comment: genre and production company data
+    changes:
+     - sqlFile:
+        path: sql/v1/1.2.sql
+        relativeToChangelogFile: true
