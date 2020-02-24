@@ -10,7 +10,7 @@ public interface MovieService {
 	
 	public Movie saveMovie(MovieDto movie);
 	
-	public void deleteMovie(Long movieId);
+	public int deleteMovie(Long movieId);
 	
 	public MovieDto getMovieById(Long movieId);
 	

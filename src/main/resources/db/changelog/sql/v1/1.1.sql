@@ -25,6 +25,7 @@ alter table hall_seats add constraint uq_hall_seats_hallid_row_col unique(id, se
 create table movies(
 	id number primary key,
 	title varchar2(100) not null,
+	trailer_uri varchar(255) not null,
 	description varchar2(255) not null,
 	duration number not null,
 	release_year number not null

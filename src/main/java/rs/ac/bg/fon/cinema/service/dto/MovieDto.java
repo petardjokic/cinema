@@ -18,6 +18,7 @@ import rs.ac.bg.fon.cinema.domain.ProductionCompany;
 public class MovieDto {
 	private Long id;
 	private String title;
+	private String trailerUri;
 	private String description;
 	private int duration;
 	private int releaseYear;
