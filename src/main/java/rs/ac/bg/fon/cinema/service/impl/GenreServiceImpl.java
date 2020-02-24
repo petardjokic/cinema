@@ -1,5 +1,6 @@
 package rs.ac.bg.fon.cinema.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -42,27 +43,30 @@ public class GenreServiceImpl implements GenreService {
 
 	@Override
 	@Transactional
-	public void saveMovieGenres(Long movieId, List<Genre> movieGenres) {
-		List<Genre> movieGenresDb = getGenresByMovieId(movieId);
-		List<Genre> genresToDelete = movieGenresDb.stream().filter(movieGenreDb -> !movieGenres.contains(movieGenreDb)).collect(Collectors.toList());
-		List<Genre> genresToAdd = movieGenres.stream().filter(movieGenre -> !movieGenresDb.contains(movieGenre)).collect(Collectors.toList());
-		genresToDelete.stream().forEach(genre -> {
-			MovieGenre movieGenre = convertToMovieGenre(movieId, genre);
-			movieGenreMapper.deleteMovieGenre(movieGenre);
-		});
-		genresToAdd.stream().forEach(genre -> {
-			MovieGenre movieGenre = convertToMovieGenre(movieId, genre);
-			movieGenreMapper.save(movieGenre);
-		});
-	}
-
-	private MovieGenre convertToMovieGenre(Long movieId, Genre genre) {
-		return MovieGenre.builder().movieId(movieId).genreId(genre.getId()).build();
+	public Genre save(Genre genre) {
+		return genreMapper.save(genre);
 	}
 
 	@Override
-	public Genre save(Genre genre) {
-		return genreMapper.save(genre);
+	@Transactional
+	public void saveMovieGenres(Long movieId, List<Genre> genres) {
+		List<MovieGenre> movieGenresDb = movieGenreMapper.getByMovieId(movieId);
+		List<MovieGenre> movieGenresParam = new ArrayList<>();
+		genres.stream().forEach(genre -> {
+			movieGenresParam.add(new MovieGenre(null, movieId, genre.getId()));
+		});
+
+		List<MovieGenre> movieGenresToDelete = movieGenresDb.stream()
+				.filter(movieGenreDb -> !movieGenresParam.contains(movieGenreDb)).collect(Collectors.toList());
+		List<MovieGenre> genresToAdd = movieGenresParam.stream()
+				.filter(movieGenre -> !movieGenresDb.contains(movieGenre)).collect(Collectors.toList());
+
+		movieGenresToDelete.stream().forEach(movieGenre -> {
+			movieGenreMapper.deleteById(movieGenre.getId());
+		});
+		genresToAdd.stream().forEach(movieGenre -> {
+			movieGenreMapper.save(movieGenre);
+		});
 	}
 
 }

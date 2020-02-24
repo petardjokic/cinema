@@ -1,5 +1,6 @@
 package rs.ac.bg.fon.cinema.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -43,24 +44,29 @@ public class ProductionCompanyServiceImpl implements ProductionCompanyService {
 	@Override
 	@Transactional
 	public void saveMovieProductionCompanies(Long movieId, List<ProductionCompany> productionCompanies) {
-		List<ProductionCompany> movieProductionCompaniesDb = getProductionCompaniesByMovieId(movieId);
-		List<ProductionCompany> productionCompaniesToDelete = movieProductionCompaniesDb.stream().filter(productionCompanyDb -> !productionCompanies.contains(productionCompanyDb)).collect(Collectors.toList());
-		List<ProductionCompany> productionCompaniesToAdd = productionCompanies.stream().filter(productionCompany -> !movieProductionCompaniesDb.contains(productionCompany)).collect(Collectors.toList());
-		productionCompaniesToDelete.stream().forEach(productionCompany -> {
-			MovieProductionCompany movieProductionCompany = convertToMovieProductionCompany(movieId, productionCompany);
-			movieProductionCompanyMapper.deleteMovieProductionCompany(movieProductionCompany);
+		List<MovieProductionCompany> movieProductionCompaniesDb = movieProductionCompanyMapper.getByMovieId(movieId);
+		List<MovieProductionCompany> movieProductionCompaniesParam = new ArrayList<>();
+		productionCompanies.stream().forEach(productionCampany -> {
+			movieProductionCompaniesParam.add(new MovieProductionCompany(null, movieId, productionCampany.getId()));
 		});
-		productionCompaniesToAdd.stream().forEach(productionCompany -> {
-			MovieProductionCompany movieProductionCompany = convertToMovieProductionCompany(movieId, productionCompany);
+
+		List<MovieProductionCompany> productionCompaniesToDelete = movieProductionCompaniesDb.stream()
+				.filter(productionCompanyDb -> !movieProductionCompaniesParam.contains(productionCompanyDb))
+				.collect(Collectors.toList());
+		List<MovieProductionCompany> productionCompaniesToAdd = movieProductionCompaniesParam.stream()
+				.filter(productionCompany -> !movieProductionCompaniesDb.contains(productionCompany))
+				.collect(Collectors.toList());
+
+		productionCompaniesToDelete.stream().forEach(movieProductionCompany -> {
+			movieProductionCompanyMapper.deleteById(movieProductionCompany.getId());
+		});
+		productionCompaniesToAdd.stream().forEach(movieProductionCompany -> {
 			movieProductionCompanyMapper.save(movieProductionCompany);
 		});
 	}
 
-	private MovieProductionCompany convertToMovieProductionCompany(Long movieId, ProductionCompany productionCompany) {
-		return MovieProductionCompany.builder().movieId(movieId).productionCompanyId(productionCompany.getId()).build();
-	}
-
 	@Override
+	@Transactional
 	public ProductionCompany save(ProductionCompany productionCompany) {
 		return productionCompanyMapper.save(productionCompany);
 	}
