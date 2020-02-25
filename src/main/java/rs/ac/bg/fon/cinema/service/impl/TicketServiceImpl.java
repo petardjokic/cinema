@@ -24,7 +24,7 @@ public class TicketServiceImpl implements TicketService {
 	}
 
 	@Override
-	public List<Ticket> getTicketByDisplayId(Long displayId) {
+	public List<TicketDto> getTicketByDisplayId(Long displayId) {
 		return ticketMapper.getByDisplayId(displayId);
 	}
 

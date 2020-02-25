@@ -10,14 +10,17 @@ import org.springframework.transaction.annotation.Transactional;
 
 import rs.ac.bg.fon.cinema.domain.Display;
 import rs.ac.bg.fon.cinema.domain.DisplayPrice;
+import rs.ac.bg.fon.cinema.domain.Ticket;
 import rs.ac.bg.fon.cinema.mapper.DisplayMapper;
 import rs.ac.bg.fon.cinema.service.DisplayPriceService;
 import rs.ac.bg.fon.cinema.service.DisplayService;
 import rs.ac.bg.fon.cinema.service.HallService;
 import rs.ac.bg.fon.cinema.service.MovieService;
+import rs.ac.bg.fon.cinema.service.TicketService;
 import rs.ac.bg.fon.cinema.service.dto.DisplayDto;
 import rs.ac.bg.fon.cinema.service.dto.HallDto;
 import rs.ac.bg.fon.cinema.service.dto.MovieDto;
+import rs.ac.bg.fon.cinema.service.dto.TicketDto;
 
 @Service
 public class DisplayServiceImpl implements DisplayService {
@@ -33,6 +36,9 @@ public class DisplayServiceImpl implements DisplayService {
 
 	@Autowired
 	private DisplayPriceService displayPriceService;
+	
+	@Autowired
+	private TicketService ticketService;
 
 	@Override
 	public DisplayDto getDisplayById(Long displayId) {
@@ -56,13 +62,14 @@ public class DisplayServiceImpl implements DisplayService {
 		MovieDto movieDto = movieService.getMovieById(display.getMovieId());
 		HallDto hallDto = hallService.getHallById(display.getHallId());
 		List<DisplayPrice> displayPrices = displayPriceService.getByDisplayId(display.getId());
-		return convertDisplayToDto(display, movieDto, hallDto, displayPrices);
+		List<TicketDto> ticketsDto = ticketService.getTicketByDisplayId(display.getId());
+		return convertDisplayToDto(display, movieDto, hallDto, displayPrices, ticketsDto);
 	}
 
 	private DisplayDto convertDisplayToDto(Display display, MovieDto movieDto, HallDto hallDto,
-			List<DisplayPrice> displayPrices) {
+			List<DisplayPrice> displayPrices, List<TicketDto> ticketsDto) {
 		return DisplayDto.builder().id(display.getId()).startsAt(display.getStartsAt()).endsAt(display.getEndsAt())
-				.movie(movieDto).hall(hallDto).displayPrices(displayPrices).build();
+				.movie(movieDto).hall(hallDto).displayPrices(displayPrices).tickets(ticketsDto).build();
 	}
 
 	@Override

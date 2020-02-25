@@ -20,7 +20,8 @@
 		<result column="seat_id" property="seatId" />
 		<result column="seat_row" property="seatRow" />
 		<result column="seat_column" property="seatColumn" />
-		<result column="seat_type_name" property="seatType" />
+		<result column="seat_type_id" property="seatTypeId" />
+		<result column="seat_type_name" property="seatTypeName" />
 		<result column="active" property="active" />
 	</resultMap>
 
@@ -39,8 +40,13 @@
 
 	<!-- public List<Ticket> getByDisplayId(Long displayId); -->
 	<select id="getByDisplayId" parameterType="long"
-		resultMap="TicketMap">
-		SELECT t.*
+		resultMap="TicketDtoMap">
+		SELECT t.id ticket_id, t.display_id display_id, d.starts_at starts_at, m.title movie_title, h.name hall_name,
+		hs.id seat_id, hs.seat_row seat_row, hs.seat_column seat_column, st.id seat_type_id, st.name seat_type_name
+		FROM tickets t INNER JOIN displays
+		d ON t.display_id = d.id INNER JOIN movies m ON d.movie_id = m.id
+		INNER JOIN halls h ON d.hall_id = h.id INNER JOIN hall_seats hs ON
+		hs.id = t.seat_id INNER JOIN seat_types st ON hs.seat_type_id = st.id
 		WHERE t.display_id = #{displayId}
 	</select>
 
@@ -48,7 +54,7 @@
 	<select id="getByInvoiceId" parameterType="long"
 		resultMap="TicketDtoMap">
 		SELECT t.id ticket_id, t.display_id display_id, d.starts_at starts_at, m.title movie_title, h.name hall_name,
-		hs.id seat_id, hs.seat_row seat_row, hs.seat_column seat_column, st.name seat_type_name
+		hs.id seat_id, hs.seat_row seat_row, hs.seat_column seat_column, st.id seat_type_id, st.name seat_type_name
 		FROM tickets t INNER JOIN displays
 		d ON t.display_id = d.id INNER JOIN movies m ON d.movie_id = m.id
 		INNER JOIN halls h ON d.hall_id = h.id INNER JOIN hall_seats hs ON

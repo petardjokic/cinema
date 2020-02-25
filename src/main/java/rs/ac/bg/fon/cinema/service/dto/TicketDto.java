@@ -24,6 +24,7 @@ public class TicketDto {
 	private Long seatId;
 	private int seatRow;
 	private int seatColumn;
-	private String seatType;
+	private Long seatTypeId;
+	private String seatTypeName;
 	private Boolean active;
 }

@@ -141,7 +141,8 @@ class TicketMapperTest extends BaseMapperTest{
 		assertEquals(hall.getName(), ticketsDb.get(0).getHallName());
 		assertEquals(hallseat.getRow(), ticketsDb.get(0).getSeatRow());
 		assertEquals(hallseat.getColumn(), ticketsDb.get(0).getSeatColumn());
-		assertEquals(seatType1.getName(), ticketsDb.get(0).getSeatType());
+		assertEquals(seatType1.getId(), ticketsDb.get(0).getSeatTypeId());
+		assertEquals(seatType1.getName(), ticketsDb.get(0).getSeatTypeName());
 	}
 	
 

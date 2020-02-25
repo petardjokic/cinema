@@ -23,4 +23,5 @@ public class DisplayDto {
 	private List<DisplayPrice> displayPrices;
 	private LocalDateTime startsAt;
 	private LocalDateTime endsAt;
+	private List<TicketDto> tickets;
 }

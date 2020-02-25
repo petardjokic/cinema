@@ -9,7 +9,7 @@ public interface TicketService {
 
 	public Ticket getTicketById(Long ticketId);
 	
-	public List<Ticket> getTicketByDisplayId(Long displayId);
+	public List<TicketDto> getTicketByDisplayId(Long displayId);
 	
 	public List<TicketDto> getTicketByInvoiceId(Long invoiceId);
 

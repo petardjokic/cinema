@@ -19,7 +19,7 @@ public interface TicketMapper extends BaseMapper<Ticket> {
 
 	public int deleteById(Long id);
 	
-	public List<Ticket> getByDisplayId(Long displayId);
+	public List<TicketDto> getByDisplayId(Long displayId);
 	
 	public List<TicketDto> getByInvoiceId(Long invoiceId);
 }
