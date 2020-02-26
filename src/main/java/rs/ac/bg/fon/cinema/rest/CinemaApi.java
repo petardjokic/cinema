@@ -68,14 +68,14 @@ public class CinemaApi {
 		return displayService.getDisplayById(id);
 	}
 	
+	@RequestMapping(value = "/api/displays/save", method = RequestMethod.POST)
+	public Display saveDisplay(@RequestBody DisplayDto display) {
+		return displayService.saveDisplay(display);
+	}
+	
 	@RequestMapping(value = "/api/displays", method = RequestMethod.GET)
 	public List<DisplayDto> getAllDisplays() {
 		return displayService.getAllDisplays();
-	}
-	
-	@RequestMapping(value = "/api/movies", method = RequestMethod.POST)
-	public Display saveDisplay(@RequestBody DisplayDto display) {
-		return displayService.saveDisplay(display);
 	}
 	
 	@RequestMapping(value = "/api/invoices/{id}", method = RequestMethod.GET)

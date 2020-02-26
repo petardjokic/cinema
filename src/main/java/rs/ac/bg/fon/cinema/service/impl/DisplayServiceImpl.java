@@ -80,6 +80,7 @@ public class DisplayServiceImpl implements DisplayService {
 		Display display = Display.builder().id(displayDto.getId()).movieId(displayDto.getMovie().getId())
 				.hallId(displayDto.getHall().getId()).startsAt(displayDto.getStartsAt()).endsAt(endsAt).build();
 		displayMapper.save(display);
+		displayPriceService.saveDisplayPriceForDisplay(display.getId(), displayDto.getDisplayPrices())
 		return null;
 	}
 

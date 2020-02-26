@@ -13,4 +13,6 @@ public interface DisplayPriceService {
 	public DisplayPrice saveDisplayPrice(DisplayPrice displayPrice);
 	
 	public int deleteDisplayPrice(Long id);
+
+	public void saveDisplayPriceForDisplay(Long id, List<DisplayPrice> displayPrices);
 }
