@@ -55,7 +55,7 @@ class DisplayPriceMapperTest extends BaseMapperTest{
 		seatTypeMapper.insert(seatType1);
 		
 		log.info("Adding a new display price");
-		DisplayPrice displayPrice = DisplayPrice.builder().displayId(display.getId()).seatTypeId(seatType1.getId()).price(new BigDecimal(100)).build();
+		DisplayPrice displayPrice = DisplayPrice.builder().displayId(display.getId()).seatTypeId(seatType1.getId()).price(new Double(100)).build();
 		assertEquals(1, displayPriceMapper.insert(displayPrice));
 		
 		log.info("Getting display price");
@@ -67,7 +67,7 @@ class DisplayPriceMapperTest extends BaseMapperTest{
 		assertEquals(displayPrice.getPrice(), displayPriceDb.getPrice());
 		
 		log.info("Updating hall seat");
-		displayPrice.setPrice(new BigDecimal(150));
+		displayPrice.setPrice(new Double(150));
 		assertEquals(1, displayPriceMapper.update(displayPrice));
 		
 		log.info("Getting hall seat");

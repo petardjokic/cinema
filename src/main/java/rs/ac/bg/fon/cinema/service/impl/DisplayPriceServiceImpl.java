@@ -37,4 +37,12 @@ public class DisplayPriceServiceImpl implements DisplayPriceService {
 		return displayPriceMapper.deleteById(id);
 	}
 
+	@Override
+	public void saveDisplayPriceForDisplay(Long displayId, List<DisplayPrice> displayPrices) {
+		displayPrices.stream().forEach(price -> {
+			price.setDisplayId(displayId);
+			displayPriceMapper.save(price);
+		});
+	}
+
 }
