@@ -3,7 +3,6 @@ package rs.ac.bg.fon.cinema.service;
 import java.util.List;
 
 import rs.ac.bg.fon.cinema.domain.Genre;
-import rs.ac.bg.fon.cinema.domain.MovieGenre;
 
 
 public interface GenreService {

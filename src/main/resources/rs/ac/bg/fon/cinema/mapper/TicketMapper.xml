@@ -15,14 +15,24 @@
 		<id column="ticket_id" property="ticketId" />
 		<result column="display_id" property="displayId" />
 		<result column="starts_at" property="startsAt" />
-		<result column="movie_title" property="movieTitle" />
-		<result column="hall_name" property="hallName" />
-		<result column="seat_id" property="seatId" />
-		<result column="seat_row" property="seatRow" />
-		<result column="seat_column" property="seatColumn" />
-		<result column="seat_type_id" property="seatTypeId" />
-		<result column="seat_type_name" property="seatTypeName" />
 		<result column="active" property="active" />
+		<association property="movie">
+			<id column="movie_id" property="id"  />
+			<result column="movie_title" property="title" />
+		</association>
+		<association property="hall">
+			<id column="hall_id" property="id" />
+			<result column="hall_name" property="name" />
+		</association>
+		<association property="seat">
+			<result column="seat_id" property="id" />
+			<result column="seat_row" property="row" />
+			<result column="seat_column" property="column" />
+			<association property="seatType">
+				<id column="seat_type_id" property="id" />
+				<result column="seat_type_name" property="name" />
+			</association>
+		</association>
 	</resultMap>
 
 	<!-- public long count(); -->
@@ -41,25 +51,42 @@
 	<!-- public List<Ticket> getByDisplayId(Long displayId); -->
 	<select id="getByDisplayId" parameterType="long"
 		resultMap="TicketDtoMap">
-		SELECT t.id ticket_id, t.display_id display_id, d.starts_at starts_at, m.title movie_title, h.name hall_name,
-		hs.id seat_id, hs.seat_row seat_row, hs.seat_column seat_column, st.id seat_type_id, st.name seat_type_name
+		SELECT t.id ticket_id, t.display_id display_id, d.starts_at
+		starts_at, m.id movie_id, m.title movie_title, h.id hall_id, h.name hall_name,
+		hs.id
+		seat_id,
+		hs.seat_row seat_row, hs.seat_column seat_column, st.id
+		seat_type_id,
+		st.name seat_type_name
 		FROM tickets t INNER JOIN displays
-		d ON t.display_id = d.id INNER JOIN movies m ON d.movie_id = m.id
-		INNER JOIN halls h ON d.hall_id = h.id INNER JOIN hall_seats hs ON
-		hs.id = t.seat_id INNER JOIN seat_types st ON hs.seat_type_id = st.id
-		WHERE t.display_id = #{displayId}
+		d ON
+		t.display_id = d.id INNER JOIN movies m ON d.movie_id = m.id
+		INNER
+		JOIN
+		halls h ON d.hall_id = h.id INNER JOIN hall_seats hs ON
+		hs.id =
+		t.seat_id INNER JOIN seat_types st ON hs.seat_type_id = st.id
+		WHERE
+		t.display_id = #{displayId}
 	</select>
 
 	<!-- public public List<TicketDto> getByInvoiceId(Long invoiceId); -->
 	<select id="getByInvoiceId" parameterType="long"
 		resultMap="TicketDtoMap">
-		SELECT t.id ticket_id, t.display_id display_id, d.starts_at starts_at, m.title movie_title, h.name hall_name,
-		hs.id seat_id, hs.seat_row seat_row, hs.seat_column seat_column, st.id seat_type_id, st.name seat_type_name
+		SELECT t.id ticket_id, t.display_id display_id, d.starts_at
+		starts_at, m.title movie_title, h.name hall_name,
+		hs.id seat_id,
+		hs.seat_row seat_row, hs.seat_column seat_column, st.id seat_type_id,
+		st.name seat_type_name
 		FROM tickets t INNER JOIN displays
-		d ON t.display_id = d.id INNER JOIN movies m ON d.movie_id = m.id
-		INNER JOIN halls h ON d.hall_id = h.id INNER JOIN hall_seats hs ON
-		hs.id = t.seat_id INNER JOIN seat_types st ON hs.seat_type_id = st.id
-		WHERE t.invoice_id = #{invoiceId}
+		d ON
+		t.display_id = d.id INNER JOIN movies m ON d.movie_id = m.id
+		INNER JOIN
+		halls h ON d.hall_id = h.id INNER JOIN hall_seats hs ON
+		hs.id =
+		t.seat_id INNER JOIN seat_types st ON hs.seat_type_id = st.id
+		WHERE
+		t.invoice_id = #{invoiceId}
 	</select>
 
 	<!-- public int insert(Ticket entity); -->
@@ -79,7 +106,8 @@
 		#{invoiceId},
 		display_id = #{displayId},
 		seat_id = #{seatId},
-		active = #{active}
+		active =
+		#{active}
 		WHERE
 		id =
 		#{id}
@@ -90,7 +118,8 @@
 		DELETE
 		FROM tickets
 		WHERE
-		id = #{id}
+		id
+		= #{id}
 	</delete>
 
 

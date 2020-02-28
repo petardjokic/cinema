@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import rs.ac.bg.fon.cinema.domain.Display;
 import rs.ac.bg.fon.cinema.domain.DisplayPrice;
-import rs.ac.bg.fon.cinema.domain.Ticket;
 import rs.ac.bg.fon.cinema.mapper.DisplayMapper;
 import rs.ac.bg.fon.cinema.service.DisplayPriceService;
 import rs.ac.bg.fon.cinema.service.DisplayService;

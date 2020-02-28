@@ -44,7 +44,7 @@ public class TicketServiceImpl implements TicketService {
 
 	private List<Ticket> convertDtoToTickets(Long invoiceId, List<TicketDto> ticketsDto) {
 		List<Ticket> tickets = ticketsDto.stream().map(ticketDto -> Ticket.builder().invoiceId(invoiceId)
-				.displayId(ticketDto.getDisplayId()).seatId(ticketDto.getSeatId()).active(ticketDto.getActive()).build())
+				.displayId(ticketDto.getDisplayId()).seatId(ticketDto.getSeat().getId()).active(ticketDto.getActive()).build())
 				.collect(Collectors.toList());
 		return tickets;
 	}

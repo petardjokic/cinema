@@ -49,3 +49,8 @@ insert into displays(id, movie_id, hall_id, starts_at, ends_at) values((select s
 insert into display_prices(id, display_id, seat_type_id, price) values((select sq_display_prices.nextval from dual), 3, 1, 100);
 insert into display_prices(id, display_id, seat_type_id, price) values((select sq_display_prices.nextval from dual), 3, 2, 200);
 insert into display_prices(id, display_id, seat_type_id, price) values((select sq_display_prices.nextval from dual), 3, 3, 150);
+
+insert into invoices(id, issued_at, active) values((select sq_invoices.nextval from dual), current_timestamp, 1);
+insert into tickets(id, invoice_id, display_id, seat_id) values((select sq_display_prices.nextval from dual), 1, 1, 1);
+insert into tickets(id, invoice_id, display_id, seat_id) values((select sq_display_prices.nextval from dual), 1, 1, 2);
+insert into tickets(id, invoice_id, display_id, seat_id) values((select sq_display_prices.nextval from dual), 1, 2, 3);
