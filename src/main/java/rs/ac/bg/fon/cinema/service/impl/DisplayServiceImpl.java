@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import rs.ac.bg.fon.cinema.domain.Display;
 import rs.ac.bg.fon.cinema.domain.DisplayPrice;
-import rs.ac.bg.fon.cinema.domain.Ticket;
 import rs.ac.bg.fon.cinema.mapper.DisplayMapper;
 import rs.ac.bg.fon.cinema.service.DisplayPriceService;
 import rs.ac.bg.fon.cinema.service.DisplayService;
@@ -80,8 +79,8 @@ public class DisplayServiceImpl implements DisplayService {
 		Display display = Display.builder().id(displayDto.getId()).movieId(displayDto.getMovie().getId())
 				.hallId(displayDto.getHall().getId()).startsAt(displayDto.getStartsAt()).endsAt(endsAt).build();
 		displayMapper.save(display);
-		displayPriceService.saveDisplayPriceForDisplay(display.getId(), displayDto.getDisplayPrices())
-		return null;
+		displayPriceService.saveDisplayPriceForDisplay(display.getId(), displayDto.getDisplayPrices());
+		return display;
 	}
 
 	@Override

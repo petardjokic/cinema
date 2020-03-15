@@ -1,6 +1,5 @@
 package rs.ac.bg.fon.cinema.domain;
 
-import java.math.BigDecimal;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,5 +17,5 @@ public class DisplayPrice implements BaseEntity {
 	private Long displayId;
 	private Long seatTypeId;
 	private String seatTypeName;
-	private BigDecimal price;
+	private Double price;
 }

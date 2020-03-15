@@ -137,12 +137,12 @@ class TicketMapperTest extends BaseMapperTest{
 		assertEquals(ticket.getId(), ticketsDb.get(0).getTicketId());
 		assertEquals(ticket.getDisplayId(), ticketsDb.get(0).getDisplayId());
 		assertEquals(display.getStartsAt(), ticketsDb.get(0).getStartsAt());
-		assertEquals(movie.getTitle(), ticketsDb.get(0).getMovieTitle());
-		assertEquals(hall.getName(), ticketsDb.get(0).getHallName());
-		assertEquals(hallseat.getRow(), ticketsDb.get(0).getSeatRow());
-		assertEquals(hallseat.getColumn(), ticketsDb.get(0).getSeatColumn());
-		assertEquals(seatType1.getId(), ticketsDb.get(0).getSeatTypeId());
-		assertEquals(seatType1.getName(), ticketsDb.get(0).getSeatTypeName());
+		assertEquals(movie.getTitle(), ticketsDb.get(0).getMovie().getTitle());
+		assertEquals(hall.getName(), ticketsDb.get(0).getHall().getName());
+		assertEquals(hallseat.getRow(), ticketsDb.get(0).getSeat().getRow());
+		assertEquals(hallseat.getColumn(), ticketsDb.get(0).getSeat().getColumn());
+		assertEquals(seatType1.getId(), ticketsDb.get(0).getSeat().getSeatType().getId());
+		assertEquals(seatType1.getName(), ticketsDb.get(0).getSeat().getSeatType().getName());
 	}
 	
 
