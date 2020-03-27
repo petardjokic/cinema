@@ -2,11 +2,11 @@ package rs.ac.bg.fon.cinema.service;
 
 import java.util.List;
 
-import rs.ac.bg.fon.cinema.service.dto.HallDto;
+import rs.ac.bg.fon.cinema.domain.Hall;
 
 public interface HallService {
 
-	public HallDto getHallById(Long hallId);
+	public Hall getHallById(Long hallId);
 
-	public List<HallDto> getAllHalls();
+	public List<Hall> getAllHalls();
 }

@@ -24,7 +24,6 @@ class MovieProductionCompanyMapperTest extends BaseMapperTest {
 	
 	@Test
 	void testCRUD() {
-		assertEquals(0L, movieProdCompMapper.count());
 
 		log.info("Adding a new prod comp 1");
 		ProductionCompany prodComp = ProductionCompany.builder().name("Prod1").build();
@@ -35,11 +34,11 @@ class MovieProductionCompanyMapperTest extends BaseMapperTest {
 		prodCompMapper.insert(prodComp2);
 		
 		log.info("Adding a new movie 1");
-		Movie movie = Movie.builder().title("Trainspotting").description("Desc").duration(134).releaseYear(1996).build();
+		Movie movie = Movie.builder().title("Trainspotting").trailerUri("dasdsad").description("Desc").duration(134).releaseYear(1996).build();
 		movieMapper.insert(movie);
 		
 		log.info("Adding a new movie 2");
-		Movie movie2 = Movie.builder().title("Trainspotting2").description("Desc2").duration(1341).releaseYear(11996).build();
+		Movie movie2 = Movie.builder().title("Trainspotting2").trailerUri("dasdsad").description("Desc2").duration(1341).releaseYear(11996).build();
 		movieMapper.insert(movie2);
 		
 		log.info("Adding a new movie prod comp");
@@ -66,8 +65,6 @@ class MovieProductionCompanyMapperTest extends BaseMapperTest {
 		log.info("Deleting prod comp");
 		assertEquals(1, movieProdCompMapper.deleteById(movieProdComp.getId()));
 		
-		assertEquals(0, movieProdCompMapper.count());
-
 	}
 
 }

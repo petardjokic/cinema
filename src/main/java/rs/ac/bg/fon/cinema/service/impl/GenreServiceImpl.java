@@ -1,6 +1,5 @@
 package rs.ac.bg.fon.cinema.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -8,13 +7,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import lombok.extern.slf4j.Slf4j;
 import rs.ac.bg.fon.cinema.domain.Genre;
+import rs.ac.bg.fon.cinema.domain.Movie;
 import rs.ac.bg.fon.cinema.domain.MovieGenre;
 import rs.ac.bg.fon.cinema.mapper.GenreMapper;
 import rs.ac.bg.fon.cinema.mapper.MovieGenreMapper;
 import rs.ac.bg.fon.cinema.service.GenreService;
 
 @Service
+@Slf4j
 public class GenreServiceImpl implements GenreService {
 
 	@Autowired
@@ -49,24 +51,24 @@ public class GenreServiceImpl implements GenreService {
 
 	@Override
 	@Transactional
-	public void saveMovieGenres(Long movieId, List<Genre> genres) {
-		List<MovieGenre> movieGenresDb = movieGenreMapper.getByMovieId(movieId);
-		List<MovieGenre> movieGenresParam = new ArrayList<>();
-		genres.stream().forEach(genre -> {
-			movieGenresParam.add(new MovieGenre(null, movieId, genre.getId()));
-		});
+	public void saveMovieGenres(Movie movie) {
+		List<MovieGenre> movieGenresDb = movieGenreMapper.getByMovieId(movie.getId());
+		
+		List<MovieGenre> movieGenresParam = movie.getGenres().stream()
+				.map(genre -> (new MovieGenre(null, movie.getId(), genre.getId())))
+				.collect(Collectors.toList());
 
-		List<MovieGenre> movieGenresToDelete = movieGenresDb.stream()
-				.filter(movieGenreDb -> !movieGenresParam.contains(movieGenreDb)).collect(Collectors.toList());
-		List<MovieGenre> genresToAdd = movieGenresParam.stream()
-				.filter(movieGenre -> !movieGenresDb.contains(movieGenre)).collect(Collectors.toList());
+		// delete removed Genres
+		log.info("Deleting removed movie genres for movieId: {}", movie.getId());
+		movieGenresDb.stream()
+			.filter(movieGenreDb -> !movieGenresParam.contains(movieGenreDb))
+			.forEach(movieGenre -> movieGenreMapper.deleteById(movieGenre.getId()));
 
-		movieGenresToDelete.stream().forEach(movieGenre -> {
-			movieGenreMapper.deleteById(movieGenre.getId());
-		});
-		genresToAdd.stream().forEach(movieGenre -> {
-			movieGenreMapper.save(movieGenre);
-		});
+		// save added Genres
+		log.info("Saving added movie genres for movieId: {}", movie.getId());
+		movieGenresParam.stream()
+			.filter(movieGenre -> !movieGenresDb.contains(movieGenre))
+			.forEach(movieGenre -> movieGenreMapper.save(movieGenre));
 	}
 
 }

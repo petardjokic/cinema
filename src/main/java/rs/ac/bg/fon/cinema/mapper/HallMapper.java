@@ -12,12 +12,14 @@ public interface HallMapper extends BaseMapper<Hall> {
 	public Long count();
 	
 	public Hall getById(Long id);
-
+	
+	public List<Hall> getAll();
+	
 	public int insert(Hall entity);
 
 	public int update(Hall entity);
 
 	public int deleteById(Long id);
 	
-	public List<Hall> getAll();
+	
 }

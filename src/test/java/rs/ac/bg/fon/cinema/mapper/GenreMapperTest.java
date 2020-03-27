@@ -16,7 +16,6 @@ class GenreMapperTest extends BaseMapperTest{
 
 	@Test
 	void testCRUD() {
-		assertEquals(0L, genreMapper.count());
 
 		log.info("Adding a new genre");
 		Genre genre = Genre.builder().name("KGenre").build();
@@ -39,8 +38,6 @@ class GenreMapperTest extends BaseMapperTest{
 		log.info("Deleting genre");
 		assertEquals(1, genreMapper.deleteById(genre.getId()));
 		
-		assertEquals(0, genreMapper.count());
-
 	}
 
 }

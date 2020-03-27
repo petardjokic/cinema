@@ -12,21 +12,23 @@
 	<select id="count" resultType="Long">
 		SELECT count(*) FROM halls
 	</select>
-
+	
+	<sql id="sqlHall">
+		SELECT h.*
+		FROM halls h
+	</sql>
 
 	<!-- public Hall getById(Long id); -->
 	<select id="getById" parameterType="long" resultMap="HallMap">
-		SELECT h.*
-		FROM halls h
+		<include refid="sqlHall"></include>
 		WHERE h.id = #{id}
 	</select>
 	
 	<!-- public List<Hall> getAll(); -->
 	<select id="getAll" resultMap="HallMap">
-		SELECT h.*
-		FROM halls h
+		<include refid="sqlHall"></include>
 	</select>
-
+	
 	<!-- public int insert(Hall entity); -->
 	<insert id="insert" parameterType="Hall">
 		<selectKey order="BEFORE" resultType="long" keyProperty="id">

@@ -1,20 +1,18 @@
 package rs.ac.bg.fon.cinema.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.datatype.jdk8.OptionalSerializer;
+
 import rs.ac.bg.fon.cinema.domain.Hall;
-import rs.ac.bg.fon.cinema.domain.HallSeat;
-import rs.ac.bg.fon.cinema.domain.SeatType;
+import rs.ac.bg.fon.cinema.domain.Seat;
 import rs.ac.bg.fon.cinema.mapper.HallMapper;
-import rs.ac.bg.fon.cinema.mapper.HallSeatMapper;
-import rs.ac.bg.fon.cinema.mapper.SeatTypeMapper;
+import rs.ac.bg.fon.cinema.mapper.SeatMapper;
 import rs.ac.bg.fon.cinema.service.HallService;
-import rs.ac.bg.fon.cinema.service.dto.HallDto;
-import rs.ac.bg.fon.cinema.service.dto.HallSeatDto;
 
 @Service
 public class HallServiceImpl implements HallService {
@@ -23,37 +21,21 @@ public class HallServiceImpl implements HallService {
 	private HallMapper hallMapper;
 
 	@Autowired
-	private HallSeatMapper hallSeatMapper;
-
-	@Autowired
-	private SeatTypeMapper seatTypeMapper;
+	private SeatMapper seatMapper;
 
 	@Override
-	public HallDto getHallById(Long hallId) {
-		Hall hallDao = hallMapper.getById(hallId);
-		HallDto hallDto = convertToDto(hallDao);
-		return hallDto;
+	public Hall getHallById(Long hallId) {
+		Hall hallDb = hallMapper.getById(hallId);
+		Optional.ofNullable(hallDb)
+				.ifPresent(hall -> hall.setSeats(seatMapper.getByHallId(hallId)));
+		Optional.ofNullable(hallDb)
+		.orElseThrow(() -> new IllegalStateException(String.format("Hall with ID: %s does not exist!", hallId)));
+		return hallDb;
 	}
 
 	@Override
-	public List<HallDto> getAllHalls() {
-		List<HallDto> halls = new ArrayList<>();
-		List<Hall> hallsDao = hallMapper.getAll();
-		hallsDao.stream().forEach(hallDao -> {
-			HallDto hallDto = convertToDto(hallDao);
-			halls.add(hallDto);
-		});
-		return halls;
-	}
-
-	private HallDto convertToDto(Hall hallDao) {
-		List<HallSeat> hallseatsDao = hallSeatMapper.getByHallId(hallDao.getId());
-		List<HallSeatDto> hallseats = new ArrayList<>();
-		hallseatsDao.stream().forEach(seat -> {
-			SeatType type = seatTypeMapper.getById(seat.getSeatTypeId());
-			hallseats.add(new HallSeatDto(seat.getId(), type, seat.getRow(), seat.getColumn()));
-		});
-		return new HallDto(hallDao.getId(), hallDao.getName(), hallseats);
+	public List<Hall> getAllHalls() {
+		return hallMapper.getAll();
 	}
 
 }

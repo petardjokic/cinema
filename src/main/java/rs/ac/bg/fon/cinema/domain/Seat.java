@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 @NoArgsConstructor
@@ -11,17 +12,13 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @Setter
 @SuperBuilder
-public class HallSeat implements BaseEntity {
-
+@ToString
+public class Seat implements BaseEntity {
+	
 	private Long id;
 	private Long hallId;
-	private Long seatTypeId;
 	private int row;
 	private int column;
-
-	@Override
-	public String toString() {
-		return "ID: " + id + " HALL.ID: " + hallId + " TYPE.ID: " + seatTypeId + " ROW: " + row + " COL: " + column;
-	}
+	private SeatType type;
 
 }

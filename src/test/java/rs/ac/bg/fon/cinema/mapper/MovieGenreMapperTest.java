@@ -24,7 +24,6 @@ class MovieGenreMapperTest extends BaseMapperTest {
 	
 	@Test
 	void testCRUD() {
-		assertEquals(0L, movieGenreMapper.count());
 
 		log.info("Adding a new genre 1");
 		Genre genre = Genre.builder().name("KGenre").build();
@@ -35,11 +34,11 @@ class MovieGenreMapperTest extends BaseMapperTest {
 		genreMapper.insert(genre2);
 		
 		log.info("Adding a new movie 1");
-		Movie movie = Movie.builder().title("Trainspotting").description("Desc").duration(134).releaseYear(1996).build();
+		Movie movie = Movie.builder().title("Trainspotting").trailerUri("dsafassds").description("Desc").duration(134).releaseYear(1996).build();
 		movieMapper.insert(movie);
 		
 		log.info("Adding a new movie 2");
-		Movie movie2 = Movie.builder().title("Trainspotting2").description("Desc2").duration(1341).releaseYear(11996).build();
+		Movie movie2 = Movie.builder().title("Trainspotting2").trailerUri("dsad33fassds").description("Desc2").duration(1341).releaseYear(11996).build();
 		movieMapper.insert(movie2);
 		
 		log.info("Adding a new movie genre");
@@ -66,8 +65,6 @@ class MovieGenreMapperTest extends BaseMapperTest {
 		log.info("Deleting genre");
 		assertEquals(1, movieGenreMapper.deleteById(movieGenre.getId()));
 		
-		assertEquals(0, movieGenreMapper.count());
-
 	}
 	
 	@Test
@@ -78,7 +75,7 @@ class MovieGenreMapperTest extends BaseMapperTest {
 		genreMapper.insert(genre);
 		
 		log.info("Adding a new movie 1");
-		Movie movie = Movie.builder().title("Trainspotting").description("Desc").duration(134).releaseYear(1996).build();
+		Movie movie = Movie.builder().title("Trainspotting").trailerUri("dsafassds").description("Desc").duration(134).releaseYear(1996).build();
 		movieMapper.insert(movie);
 		
 		log.info("Adding a new movie genre");

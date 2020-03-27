@@ -2,6 +2,7 @@ package rs.ac.bg.fon.cinema.service;
 
 import java.util.List;
 
+import rs.ac.bg.fon.cinema.domain.Movie;
 import rs.ac.bg.fon.cinema.domain.ProductionCompany;
 
 
@@ -13,7 +14,7 @@ public interface ProductionCompanyService {
 	
 	public List<ProductionCompany> getProductionCompaniesByMovieId(Long movieId);
 	
-	public void saveMovieProductionCompanies(Long id, List<ProductionCompany> productionCompanies);
+	public void saveMovieProductionCompanies(Movie movies);
 	
 	public ProductionCompany save(ProductionCompany productionCompany);
 }

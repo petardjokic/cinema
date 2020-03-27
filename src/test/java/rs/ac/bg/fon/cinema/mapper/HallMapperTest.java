@@ -17,7 +17,6 @@ class HallMapperTest extends BaseMapperTest {
 
 	@Test
 	void testCRUD() {
-		assertEquals(0L, hallMapper.count());
 
 		log.info("Adding a new hall");
 		Hall hall = Hall.builder().name("Kings Hall").build();
@@ -40,8 +39,7 @@ class HallMapperTest extends BaseMapperTest {
 		log.info("Deleting hall");
 		assertEquals(1, hallMapper.deleteById(hall.getId()));
 		
-		assertEquals(0, hallMapper.count());
-
 	}
+	
 
 }

@@ -11,57 +11,21 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import rs.ac.bg.fon.cinema.domain.Display;
-import rs.ac.bg.fon.cinema.domain.Genre;
-import rs.ac.bg.fon.cinema.domain.Movie;
-import rs.ac.bg.fon.cinema.domain.ProductionCompany;
 import rs.ac.bg.fon.cinema.service.DisplayService;
-import rs.ac.bg.fon.cinema.service.GenreService;
-import rs.ac.bg.fon.cinema.service.HallService;
 import rs.ac.bg.fon.cinema.service.InvoiceService;
-import rs.ac.bg.fon.cinema.service.MovieService;
-import rs.ac.bg.fon.cinema.service.ProductionCompanyService;
 import rs.ac.bg.fon.cinema.service.dto.DisplayDto;
-import rs.ac.bg.fon.cinema.service.dto.HallDto;
 import rs.ac.bg.fon.cinema.service.dto.InvoiceDto;
-import rs.ac.bg.fon.cinema.service.dto.MovieDto;
 
 @RestController
 @CrossOrigin
 public class CinemaApi {
 	
-	@Autowired
-	private MovieService movieService;
 	
 	@Autowired
 	private DisplayService displayService;
 	
 	@Autowired
 	private InvoiceService invoiceService;
-	
-	@Autowired
-	private HallService hallService;
-	
-	@Autowired
-	private GenreService genreService;
-	
-	@Autowired
-	private ProductionCompanyService productionCompanyService;
-	
-	
-	@RequestMapping(value = "/api/movies/{id}", method = RequestMethod.GET)
-	public MovieDto getMovieById(@PathVariable Long id) {
-		return movieService.getMovieById(id);
-	}
-	
-	@RequestMapping(value = "/api/movies", method = RequestMethod.GET)
-	public List<MovieDto> getAllMovies() {
-		return movieService.getAllMovies();
-	}
-	
-	@RequestMapping(value = "/api/movies/save", method = RequestMethod.POST)
-	public Movie saveMovie(@RequestBody MovieDto movie) {
-		return movieService.saveMovie(movie);
-	}
 	
 	@RequestMapping(value = "/api/displays/{id}", method = RequestMethod.GET)
 	public DisplayDto getDisplayById(@PathVariable Long id) {
@@ -82,46 +46,5 @@ public class CinemaApi {
 	public InvoiceDto getInvoiceById(@PathVariable Long id) {
 		return invoiceService.getInvoiceById(id);
 	}
-	
-	@RequestMapping(value = "/api/halls", method = RequestMethod.GET)
-	public List<HallDto> getAllHalls() {
-		return hallService.getAllHalls();
-	}
-	
-	@RequestMapping(value = "/api/halls/{id}", method = RequestMethod.GET)
-	public HallDto getHallById(@PathVariable Long id) {
-		return hallService.getHallById(id);
-	}
-	
-	@RequestMapping(value = "/api/genres", method = RequestMethod.GET)
-	public List<Genre> getAllGenre() {
-		return genreService.getAllGenres();
-	}
-	
-	@RequestMapping(value = "/api/genres/{id}", method = RequestMethod.GET)
-	public Genre getGenreById(@PathVariable Long id) {
-		return genreService.getGenreById(id);
-	}
-	
-	@RequestMapping(value = "/api/genres/save", method = RequestMethod.POST)
-	public Genre saveGenre(@RequestBody Genre genre) {
-		return genreService.save(genre);
-	}
-	
-	@RequestMapping(value = "/api/productionCompanies", method = RequestMethod.GET)
-	public List<ProductionCompany> getAllProductionCompanies() {
-	return productionCompanyService.getAllProductionCompanies();
-	}
-	
-	@RequestMapping(value = "/api/productionCompanies/{id}", method = RequestMethod.GET)
-	public ProductionCompany getProductionCompanyById(@PathVariable Long id) {
-		return productionCompanyService.getProductionCompanyById(id);
-	}
-	
-	@RequestMapping(value = "/api/productionCompanies/save", method = RequestMethod.POST)
-	public ProductionCompany saveProductionCompany(@RequestBody ProductionCompany productionCompany) {
-		return productionCompanyService.save(productionCompany);
-	}
-	
 	
 }

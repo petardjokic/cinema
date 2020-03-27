@@ -12,6 +12,7 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @SuperBuilder
 public class SeatType implements BaseEntity{
+	
 	private Long id;
 	private String name;
 }

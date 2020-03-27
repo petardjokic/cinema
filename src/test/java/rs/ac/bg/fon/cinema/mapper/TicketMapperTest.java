@@ -11,9 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import lombok.extern.slf4j.Slf4j;
 import rs.ac.bg.fon.cinema.domain.Display;
 import rs.ac.bg.fon.cinema.domain.Hall;
-import rs.ac.bg.fon.cinema.domain.HallSeat;
 import rs.ac.bg.fon.cinema.domain.Invoice;
 import rs.ac.bg.fon.cinema.domain.Movie;
+import rs.ac.bg.fon.cinema.domain.Seat;
 import rs.ac.bg.fon.cinema.domain.SeatType;
 import rs.ac.bg.fon.cinema.domain.Ticket;
 import rs.ac.bg.fon.cinema.service.dto.TicketDto;
@@ -37,7 +37,7 @@ class TicketMapperTest extends BaseMapperTest{
 	private HallMapper hallMapper;
 	
 	@Autowired
-	private HallSeatMapper hallSeatMapper;
+	private SeatMapper hallSeatMapper;
 	
 	@Autowired
 	private SeatTypeMapper seatTypeMapper;
@@ -56,7 +56,7 @@ class TicketMapperTest extends BaseMapperTest{
 		seatTypeMapper.insert(seatType1);
 		
 		log.info("Adding a new hall seat");
-		HallSeat hallseat = HallSeat.builder().hallId(hall.getId()).seatTypeId(seatType1.getId()).row(1).column(1).build();
+		Seat hallseat = Seat.builder().hallId(hall.getId()).type(seatType1).row(1).column(1).build();
 		hallSeatMapper.insert(hallseat);
 		
 		log.info("Adding a new movie");
@@ -108,7 +108,7 @@ class TicketMapperTest extends BaseMapperTest{
 		seatTypeMapper.insert(seatType1);
 		
 		log.info("Adding a new hall seat");
-		HallSeat hallseat = HallSeat.builder().hallId(hall.getId()).seatTypeId(seatType1.getId()).row(1).column(1).build();
+		Seat hallseat = Seat.builder().hallId(hall.getId()).type(seatType1).row(1).column(1).build();
 		hallSeatMapper.insert(hallseat);
 		
 		log.info("Adding a new movie");

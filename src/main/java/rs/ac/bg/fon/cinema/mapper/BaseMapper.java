@@ -1,5 +1,7 @@
 package rs.ac.bg.fon.cinema.mapper;
 
+import java.util.List;
+
 import rs.ac.bg.fon.cinema.domain.BaseEntity;
 
 public interface BaseMapper<E extends BaseEntity> {
@@ -7,7 +9,9 @@ public interface BaseMapper<E extends BaseEntity> {
 	public Long count();
 
 	public E getById(Long id);
-
+	
+	public List<E> getAll();
+	
 	public int insert(E entity);
 
 	public int update(E entity);

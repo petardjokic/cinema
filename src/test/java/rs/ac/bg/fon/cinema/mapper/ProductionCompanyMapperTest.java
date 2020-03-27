@@ -16,7 +16,6 @@ class ProductionCompanyMapperTest extends BaseMapperTest {
 
 	@Test
 	void testCRUD() {
-		assertEquals(0L, productionCompanyMapper.count());
 
 		log.info("Adding a new prod comp");
 		ProductionCompany prodComp = ProductionCompany.builder().name("KProd").build();
@@ -38,8 +37,6 @@ class ProductionCompanyMapperTest extends BaseMapperTest {
 
 		log.info("Deleting genre");
 		assertEquals(1, productionCompanyMapper.deleteById(prodComp.getId()));
-
-		assertEquals(0, productionCompanyMapper.count());
 
 	}
 

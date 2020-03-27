@@ -1,9 +1,12 @@
 package rs.ac.bg.fon.cinema.domain;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 @NoArgsConstructor
@@ -11,6 +14,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @Setter
 @SuperBuilder
+@ToString
 public class Movie implements BaseEntity {
 	
 	private Long id;
@@ -19,4 +23,6 @@ public class Movie implements BaseEntity {
 	private String description;
 	private int duration;
 	private int releaseYear;
+	private List<Genre> genres;
+	private List<ProductionCompany> productionCompanies;
 }

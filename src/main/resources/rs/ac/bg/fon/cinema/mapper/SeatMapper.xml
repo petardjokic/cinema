@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="rs.ac.bg.fon.cinema.mapper.HallSeatMapper">
+<mapper namespace="rs.ac.bg.fon.cinema.mapper.SeatMapper">
 
-	<resultMap type="HallSeat" id="HallSeatMap">
+	<resultMap type="Seat" id="SeatMap">
 		<id column="id" property="id" />
 		<result column="hall_id" property="hallId" />
-		<result column="seat_type_id" property="seatTypeId" />
 		<result column="seat_row" property="row" />
 		<result column="seat_column" property="column" />
+		<association property="type">
+				<id column="seat_type_id" property="id" />
+				<result column="seat_type_name" property="name" />
+			</association>
 	</resultMap>
 
 	<!-- public long count(); -->
@@ -16,36 +19,38 @@
 		SELECT count(*) FROM hall_seats
 	</select>
 
-
-	<!-- public HallSeat getById(Long id); -->
-	<select id="getById" parameterType="long" resultMap="HallSeatMap">
-		SELECT hs.*
-		FROM hall_seats hs
+	<sql id="getSeat">
+		SELECT hs.*, st.id seat_type_id, st.name seat_type_name
+		FROM hall_seats hs INNER JOIN seat_types st ON hs.seat_type_id = st.id
+	</sql>
+	
+	<!-- public Seat getById(Long id); -->
+	<select id="getById" parameterType="long" resultMap="SeatMap">
+		<include refid="getSeat"></include>
 		WHERE hs.id = #{id}
 	</select>
 	
-	<!-- public List<HallSeat> getByHallId(Long hallId); -->
-	<select id="getByHallId" parameterType="long" resultMap="HallSeatMap">
-		SELECT hs.*
-		FROM hall_seats hs
+	<!-- public List<Seat> getByHallId(Long hallId); -->
+	<select id="getByHallId" parameterType="long" resultMap="SeatMap">
+		<include refid="getSeat"></include>
 		WHERE hs.hall_id = #{hallId}
 	</select>
 
-	<!-- public int insert(HallSeat entity); -->
-	<insert id="insert" parameterType="HallSeat">
+	<!-- public int insert(Seat entity); -->
+	<insert id="insert" parameterType="Seat">
 		<selectKey order="BEFORE" resultType="long" keyProperty="id">
 			select sq_hall_seats.nextval from dual
 		</selectKey>
 		INSERT INTO hall_seats(id, hall_id, seat_type_id, seat_row, seat_column)
-				VALUES (#{id}, #{hallId}, #{seatTypeId}, #{row}, #{column})
+				VALUES (#{id}, #{hallId}, #{type.id}, #{row}, #{column})
 	</insert>
 
-	<!-- public int update(HallSeat entity); -->
-	<update id="update" parameterType="HallSeat">
+	<!-- public int update(Seat entity); -->
+	<update id="update" parameterType="Seat">
 		UPDATE hall_seats
 		SET
 		hall_id = #{hallId},
-		seat_type_id = #{seatTypeId},
+		seat_type_id = #{type.id},
 		seat_row = #{row},
 		seat_column = #{column}
 		WHERE

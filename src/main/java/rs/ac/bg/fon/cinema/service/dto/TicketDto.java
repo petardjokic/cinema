@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import rs.ac.bg.fon.cinema.domain.Hall;
-import rs.ac.bg.fon.cinema.domain.HallSeat;
 import rs.ac.bg.fon.cinema.domain.Movie;
 
 @NoArgsConstructor

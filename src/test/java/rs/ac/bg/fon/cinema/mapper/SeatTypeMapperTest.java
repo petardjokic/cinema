@@ -16,7 +16,6 @@ class SeatTypeMapperTest extends BaseMapperTest{
 
 	@Test
 	void testCRUD() {
-		assertEquals(0L, seatTypeMapper.count());
 
 		log.info("Adding a new seat type");
 		SeatType seatType = SeatType.builder().name("Classic").build();
@@ -39,8 +38,6 @@ class SeatTypeMapperTest extends BaseMapperTest{
 		log.info("Deleting seat type");
 		assertEquals(1, seatTypeMapper.deleteById(seatType.getId()));
 		
-		assertEquals(0, seatTypeMapper.count());
-
 	}
 
 }
