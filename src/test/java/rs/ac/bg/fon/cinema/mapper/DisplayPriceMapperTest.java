@@ -34,19 +34,18 @@ class DisplayPriceMapperTest extends BaseMapperTest{
 
 	@Test
 	void testCRUD() {
-		assertEquals(0L, displayPriceMapper.count());
 		
 		log.info("Adding a new hall");
 		Hall hall = Hall.builder().name("Kings Hall").build();
 		hallMapper.insert(hall);
 		
 		log.info("Adding a new movie");
-		Movie movie = Movie.builder().title("Trainspotting").description("Desc").duration(134).releaseYear(1996).build();
+		Movie movie = Movie.builder().title("Trainspotting").trailerUri("12dsas").description("Desc").duration(134).releaseYear(1996).build();
 		movieMapper.insert(movie);
 		
 		log.info("Adding a new display");
 		LocalDateTime startsAt =LocalDateTime.now();
-		Display display = Display.builder().movieId(movie.getId()).hallId(hall.getId()).startsAt(startsAt).endsAt(startsAt.plusMinutes(movie.getDuration())).build();
+		Display display = Display.builder().movie(movie).hall(hall).startsAt(startsAt).build();
 		assertEquals(1, displayMapper.insert(display));
 		
 		log.info("Adding a new seat type");
@@ -54,15 +53,15 @@ class DisplayPriceMapperTest extends BaseMapperTest{
 		seatTypeMapper.insert(seatType1);
 		
 		log.info("Adding a new display price");
-		DisplayPrice displayPrice = DisplayPrice.builder().displayId(display.getId()).seatTypeId(seatType1.getId()).price(new Double(100)).build();
+		DisplayPrice displayPrice = DisplayPrice.builder().displayId(display.getId()).seatType(seatType1).price(new Double(100)).build();
 		assertEquals(1, displayPriceMapper.insert(displayPrice));
 		
 		log.info("Getting display price");
 		DisplayPrice displayPriceDb = displayPriceMapper.getById(displayPrice.getId());
 		assertEquals(displayPrice.getId(), displayPriceDb.getId());
 		assertEquals(displayPrice.getDisplayId(), displayPriceDb.getDisplayId());
-		assertEquals(displayPrice.getSeatTypeId(), displayPriceDb.getSeatTypeId());
-		assertEquals(seatType1.getName(), displayPriceDb.getSeatTypeName());
+		assertEquals(displayPrice.getSeatType().getId(), displayPriceDb.getSeatType().getId());
+		assertEquals(displayPrice.getSeatType().getName(), displayPriceDb.getSeatType().getName());
 		assertEquals(displayPrice.getPrice(), displayPriceDb.getPrice());
 		
 		log.info("Updating hall seat");
@@ -73,13 +72,12 @@ class DisplayPriceMapperTest extends BaseMapperTest{
 		displayPriceDb = displayPriceMapper.getById(displayPrice.getId());
 		assertEquals(displayPrice.getId(), displayPriceDb.getId());
 		assertEquals(displayPrice.getDisplayId(), displayPriceDb.getDisplayId());
-		assertEquals(displayPrice.getSeatTypeId(), displayPriceDb.getSeatTypeId());
+		assertEquals(displayPrice.getSeatType().getId(), displayPriceDb.getSeatType().getId());
 		assertEquals(displayPrice.getPrice(), displayPriceDb.getPrice());
 		
 		log.info("Deleting hall seat");
 		assertEquals(1, displayPriceMapper.deleteById(displayPrice.getId()));
 		
-		assertEquals(0, displayPriceMapper.count());
 	}
 	
 

@@ -1,6 +1,7 @@
 package rs.ac.bg.fon.cinema.domain;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,9 +17,10 @@ import lombok.experimental.SuperBuilder;
 public class Display implements BaseEntity {
 
 	private Long id;
-	private Long movieId;
-	private Long hallId;
 	private LocalDateTime startsAt;
-	private LocalDateTime endsAt;
+	private Movie movie;
+	private Hall hall;
+	private List<DisplayPrice> prices;
+	private List<Ticket> tickets;
 	
 }

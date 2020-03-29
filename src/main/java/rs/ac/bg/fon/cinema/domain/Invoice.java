@@ -1,6 +1,7 @@
 package rs.ac.bg.fon.cinema.domain;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,7 +15,10 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @SuperBuilder
 public class Invoice implements BaseEntity {
+	
 	private Long id;
 	private LocalDateTime issuedAt;
 	private Boolean active;
+	private List<Ticket> tickets;
+	
 }

@@ -5,29 +5,45 @@
 
 	<resultMap type="Display" id="DisplayMap">
 		<id column="id" property="id" />
-		<result column="movie_id" property="movieId" />
-		<result column="hall_id" property="hallId" />
 		<result column="starts_at" property="startsAt" />
-		<result column="ends_at" property="endsAt" />
+		<association property="movie">
+			<id column="movie_id" property="id" />
+			<result column="movie_title" property="title" />
+			<result column="movie_trailer_uri" property="trailerUri" />
+			<result column="movie_description" property="description" />
+			<result column="movie_duration" property="duration" />
+			<result column="movie_year" property="releaseYear" />
+		</association>
+		<association property="hall">
+			<id column="hall_id" property="id" />
+			<result column="hall_name" property="name" />
+		</association>
 	</resultMap>
 
 	<!-- public long count(); -->
 	<select id="count" resultType="Long">
 		SELECT count(*) FROM displays
 	</select>
-
+	
+	<sql id="getDisplay">
+		SELECT d.*, 
+		m.title movie_title, m.trailer_uri movie_trailer_uri, 
+		m.duration movie_duration, m.release_year movie_year, m.description movie_description,
+		h.id hall_id, h.name hall_name
+		FROM displays d 
+		INNER JOIN movies m ON d.movie_id = m.id 
+		INNER JOIN halls h ON d.hall_id = h.id
+	</sql>
 
 	<!-- public Display getById(Long id); -->
 	<select id="getById" parameterType="long" resultMap="DisplayMap">
-		SELECT d.*
-		FROM displays d
+		<include refid="getDisplay"></include>
 		WHERE d.id = #{id}
 	</select>
 	
 	<!-- public List<Display> getAll(); -->
 	<select id="getAll" resultMap="DisplayMap">
-		SELECT d.*
-		FROM displays d
+		<include refid="getDisplay"></include>
 	</select>
 
 	<!-- public int insert(Display entity); -->
@@ -35,18 +51,17 @@
 		<selectKey order="BEFORE" resultType="long" keyProperty="id">
 			select sq_displays.nextval from dual
 		</selectKey>
-		INSERT INTO displays(id, movie_id, hall_id, starts_at, ends_at)
-						VALUES (#{id}, #{movieId}, #{hallId}, #{startsAt}, #{endsAt})
+		INSERT INTO displays(id, movie_id, hall_id, starts_at)
+					VALUES (#{id}, #{movie.id}, #{hall.id}, #{startsAt})
 	</insert>
 
 	<!-- public int update(Display entity); -->
 	<update id="update" parameterType="Display">
 		UPDATE displays
 		SET
-		movie_id = #{movieId},
-		hall_id = #{hallId},
-		starts_at = #{startsAt},
-		ends_at = #{endsAt}
+		movie_id = #{movie.id},
+		hall_id = #{hall.id},
+		starts_at = #{startsAt}
 		WHERE
 		id = #{id}
 	</update>

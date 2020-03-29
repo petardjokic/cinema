@@ -6,8 +6,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.fasterxml.jackson.datatype.jdk8.OptionalSerializer;
-
 import rs.ac.bg.fon.cinema.domain.Hall;
 import rs.ac.bg.fon.cinema.domain.Seat;
 import rs.ac.bg.fon.cinema.mapper.HallMapper;
@@ -27,7 +25,7 @@ public class HallServiceImpl implements HallService {
 	public Hall getHallById(Long hallId) {
 		Hall hallDb = hallMapper.getById(hallId);
 		Optional.ofNullable(hallDb)
-				.ifPresent(hall -> hall.setSeats(seatMapper.getByHallId(hallId)));
+				.ifPresent(hall -> hall.setSeats(getSeatsByHallId(hallId)));
 		Optional.ofNullable(hallDb)
 		.orElseThrow(() -> new IllegalStateException(String.format("Hall with ID: %s does not exist!", hallId)));
 		return hallDb;
@@ -36,6 +34,10 @@ public class HallServiceImpl implements HallService {
 	@Override
 	public List<Hall> getAllHalls() {
 		return hallMapper.getAll();
+	}
+	
+	public List<Seat> getSeatsByHallId(Long hallId) {
+		return seatMapper.getByHallId(hallId);
 	}
 
 }

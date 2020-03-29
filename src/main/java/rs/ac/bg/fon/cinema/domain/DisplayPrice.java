@@ -1,6 +1,5 @@
 package rs.ac.bg.fon.cinema.domain;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,9 +12,9 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @SuperBuilder
 public class DisplayPrice implements BaseEntity {
+	
 	private Long id;
 	private Long displayId;
-	private Long seatTypeId;
-	private String seatTypeName;
 	private Double price;
+	private SeatType seatType;
 }

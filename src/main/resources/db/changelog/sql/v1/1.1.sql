@@ -66,8 +66,7 @@ create table displays(
 	id number primary key,
 	movie_id number not null,
 	hall_id number not null,
-	starts_at timestamp not null,
-	ends_at timestamp not null
+	starts_at timestamp not null
 );
 create sequence sq_displays;
 alter table displays add constraint fk_displays_movie foreign key(movie_id) references movies on delete cascade;            
@@ -84,7 +83,8 @@ create table tickets(
 	id number primary key,
 	invoice_id number not null,
 	display_id number not null,
-	seat_id number not null
+	seat_id number not null,
+	active number(1,0) not null
 );
 create sequence sq_tickets;
 alter table tickets add constraint fk_tickets_invoice foreign key(invoice_id) references invoices on delete cascade;            

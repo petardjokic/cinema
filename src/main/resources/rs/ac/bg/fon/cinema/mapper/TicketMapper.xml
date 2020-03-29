@@ -4,11 +4,20 @@
 <mapper namespace="rs.ac.bg.fon.cinema.mapper.TicketMapper">
 
 	<resultMap type="Ticket" id="TicketMap">
-		<id column="id" property="id" />
+		<id column="ticket_id" property="id" />
 		<result column="invoice_id" property="invoiceId" />
 		<result column="display_id" property="displayId" />
-		<result column="seat_id" property="seatId" />
 		<result column="active" property="active" />
+		<association property="seat">
+			<id column="seat_id" property="id" />
+			<result column="seat_hall_id" property="hallId" />
+			<result column="seat_row" property="row" />
+			<result column="seat_column" property="column" />
+			<association property="type">
+				<id column="seat_type_id" property="id" />
+			<result column="seat_type_name" property="name" />
+			</association>
+		</association>
 	</resultMap>
 
 	<resultMap type="TicketDto" id="TicketDtoMap">
@@ -40,51 +49,33 @@
 		SELECT count(*) FROM tickets
 	</select>
 
+	<sql id="getTicket">
+		SELECT t.id ticket_id, t.display_id display_id, t.invoice_id invoice_id, t.active active,
+		hs.id seat_id, hs.hall_id seat_hall_id, hs.seat_row seat_row, hs.seat_column seat_column, 
+		st.id seat_type_id, st.name seat_type_name
+		FROM tickets t 
+		INNER JOIN hall_seats hs ON hs.id = t.seat_id 
+		INNER JOIN seat_types st ON hs.seat_type_id = st.id
+	</sql>
 
 	<!-- public Ticket getById(Long id); -->
 	<select id="getById" parameterType="long" resultMap="TicketMap">
-		SELECT t.*
-		FROM tickets t
+		<include refid="getTicket"></include>
 		WHERE t.id = #{id}
 	</select>
+	
+	
 
 	<!-- public List<Ticket> getByDisplayId(Long displayId); -->
-	<select id="getByDisplayId" parameterType="long"
-		resultMap="TicketDtoMap">
-		SELECT t.id ticket_id, t.display_id display_id, d.starts_at
-		starts_at, m.id movie_id, m.title movie_title, h.id hall_id, h.name hall_name,
-		hs.id
-		seat_id,
-		hs.seat_row seat_row, hs.seat_column seat_column, st.id
-		seat_type_id,
-		st.name seat_type_name
-		FROM tickets t INNER JOIN displays
-		d ON
-		t.display_id = d.id INNER JOIN movies m ON d.movie_id = m.id
-		INNER
-		JOIN
-		halls h ON d.hall_id = h.id INNER JOIN hall_seats hs ON
-		hs.id =
-		t.seat_id INNER JOIN seat_types st ON hs.seat_type_id = st.id
+	<select id="getByDisplayId" parameterType="long" resultMap="TicketMap">
+		<include refid="getTicket"></include>
 		WHERE
 		t.display_id = #{displayId}
 	</select>
 
-	<!-- public public List<TicketDto> getByInvoiceId(Long invoiceId); -->
-	<select id="getByInvoiceId" parameterType="long"
-		resultMap="TicketDtoMap">
-		SELECT t.id ticket_id, t.display_id display_id, d.starts_at
-		starts_at, m.title movie_title, h.name hall_name,
-		hs.id seat_id,
-		hs.seat_row seat_row, hs.seat_column seat_column, st.id seat_type_id,
-		st.name seat_type_name
-		FROM tickets t INNER JOIN displays
-		d ON
-		t.display_id = d.id INNER JOIN movies m ON d.movie_id = m.id
-		INNER JOIN
-		halls h ON d.hall_id = h.id INNER JOIN hall_seats hs ON
-		hs.id =
-		t.seat_id INNER JOIN seat_types st ON hs.seat_type_id = st.id
+	<!-- public public List<Ticket> getByInvoiceId(Long invoiceId); -->
+	<select id="getByInvoiceId" parameterType="long" resultMap="TicketMap">
+		<include refid="getTicket"></include>
 		WHERE
 		t.invoice_id = #{invoiceId}
 	</select>
@@ -95,22 +86,19 @@
 			select sq_tickets.nextval from dual
 		</selectKey>
 		INSERT INTO tickets(id, invoice_id, display_id, seat_id, active)
-		VALUES (#{id}, #{invoiceId} , #{displayId}, #{seatId}, #{active})
+		VALUES (#{id}, #{invoiceId} , #{displayId}, #{seat.id}, #{active})
 	</insert>
 
 	<!-- public int update(Ticket entity); -->
 	<update id="update" parameterType="Ticket">
 		UPDATE tickets
-		SET
-		invoice_id =
-		#{invoiceId},
+		SET 
+		invoice_id = #{invoiceId},
 		display_id = #{displayId},
-		seat_id = #{seatId},
-		active =
-		#{active}
+		seat_id = #{seat.id},
+		active = #{active}
 		WHERE
-		id =
-		#{id}
+		id = #{id}
 	</update>
 
 	<!-- public int deleteById(Long id); -->
@@ -118,8 +106,7 @@
 		DELETE
 		FROM tickets
 		WHERE
-		id
-		= #{id}
+		id = #{id}
 	</delete>
 
 

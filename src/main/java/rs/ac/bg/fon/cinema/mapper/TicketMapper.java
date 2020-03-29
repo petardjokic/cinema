@@ -5,7 +5,6 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import rs.ac.bg.fon.cinema.domain.Ticket;
-import rs.ac.bg.fon.cinema.service.dto.TicketDto;
 
 @Mapper
 public interface TicketMapper extends BaseMapper<Ticket> {
@@ -19,7 +18,7 @@ public interface TicketMapper extends BaseMapper<Ticket> {
 
 	public int deleteById(Long id);
 	
-	public List<TicketDto> getByDisplayId(Long displayId);
+	public List<Ticket> getByDisplayId(Long displayId);
 	
-	public List<TicketDto> getByInvoiceId(Long invoiceId);
+	public List<Ticket> getByInvoiceId(Long invoiceId);
 }

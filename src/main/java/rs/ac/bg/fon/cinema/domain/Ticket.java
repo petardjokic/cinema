@@ -15,7 +15,7 @@ public class Ticket implements BaseEntity {
 	private Long id;
 	private Long invoiceId;
 	private Long displayId;
-	private Long seatId;
 	private Boolean active;
+	private Seat seat;
 
 }

@@ -6,28 +6,33 @@
 	<resultMap type="DisplayPrice" id="DisplayPriceMap">
 		<id column="id" property="id" />
 		<result column="display_id" property="displayId" />
-		<result column="seat_type_id" property="seatTypeId" />
-		<result column="name" property="seatTypeName" />
 		<result column="price" property="price" />
+		<association property="seatType">
+			<id column="seat_type_id" property="id" />
+			<result column="seat_type_name" property="name" />
+		</association>
 	</resultMap>
 
 	<!-- public long count(); -->
 	<select id="count" resultType="Long">
 		SELECT count(*) FROM display_prices
 	</select>
-
+	
+	<sql id="getDisplayPrice">
+		SELECT dp.*, st.id seat_type_id, st.name seat_type_name
+		FROM display_prices dp 
+		INNER JOIN seat_types st ON dp.seat_type_id = st.id
+	</sql>
 
 	<!-- public DisplayPrice getById(Long id); -->
 	<select id="getById" parameterType="long" resultMap="DisplayPriceMap">
-		SELECT dp.*, st.name
-		FROM display_prices dp INNER JOIN seat_types st ON dp.seat_type_id = st.id
+		<include refid="getDisplayPrice"></include>
 		WHERE dp.id = #{id}
 	</select>
 	
 	<!-- public List<DisplayPrice> getByHallId(Long displayId); -->
 	<select id="getByDisplayId" parameterType="long" resultMap="DisplayPriceMap">
-		SELECT dp.*, st.name
-		FROM display_prices dp INNER JOIN seat_types st ON dp.seat_type_id = st.id
+		<include refid="getDisplayPrice"></include>
 		WHERE dp.display_id = #{displayId}
 	</select>
 
@@ -37,7 +42,7 @@
 			select sq_display_prices.nextval from dual
 		</selectKey>
 		INSERT INTO display_prices(id, display_id, seat_type_id, price)
-				VALUES (#{id}, #{displayId}, #{seatTypeId}, #{price})
+				VALUES (#{id}, #{displayId}, #{seatType.id}, #{price})
 	</insert>
 
 	<!-- public int update(DisplayPrice entity); -->
@@ -45,7 +50,7 @@
 		UPDATE display_prices
 		SET
 		display_id = #{displayId},
-		seat_type_id = #{seatTypeId},
+		seat_type_id = #{seatType.id},
 		price = #{price}
 		WHERE
 		id = #{id}

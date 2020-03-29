@@ -18,7 +18,6 @@ class InvoiceMapperTest extends BaseMapperTest{
 
 	@Test
 	void testCRUD() {
-		assertEquals(0L, invoiceMapper.count());
 
 		log.info("Adding a new invoice");
 		Invoice invoice = Invoice.builder().issuedAt(LocalDateTime.now()).active(new Boolean(true)).build();
@@ -42,7 +41,6 @@ class InvoiceMapperTest extends BaseMapperTest{
 		log.info("Deleting invoice");
 		assertEquals(1, invoiceMapper.deleteById(invoice.getId()));
 		
-		assertEquals(0, invoiceMapper.count());
 
 	}
 

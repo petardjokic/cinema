@@ -24,28 +24,26 @@ public class TicketServiceImpl implements TicketService {
 	}
 
 	@Override
-	public List<TicketDto> getTicketByDisplayId(Long displayId) {
+	public List<Ticket> getTicketByDisplayId(Long displayId) {
 		return ticketMapper.getByDisplayId(displayId);
 	}
 
 	@Override
-	public List<TicketDto> getTicketByInvoiceId(Long invoiceId) {
+	public List<Ticket> getTicketByInvoiceId(Long invoiceId) {
 		return ticketMapper.getByInvoiceId(invoiceId);
 	}
 
 	@Override
 	@Transactional
-	public void saveInvoiceTickets(Long invoiceId, List<TicketDto> ticketsDto) {
-		List<Ticket> tickets = convertDtoToTickets(invoiceId, ticketsDto);
-		tickets.stream().forEach(ticket -> {
-			ticketMapper.save(ticket);
-		});
+	public void saveInvoiceTickets(Long invoiceId, List<Ticket> ticketsDto) {
+//		List<Ticket> tickets = convertDtoToTickets(invoiceId, ticketsDto);
+//		tickets.stream().forEach(ticket -> {
+//			ticketMapper.save(ticket);
+//		});
 	}
 
 	private List<Ticket> convertDtoToTickets(Long invoiceId, List<TicketDto> ticketsDto) {
-		List<Ticket> tickets = ticketsDto.stream().map(ticketDto -> Ticket.builder().invoiceId(invoiceId)
-				.displayId(ticketDto.getDisplayId()).seatId(ticketDto.getSeat().getId()).active(ticketDto.getActive()).build())
-				.collect(Collectors.toList());
+		List<Ticket> tickets = null;
 		return tickets;
 	}
 
