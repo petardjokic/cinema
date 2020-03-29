@@ -1,7 +1,6 @@
 package rs.ac.bg.fon.cinema.service.impl;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 import rs.ac.bg.fon.cinema.domain.Ticket;
 import rs.ac.bg.fon.cinema.mapper.TicketMapper;
 import rs.ac.bg.fon.cinema.service.TicketService;
-import rs.ac.bg.fon.cinema.service.dto.TicketDto;
 
 @Service
 public class TicketServiceImpl implements TicketService {
@@ -40,11 +38,6 @@ public class TicketServiceImpl implements TicketService {
 //		tickets.stream().forEach(ticket -> {
 //			ticketMapper.save(ticket);
 //		});
-	}
-
-	private List<Ticket> convertDtoToTickets(Long invoiceId, List<TicketDto> ticketsDto) {
-		List<Ticket> tickets = null;
-		return tickets;
 	}
 
 }

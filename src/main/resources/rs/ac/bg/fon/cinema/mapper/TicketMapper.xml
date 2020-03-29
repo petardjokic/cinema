@@ -20,29 +20,7 @@
 		</association>
 	</resultMap>
 
-	<resultMap type="TicketDto" id="TicketDtoMap">
-		<id column="ticket_id" property="ticketId" />
-		<result column="display_id" property="displayId" />
-		<result column="starts_at" property="startsAt" />
-		<result column="active" property="active" />
-		<association property="movie">
-			<id column="movie_id" property="id"  />
-			<result column="movie_title" property="title" />
-		</association>
-		<association property="hall">
-			<id column="hall_id" property="id" />
-			<result column="hall_name" property="name" />
-		</association>
-		<association property="seat">
-			<result column="seat_id" property="id" />
-			<result column="seat_row" property="row" />
-			<result column="seat_column" property="column" />
-			<association property="seatType">
-				<id column="seat_type_id" property="id" />
-				<result column="seat_type_name" property="name" />
-			</association>
-		</association>
-	</resultMap>
+	
 
 	<!-- public long count(); -->
 	<select id="count" resultType="Long">

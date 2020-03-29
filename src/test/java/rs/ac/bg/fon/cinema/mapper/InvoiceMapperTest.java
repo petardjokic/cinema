@@ -3,12 +3,17 @@ package rs.ac.bg.fon.cinema.mapper;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import lombok.extern.slf4j.Slf4j;
 import rs.ac.bg.fon.cinema.domain.Invoice;
+import rs.ac.bg.fon.cinema.domain.Ticket;
 
 @Slf4j
 class InvoiceMapperTest extends BaseMapperTest{
@@ -40,8 +45,24 @@ class InvoiceMapperTest extends BaseMapperTest{
 		
 		log.info("Deleting invoice");
 		assertEquals(1, invoiceMapper.deleteById(invoice.getId()));
-		
 
+	}
+	
+	@Test
+	public void testSet() {
+		List<Ticket> tickets = Arrays.asList(
+				Ticket.builder().displayId(1L).build(),
+				Ticket.builder().displayId(1L).build(),
+				Ticket.builder().displayId(2L).build(),
+				Ticket.builder().displayId(3L).build(),
+				Ticket.builder().displayId(4L).build(),
+				Ticket.builder().displayId(5L).build(),
+				Ticket.builder().displayId(4L).build()
+				);
+		Set<Long> set = tickets.stream()
+		.map(ticket -> ticket.getDisplayId())
+		.collect(Collectors.toSet());
+		System.out.println(set);
 	}
 
 }

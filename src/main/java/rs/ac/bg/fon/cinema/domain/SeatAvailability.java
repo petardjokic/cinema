@@ -1,21 +1,19 @@
-package rs.ac.bg.fon.cinema.service.dto;
+package rs.ac.bg.fon.cinema.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import rs.ac.bg.fon.cinema.domain.SeatType;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @SuperBuilder
-public class HallSeatDto {
-
-	private Long id;
-	private SeatType seatType;
-	private int row;
-	private int column;
+public class SeatAvailability {
+	
+	private Boolean free;
+	private Seat seat;
+	
 }

@@ -1,5 +1,6 @@
-package rs.ac.bg.fon.cinema.service.dto;
+package rs.ac.bg.fon.cinema.domain;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
@@ -13,9 +14,11 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @Setter
 @SuperBuilder
-public class HallDto {
+public class InvoiceDto {
 	
 	private Long id;
-	private String name;
-	private List<HallSeatDto> seats; 
+	private LocalDateTime issuedAt;
+	private Boolean active;
+	private List<Display> events;
+
 }

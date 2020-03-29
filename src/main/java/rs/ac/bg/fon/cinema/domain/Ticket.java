@@ -12,6 +12,7 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @SuperBuilder
 public class Ticket implements BaseEntity {
+	
 	private Long id;
 	private Long invoiceId;
 	private Long displayId;

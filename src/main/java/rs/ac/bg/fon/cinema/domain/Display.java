@@ -22,5 +22,6 @@ public class Display implements BaseEntity {
 	private Hall hall;
 	private List<DisplayPrice> prices;
 	private List<Ticket> tickets;
+	private List<SeatAvailability> seatsAvailability;
 	
 }

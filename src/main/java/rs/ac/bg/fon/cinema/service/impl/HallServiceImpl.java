@@ -36,8 +36,9 @@ public class HallServiceImpl implements HallService {
 		return hallMapper.getAll();
 	}
 	
+	@Override
 	public List<Seat> getSeatsByHallId(Long hallId) {
 		return seatMapper.getByHallId(hallId);
 	}
-
+	
 }
