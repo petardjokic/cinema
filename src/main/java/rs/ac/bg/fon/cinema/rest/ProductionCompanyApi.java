@@ -16,7 +16,7 @@ import rs.ac.bg.fon.cinema.service.ProductionCompanyService;
 
 @RestController
 @CrossOrigin
-@RequestMapping(path = "api/productionCompany")
+@RequestMapping(path = "api/productionCompanies")
 public class ProductionCompanyApi {
 	
 	@Autowired
