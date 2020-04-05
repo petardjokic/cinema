@@ -33,7 +33,7 @@ public class MovieServiceImpl implements MovieService {
 	@Transactional
 	public Movie saveMovie(Movie movie) {
 		log.info("Saving movie: {}", movie);
-		movie = movieMapper.save(movie);
+		movieMapper.save(movie);
 		log.info("Saving movie genres");
 		genreService.saveMovieGenres(movie);
 		log.info("Saving movie production companies");

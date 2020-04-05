@@ -41,6 +41,8 @@ public class DisplayServiceImpl implements DisplayService {
 	@Override
 	public Display getDisplayById(Long displayId) {
 		Display display = displayMapper.getById(displayId);
+		Movie movie = movieService.getMovieById(display.getMovie().getId());
+		display.setMovie(movie);
 		List<DisplayPrice> prices = displayPriceService.getByDisplayId(displayId);
 		display.setPrices(prices);
 		List<Ticket> tickets = ticketService.getTicketByDisplayId(displayId);
