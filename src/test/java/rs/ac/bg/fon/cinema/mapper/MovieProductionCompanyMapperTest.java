@@ -9,6 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import rs.ac.bg.fon.cinema.domain.Movie;
 import rs.ac.bg.fon.cinema.domain.MovieProductionCompany;
 import rs.ac.bg.fon.cinema.domain.ProductionCompany;
+import rs.ac.bg.fon.cinema.mapper.setup.MovieSetup;
+import rs.ac.bg.fon.cinema.mapper.setup.ProductionCompanySetup;
 
 @Slf4j
 class MovieProductionCompanyMapperTest extends BaseMapperTest {
@@ -17,32 +19,22 @@ class MovieProductionCompanyMapperTest extends BaseMapperTest {
 	private MovieProductionCompanyMapper movieProdCompMapper;
 
 	@Autowired
-	private MovieMapper movieMapper;
+	private MovieSetup movieSetup;
 	
 	@Autowired
-	private ProductionCompanyMapper prodCompMapper;
+	private ProductionCompanySetup productionCompanySetup;
 	
 	@Test
 	void testCRUD() {
 
-		log.info("Adding a new prod comp 1");
-		ProductionCompany prodComp = ProductionCompany.builder().name("Prod1").build();
-		prodCompMapper.insert(prodComp);
+		ProductionCompany prodComp1 = productionCompanySetup.productionCompanyFirstPC();
+		ProductionCompany prodComp2 = productionCompanySetup.productionCompanySecondPC();
 		
-		log.info("Adding a new prod comp 2");
-		ProductionCompany prodComp2 = ProductionCompany.builder().name("Prod2").build();
-		prodCompMapper.insert(prodComp2);
-		
-		log.info("Adding a new movie 1");
-		Movie movie = Movie.builder().title("Trainspotting").trailerUri("dasdsad").description("Desc").duration(134).releaseYear(1996).build();
-		movieMapper.insert(movie);
-		
-		log.info("Adding a new movie 2");
-		Movie movie2 = Movie.builder().title("Trainspotting2").trailerUri("dasdsad").description("Desc2").duration(1341).releaseYear(11996).build();
-		movieMapper.insert(movie2);
+		Movie movie1 = movieSetup.movieBasicInstinct();
+		Movie movie2 = movieSetup.moviePulpFiction();
 		
 		log.info("Adding a new movie prod comp");
-		MovieProductionCompany movieProdComp = MovieProductionCompany.builder().movieId(movie.getId()).productionCompanyId(prodComp.getId()).build();
+		MovieProductionCompany movieProdComp = MovieProductionCompany.builder().movieId(movie1.getId()).productionCompanyId(prodComp1.getId()).build();
 		assertEquals(1, movieProdCompMapper.insert(movieProdComp));
 		
 		log.info("Getting movie prod comp");

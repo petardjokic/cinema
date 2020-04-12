@@ -17,4 +17,6 @@ public interface InvoiceMapper extends BaseMapper<Invoice>{
 
 	public int deleteById(Long id);
 
+	public int freezeInvoice(Long id);
+
 }

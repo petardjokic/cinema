@@ -52,15 +52,19 @@ public class ProductionCompanyServiceImpl implements ProductionCompanyService {
 				.map(productionCompany -> new MovieProductionCompany(null, movie.getId(), productionCompany.getId()))
 				.collect(Collectors.toList());
 
-		log.info("Deleting removed movie production companies");
 		movieProductionCompaniesDb.stream()
 				.filter(movieProductionCompanyDb -> !movieProductionCompaniesParam.contains(movieProductionCompanyDb))
-				.forEach(movieProductionCompany -> movieProductionCompanyMapper.deleteById(movieProductionCompany.getId()));
+				.forEach(movieProductionCompany -> {
+					log.info("Deleting movie production company: {}", movieProductionCompany);
+					movieProductionCompanyMapper.deleteById(movieProductionCompany.getId());
+				});
 		
-		log.info("Saving added movie production companies");
 		 movieProductionCompaniesParam.stream()
 				.filter(productionCompany -> !movieProductionCompaniesDb.contains(productionCompany))
-				.forEach(movieProductionCompany -> movieProductionCompanyMapper.save(movieProductionCompany));
+				.forEach(movieProductionCompany -> {
+					log.info("Adding movie production company: {}", movieProductionCompany);
+					movieProductionCompanyMapper.save(movieProductionCompany);
+				});
 	}
 
 	@Override

@@ -33,11 +33,23 @@ public class TicketServiceImpl implements TicketService {
 
 	@Override
 	@Transactional
-	public void saveInvoiceTickets(Long invoiceId, List<Ticket> ticketsDto) {
-//		List<Ticket> tickets = convertDtoToTickets(invoiceId, ticketsDto);
-//		tickets.stream().forEach(ticket -> {
-//			ticketMapper.save(ticket);
-//		});
+	public void saveInvoiceTickets(Long invoiceId, List<Ticket> tickets) {
+		tickets.stream().forEach(ticket -> {
+			ticket.setActive(true);
+			ticket.setInvoiceId(invoiceId);
+			ticketMapper.save(ticket);
+		});
+	}
+
+	@Override
+	public Ticket findActiveByDisplayAndSeat(Ticket ticket) {
+		return ticketMapper.findActiveByDisplayAndSeat(ticket);
+	}
+
+	@Override
+	@Transactional
+	public int freezeTicketsByByInvoiceId(Long invoiceId) {
+		return ticketMapper.freezeTicketsByInvoiceId(invoiceId);
 	}
 
 }

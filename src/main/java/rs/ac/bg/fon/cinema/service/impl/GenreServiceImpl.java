@@ -59,16 +59,20 @@ public class GenreServiceImpl implements GenreService {
 				.collect(Collectors.toList());
 
 		// delete removed Genres
-		log.info("Deleting removed movie genres for movieId: {}", movie.getId());
 		movieGenresDb.stream()
 			.filter(movieGenreDb -> !movieGenresParam.contains(movieGenreDb))
-			.forEach(movieGenre -> movieGenreMapper.deleteById(movieGenre.getId()));
+			.forEach(movieGenre -> {
+				log.info("Deleting movie genre: {}", movieGenre);
+				movieGenreMapper.deleteById(movieGenre.getId());
+				});
 
 		// save added Genres
-		log.info("Saving added movie genres for movieId: {}", movie.getId());
 		movieGenresParam.stream()
 			.filter(movieGenre -> !movieGenresDb.contains(movieGenre))
-			.forEach(movieGenre -> movieGenreMapper.save(movieGenre));
+			.forEach(movieGenre -> { 
+				log.info("Adding movie genre: {}", movieGenre);
+				movieGenreMapper.save(movieGenre);
+				});
 	}
 
 }

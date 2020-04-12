@@ -46,6 +46,16 @@
 		WHERE
 		id = #{id}
 	</update>
+	
+	
+	<!-- public void freezeInvoice(Long id); -->
+	<update id="freezeInvoice" parameterType="Long">
+		UPDATE invoices
+		SET
+		active = 0
+		WHERE
+		id = #{id}
+	</update>
 
 	<!-- public int deleteById(Long id); -->
 	<delete id="deleteById" parameterType="long">

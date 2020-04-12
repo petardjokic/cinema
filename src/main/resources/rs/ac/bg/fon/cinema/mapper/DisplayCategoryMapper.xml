@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="rs.ac.bg.fon.cinema.mapper.DisplayCategoryMapper">
+
+	<resultMap type="DisplayCategory" id="DisplayCategoryMap">
+		<id column="id" property="id" />
+		<result column="name" property="name" />
+	</resultMap>
+
+	<!-- public long count(); -->
+	<select id="count" resultType="Long">
+		SELECT count(*) FROM display_categories
+	</select>
+	
+	<sql id="sqlDisplayCategory">
+		SELECT dc.*
+		FROM display_categories dc
+	</sql>
+
+	<!-- public DisplayCategory getById(Long id); -->
+	<select id="getById" parameterType="long" resultMap="DisplayCategoryMap">
+		<include refid="sqlDisplayCategory"></include>
+		WHERE dc.id = #{id}
+	</select>
+	
+	<!-- public List<Hall> getAll(); -->
+	<select id="getAll" resultMap="DisplayCategoryMap">
+		<include refid="sqlDisplayCategory"></include>
+	</select>
+	
+	<!-- public int insert(DisplayCategory entity); -->
+	<insert id="insert" parameterType="DisplayCategory">
+		<selectKey order="BEFORE" resultType="long" keyProperty="id">
+			select sq_display_categories.nextval from dual
+		</selectKey>
+		INSERT INTO display_categories(id, name)
+				VALUES (#{id}, #{name})
+	</insert>
+
+	<!-- public int update(DisplayCategory entity); -->
+	<update id="update" parameterType="DisplayCategory">
+		UPDATE display_categories
+		SET
+		name = #{name}
+		WHERE
+		id = #{id}
+	</update>
+
+	<!-- public int deleteById(Long id); -->
+	<delete id="deleteById" parameterType="long">
+		DELETE
+		FROM display_categories 
+		WHERE
+		id = #{id}
+	</delete>
+
+
+</mapper>

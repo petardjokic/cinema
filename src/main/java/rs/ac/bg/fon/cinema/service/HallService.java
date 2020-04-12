@@ -12,4 +12,6 @@ public interface HallService {
 	public List<Hall> getAllHalls();
 	
 	public List<Seat> getSeatsByHallId(Long hallId);
+	
+	public Seat getSeatById(Long seatId);
 }

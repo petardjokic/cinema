@@ -13,4 +13,8 @@ public interface TicketService {
 	public List<Ticket> getTicketByInvoiceId(Long invoiceId);
 
 	public void saveInvoiceTickets(Long invoiceId, List<Ticket> tickets);
+
+	public Ticket findActiveByDisplayAndSeat(Ticket ticket);
+
+	public int freezeTicketsByByInvoiceId(Long invoiceId);
 }

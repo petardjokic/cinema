@@ -20,8 +20,6 @@
 		</association>
 	</resultMap>
 
-	
-
 	<!-- public long count(); -->
 	<select id="count" resultType="Long">
 		SELECT count(*) FROM tickets
@@ -41,8 +39,6 @@
 		<include refid="getTicket"></include>
 		WHERE t.id = #{id}
 	</select>
-	
-	
 
 	<!-- public List<Ticket> getByDisplayId(Long displayId); -->
 	<select id="getByDisplayId" parameterType="long" resultMap="TicketMap">
@@ -56,6 +52,12 @@
 		<include refid="getTicket"></include>
 		WHERE
 		t.invoice_id = #{invoiceId}
+	</select>
+	
+	<!-- public Ticket findActiveByDisplayAndSeat(Ticket ticket); -->
+	<select id="findActiveByDisplayAndSeat" parameterType="Ticket" resultMap="TicketMap">
+		<include refid="getTicket"></include>
+		WHERE t.display_id = #{displayId} AND t.seat_id = #{seat.id} AND t.active = 1
 	</select>
 
 	<!-- public int insert(Ticket entity); -->
@@ -77,6 +79,15 @@
 		active = #{active}
 		WHERE
 		id = #{id}
+	</update>
+	
+	<!-- public int freezeTicketsByInvoiceId(Long invoiceId); -->
+	<update id="freezeTicketsByInvoiceId" parameterType="Long">
+		UPDATE tickets
+		SET 
+		active = 0
+		WHERE
+		invoice_id = #{invoiceId}
 	</update>
 
 	<!-- public int deleteById(Long id); -->

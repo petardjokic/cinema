@@ -10,7 +10,10 @@ mybatis:
   type-aliases-package: rs.ac.bg.fon.cinema
   configuration:
     jdbc-type-for-null: 'NULL'
-    
+cinema:
+  worktime:
+    opens: 11
+    closes: '23'
 ---
  
 spring:

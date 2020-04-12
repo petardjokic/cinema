@@ -25,7 +25,7 @@ public class DisplayApi {
 	
 	@GetMapping(value = "/{id}")
 	public Display getDisplayById(@PathVariable Long id) {
-		return displayService.getDisplayById(id);
+		return displayService.getDisplayByIdEager(id);
 	}
 	
 	@PostMapping

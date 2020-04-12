@@ -61,16 +61,34 @@ create table movie_production_companies(
 create sequence sq_movie_production_companies;
 alter table movie_production_companies add constraint fk_movie_production_companies_movie foreign key(movie_id) references movies on delete cascade;            
 alter table movie_production_companies add constraint fk_movie_production_companies_genre foreign key(production_company_id) references production_companies on delete restrict;
-            
+
+create table display_categories(
+	id number primary key,
+	name varchar2(100) not null
+);
+create sequence sq_display_categories;
+
+create table category_prices(
+	id number primary key,
+	category_id number not null,
+	seat_type_id number not null,
+	price number not null
+);
+create sequence sq_category_prices;
+alter table category_prices add constraint fk_category_prices_category foreign key(category_id) references display_categories on delete cascade;            
+alter table category_prices add constraint fk_category_prices_seat_type foreign key(seat_type_id) references seat_types on delete cascade;
+
 create table displays(
 	id number primary key,
 	movie_id number not null,
 	hall_id number not null,
+	category_id number not null,
 	starts_at timestamp not null
 );
 create sequence sq_displays;
-alter table displays add constraint fk_displays_movie foreign key(movie_id) references movies on delete cascade;            
+alter table displays add constraint fk_displays_movie foreign key(movie_id) references movies on delete restrict;            
 alter table displays add constraint fk_displays_hall foreign key(hall_id) references halls on delete restrict;
+alter table displays add constraint fk_displays_category foreign key(category_id) references display_categories on delete restrict;
             
 create table invoices(
 	id number primary key,
@@ -90,13 +108,3 @@ create sequence sq_tickets;
 alter table tickets add constraint fk_tickets_invoice foreign key(invoice_id) references invoices on delete cascade;            
 alter table tickets add constraint fk_tickets_display foreign key(display_id) references displays on delete cascade;            
 alter table tickets add constraint fk_tickets_seat foreign key(seat_id) references hall_seats on delete restrict;
-            
-create table display_prices(
-	id number primary key,
-	display_id number not null,
-	seat_type_id number not null,
-	price number not null
-);
-create sequence sq_display_prices;
-alter table display_prices add constraint fk_display_price_display foreign key(display_id) references displays on delete cascade;            
-alter table display_prices add constraint fk_display_price_seat_type foreign key(seat_type_id) references seat_types on delete restrict;

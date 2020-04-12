@@ -5,8 +5,10 @@ import java.util.List;
 import rs.ac.bg.fon.cinema.domain.Display;
 
 public interface DisplayService {
+	
+	public Display getDisplayByIdLazy(Long displayId);
 
-	public Display getDisplayById(Long displayId);
+	public Display getDisplayByIdEager(Long displayId);
 
 	public List<Display> getAllDisplays();
 	

@@ -11,10 +11,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @Setter
 @SuperBuilder
-public class DisplayPrice implements BaseEntity {
-	
-	private Long id;
+public class CartItem {
 	private Long displayId;
-	private Double price;
-	private SeatType seatType;
+	private Long seatId;
 }

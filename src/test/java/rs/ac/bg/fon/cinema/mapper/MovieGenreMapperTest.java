@@ -9,6 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import rs.ac.bg.fon.cinema.domain.Genre;
 import rs.ac.bg.fon.cinema.domain.Movie;
 import rs.ac.bg.fon.cinema.domain.MovieGenre;
+import rs.ac.bg.fon.cinema.mapper.setup.GenreSetup;
+import rs.ac.bg.fon.cinema.mapper.setup.MovieSetup;
 
 @Slf4j
 class MovieGenreMapperTest extends BaseMapperTest {
@@ -17,32 +19,22 @@ class MovieGenreMapperTest extends BaseMapperTest {
 	private MovieGenreMapper movieGenreMapper;
 
 	@Autowired
-	private MovieMapper movieMapper;
+	private MovieSetup movieSetup;
 	
 	@Autowired
-	private GenreMapper genreMapper;
+	private GenreSetup genreSetup;
 	
 	@Test
 	void testCRUD() {
 
-		log.info("Adding a new genre 1");
-		Genre genre = Genre.builder().name("KGenre").build();
-		genreMapper.insert(genre);
+		Genre genre1 = genreSetup.genreAction();
+		Genre genre2 = genreSetup.genreComedy();
 		
-		log.info("Adding a new genre 2");
-		Genre genre2 = Genre.builder().name("KGenre2").build();
-		genreMapper.insert(genre2);
-		
-		log.info("Adding a new movie 1");
-		Movie movie = Movie.builder().title("Trainspotting").trailerUri("dsafassds").description("Desc").duration(134).releaseYear(1996).build();
-		movieMapper.insert(movie);
-		
-		log.info("Adding a new movie 2");
-		Movie movie2 = Movie.builder().title("Trainspotting2").trailerUri("dsad33fassds").description("Desc2").duration(1341).releaseYear(11996).build();
-		movieMapper.insert(movie2);
+		Movie movie1 = movieSetup.movieBasicInstinct();
+		Movie movie2 = movieSetup.moviePulpFiction();
 		
 		log.info("Adding a new movie genre");
-		MovieGenre movieGenre = MovieGenre.builder().movieId(movie.getId()).genreId(genre.getId()).build();
+		MovieGenre movieGenre = MovieGenre.builder().movieId(movie1.getId()).genreId(genre1.getId()).build();
 		assertEquals(1, movieGenreMapper.insert(movieGenre));
 		
 		log.info("Getting movie genre");
@@ -62,7 +54,7 @@ class MovieGenreMapperTest extends BaseMapperTest {
 		assertEquals(movieGenre.getMovieId(), movieGenreDb.getMovieId());
 		assertEquals(movieGenre.getGenreId(), movieGenreDb.getGenreId());
 		
-		log.info("Deleting genre");
+		log.info("Deleting movie genre");
 		assertEquals(1, movieGenreMapper.deleteById(movieGenre.getId()));
 		
 	}
@@ -70,14 +62,10 @@ class MovieGenreMapperTest extends BaseMapperTest {
 	@Test
 	public void testDeleteMovieGenre() {
 		
-		log.info("Adding a new genre 1");
-		Genre genre = Genre.builder().name("KGenre").build();
-		genreMapper.insert(genre);
+		Genre genre = genreSetup.genreHorror();
 		
-		log.info("Adding a new movie 1");
-		Movie movie = Movie.builder().title("Trainspotting").trailerUri("dsafassds").description("Desc").duration(134).releaseYear(1996).build();
-		movieMapper.insert(movie);
-		
+		Movie movie = movieSetup.movieTheShawshankRedemption();
+				
 		log.info("Adding a new movie genre");
 		MovieGenre movieGenre = MovieGenre.builder().movieId(movie.getId()).genreId(genre.getId()).build();
 		assertEquals(1, movieGenreMapper.insert(movieGenre));

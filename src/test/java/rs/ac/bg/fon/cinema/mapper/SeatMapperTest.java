@@ -9,6 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import rs.ac.bg.fon.cinema.domain.Hall;
 import rs.ac.bg.fon.cinema.domain.Seat;
 import rs.ac.bg.fon.cinema.domain.SeatType;
+import rs.ac.bg.fon.cinema.mapper.setup.HallSetup;
+import rs.ac.bg.fon.cinema.mapper.setup.SeatTypeSetup;
 
 @Slf4j
 class SeatMapperTest extends BaseMapperTest{
@@ -17,28 +19,22 @@ class SeatMapperTest extends BaseMapperTest{
 	private SeatMapper seatMapper;
 	
 	@Autowired
-	private HallMapper hallMapper;
+	private HallSetup hallSetup;
 	
 	@Autowired
-	private SeatTypeMapper seatTypeMapper;
+	private SeatTypeSetup seatTypeSetup;
 
 	@Test
 	void testCRUD() {
 		
-		log.info("Adding a new hall");
-		Hall hall = Hall.builder().name("Kings Hall").build();
-		hallMapper.insert(hall);
+		Hall hall1 = hallSetup.hallHallOfLegends();
+		Hall hall2 = hallSetup.hallShadowValey();
 		
-		log.info("Adding a new seat type 1");
-		SeatType seatType1 = SeatType.builder().name("Classic").build();
-		seatTypeMapper.insert(seatType1);
-		
-		log.info("Adding a new seat type 2");
-		SeatType seatType2 = SeatType.builder().name("VIP").build();
-		seatTypeMapper.insert(seatType2);
+		SeatType seatType1 = seatTypeSetup.seatTypeClassic();
+		SeatType seatType2 = seatTypeSetup.seatTypeLove();
 		
 		log.info("Adding a new seat");
-		Seat seat = Seat.builder().hallId(hall.getId()).type(seatType1).row(1).column(1).build();
+		Seat seat = Seat.builder().hallId(hall1.getId()).type(seatType1).row(1).column(1).build();
 		assertEquals(1, seatMapper.insert(seat));
 		
 		log.info("Getting seat");
@@ -51,6 +47,7 @@ class SeatMapperTest extends BaseMapperTest{
 		assertEquals(seat.getColumn(), seatDb.getColumn());
 		
 		log.info("Updating seat");
+		seat.setHallId(hall2.getId());
 		seat.setType(seatType2);
 		seat.setRow(2);
 		seat.setColumn(2);

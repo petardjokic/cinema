@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import rs.ac.bg.fon.cinema.domain.Hall;
 import rs.ac.bg.fon.cinema.domain.Seat;
+import rs.ac.bg.fon.cinema.exception.ServiceException;
 import rs.ac.bg.fon.cinema.mapper.HallMapper;
 import rs.ac.bg.fon.cinema.mapper.SeatMapper;
 import rs.ac.bg.fon.cinema.service.HallService;
@@ -27,18 +28,25 @@ public class HallServiceImpl implements HallService {
 		Optional.ofNullable(hallDb)
 				.ifPresent(hall -> hall.setSeats(getSeatsByHallId(hallId)));
 		Optional.ofNullable(hallDb)
-		.orElseThrow(() -> new IllegalStateException(String.format("Hall with ID: %s does not exist!", hallId)));
+		.orElseThrow(() -> new ServiceException(String.format("Hall with ID: %s does not exist!", hallId)));
 		return hallDb;
 	}
 
 	@Override
 	public List<Hall> getAllHalls() {
-		return hallMapper.getAll();
+		List<Hall> halls = hallMapper.getAll();
+		halls.stream().forEach(hall -> hall.setSeats(getSeatsByHallId(hall.getId())));
+		return halls;
 	}
 	
 	@Override
 	public List<Seat> getSeatsByHallId(Long hallId) {
 		return seatMapper.getByHallId(hallId);
+	}
+
+	@Override
+	public Seat getSeatById(Long seatId) {
+		return seatMapper.getById(seatId);
 	}
 	
 }

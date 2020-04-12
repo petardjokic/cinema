@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="rs.ac.bg.fon.cinema.mapper.CategoryPriceMapper">
+
+	<resultMap type="CategoryPrice" id="CategoryPriceMap">
+		<id column="id" property="id" />
+		<result column="category_id" property="displayCategoryId" />
+		<result column="price" property="price" />
+		<association property="seatType">
+			<id column="seat_type_id" property="id" />
+			<result column="seat_type_name" property="name" />
+		</association>
+	</resultMap>
+
+	<!-- public long count(); -->
+	<select id="count" resultType="Long">
+		SELECT count(*) FROM category_prices
+	</select>
+	
+	<sql id="getCategoryPrice">
+		SELECT cp.*, st.id seat_type_id, st.name seat_type_name
+		FROM category_prices cp 
+		INNER JOIN seat_types st ON cp.seat_type_id = st.id
+	</sql>
+
+	<!-- public CategoryPrice getById(Long id); -->
+	<select id="getById" parameterType="long" resultMap="CategoryPriceMap">
+		<include refid="getCategoryPrice"></include>
+		WHERE cp.id = #{id}
+	</select>
+	
+	<!-- public List<CategoryPrice> getByCategoryId(Long categoryId); -->
+	<select id="getByCategoryId" parameterType="long" resultMap="CategoryPriceMap">
+		<include refid="getCategoryPrice"></include>
+		WHERE cp.category_id = #{categoryId}
+	</select>
+
+	<!-- public int insert(CategoryPrice entity); -->
+	<insert id="insert" parameterType="CategoryPrice">
+		<selectKey order="BEFORE" resultType="long" keyProperty="id">
+			select sq_category_prices.nextval from dual
+		</selectKey>
+		INSERT INTO category_prices(id, category_id, seat_type_id, price)
+				VALUES (#{id}, #{displayCategoryId}, #{seatType.id}, #{price})
+	</insert>
+
+	<!-- public int update(CategoryPrice entity); -->
+	<update id="update" parameterType="CategoryPrice">
+		UPDATE category_prices
+		SET
+		category_id = #{displayCategoryId},
+		seat_type_id = #{seatType.id},
+		price = #{price}
+		WHERE
+		id = #{id}
+	</update>
+
+	<!-- public int deleteById(Long id); -->
+	<delete id="deleteById" parameterType="long">
+		DELETE
+		FROM category_prices 
+		WHERE
+		id = #{id}
+	</delete>
+
+
+</mapper>

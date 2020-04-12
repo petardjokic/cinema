@@ -18,6 +18,10 @@
 			<id column="hall_id" property="id" />
 			<result column="hall_name" property="name" />
 		</association>
+		<association property="category">
+			<id column="category_id" property="id" />
+			<result column="category_name" property="name" />
+		</association>
 	</resultMap>
 
 	<!-- public long count(); -->
@@ -29,10 +33,12 @@
 		SELECT d.*, 
 		m.title movie_title, m.trailer_uri movie_trailer_uri, 
 		m.duration movie_duration, m.release_year movie_year, m.description movie_description,
-		h.id hall_id, h.name hall_name
+		h.id hall_id, h.name hall_name,
+		dc.id category_id, dc.name category_name
 		FROM displays d 
 		INNER JOIN movies m ON d.movie_id = m.id 
 		INNER JOIN halls h ON d.hall_id = h.id
+		INNER JOIN display_categories dc ON d.category_id = dc.id
 	</sql>
 
 	<!-- public Display getById(Long id); -->
@@ -51,8 +57,8 @@
 		<selectKey order="BEFORE" resultType="long" keyProperty="id">
 			select sq_displays.nextval from dual
 		</selectKey>
-		INSERT INTO displays(id, movie_id, hall_id, starts_at)
-					VALUES (#{id}, #{movie.id}, #{hall.id}, #{startsAt})
+		INSERT INTO displays(id, movie_id, hall_id, category_id,starts_at)
+					VALUES (#{id}, #{movie.id}, #{hall.id}, #{category.id}, #{startsAt})
 	</insert>
 
 	<!-- public int update(Display entity); -->
@@ -61,6 +67,7 @@
 		SET
 		movie_id = #{movie.id},
 		hall_id = #{hall.id},
+		category_id = #{category.id},
 		starts_at = #{startsAt}
 		WHERE
 		id = #{id}

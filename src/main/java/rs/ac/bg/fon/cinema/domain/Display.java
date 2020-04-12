@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 @NoArgsConstructor
@@ -14,13 +15,14 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @Setter
 @SuperBuilder
+@ToString
 public class Display implements BaseEntity {
 
 	private Long id;
 	private LocalDateTime startsAt;
 	private Movie movie;
 	private Hall hall;
-	private List<DisplayPrice> prices;
+	private DisplayCategory category;
 	private List<Ticket> tickets;
 	private List<SeatAvailability> seatsAvailability;
 	
