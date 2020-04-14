@@ -18,6 +18,8 @@ import rs.ac.bg.fon.cinema.service.DisplayService;
 import rs.ac.bg.fon.cinema.service.HallService;
 import rs.ac.bg.fon.cinema.service.MovieService;
 import rs.ac.bg.fon.cinema.service.TicketService;
+import rs.ac.bg.fon.cinema.service.dto.TicketSearchRequest;
+import rs.ac.bg.fon.cinema.service.dto.TicketSearchResponse;
 import rs.ac.bg.fon.cinema.service.validation.DisplaySaveValidation;
 
 @Service
@@ -54,7 +56,9 @@ public class DisplayServiceImpl implements DisplayService {
 		Display display = getDisplayByIdLazy(displayId);
 		display.setMovie(movieService.getMovieById(display.getMovie().getId()));
 		display.setCategory(displayCategoryService.getById(display.getCategory().getId()));
-		display.setTickets(ticketService.getTicketByDisplayId(displayId));
+		TicketSearchResponse searchResponse = 
+				ticketService.searchTickets(TicketSearchRequest.builder().displayId(displayId).active(true).build());
+		display.setTickets(searchResponse.getTickets());
 		computeSeatsAvailability(display);
 		return display;
 	}
@@ -92,6 +96,11 @@ public class DisplayServiceImpl implements DisplayService {
 	@Override
 	public int deleteDisplayById(Long displayId) {
 		return displayMapper.deleteById(displayId);
+	}
+
+	@Override
+	public int cancelDisplay(Long id) {
+		return displayMapper.deactivateDisplay(id);
 	}
 
 }

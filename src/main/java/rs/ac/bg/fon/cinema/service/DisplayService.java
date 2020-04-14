@@ -15,5 +15,7 @@ public interface DisplayService {
 	public Display saveDisplay(Display display);
 	
 	public int deleteDisplayById(Long displayId);
+
+	public int cancelDisplay(Long id);
 	
 }

@@ -5,13 +5,11 @@ import java.time.LocalTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import lombok.extern.slf4j.Slf4j;
 import rs.ac.bg.fon.cinema.domain.Display;
 import rs.ac.bg.fon.cinema.exception.ServiceException;
 import rs.ac.bg.fon.cinema.service.MovieService;
 
 @Component
-@Slf4j
 public class DisplaySaveCinemaWorkingHoursFilter extends ValidationFilter<Display> {
 	
 	private LocalTime opens = LocalTime.of(11, 0);

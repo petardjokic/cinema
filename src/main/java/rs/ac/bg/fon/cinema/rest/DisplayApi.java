@@ -12,12 +12,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.extern.slf4j.Slf4j;
 import rs.ac.bg.fon.cinema.domain.Display;
 import rs.ac.bg.fon.cinema.service.DisplayService;
 
 @RestController
 @CrossOrigin
 @RequestMapping(path = "api/displays")
+@Slf4j
 public class DisplayApi {
 
 	@Autowired
@@ -39,7 +41,8 @@ public class DisplayApi {
 	}
 	
 	@DeleteMapping(value = "/{id}")
-	public Boolean deleteDisplayById(@PathVariable Long id) {
-		return displayService.deleteDisplayById(id) == 1 ? true : false;
+	public Boolean cancelDisplayById(@PathVariable Long id) {
+		log.info("Canceling display with ID: {}", id);
+		return displayService.cancelDisplay(id) == 1 ? true : false;
 	}
 }

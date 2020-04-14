@@ -39,20 +39,25 @@
 		<include refid="getTicket"></include>
 		WHERE t.id = #{id}
 	</select>
-
-	<!-- public List<Ticket> getByDisplayId(Long displayId); -->
-	<select id="getByDisplayId" parameterType="long" resultMap="TicketMap">
-		<include refid="getTicket"></include>
-		WHERE
-		t.display_id = #{displayId}
-	</select>
-
-	<!-- public public List<Ticket> getByInvoiceId(Long invoiceId); -->
-	<select id="getByInvoiceId" parameterType="long" resultMap="TicketMap">
-		<include refid="getTicket"></include>
-		WHERE
-		t.invoice_id = #{invoiceId}
-	</select>
+	
+	
+	 <select id="searchTickets" resultMap="TicketMap">
+         <include refid="getTicket"></include>
+         <where>
+            <if test="displayId != null">
+               	t.display_id = #{displayId}
+            </if>
+            <if test="invoiceId != null">
+                AND t.invoice_id = #{invoiceId}
+            </if>
+            <if test="seatId != null">
+               AND t.seat_id = #{invoiceId}
+            </if>
+            <if test="active != null">
+               AND t.active = #{active}
+            </if>
+          </where>
+    </select>
 	
 	<!-- public Ticket findActiveByDisplayAndSeat(Ticket ticket); -->
 	<select id="findActiveByDisplayAndSeat" parameterType="Ticket" resultMap="TicketMap">

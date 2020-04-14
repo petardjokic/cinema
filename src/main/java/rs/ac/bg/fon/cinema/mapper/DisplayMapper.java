@@ -21,4 +21,6 @@ public interface DisplayMapper extends BaseMapper<Display> {
 	
 	public List<Display> getAll();
 
+	public int deactivateDisplay(Long id);
+
 }

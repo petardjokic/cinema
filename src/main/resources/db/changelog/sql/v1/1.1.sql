@@ -83,7 +83,8 @@ create table displays(
 	movie_id number not null,
 	hall_id number not null,
 	category_id number not null,
-	starts_at timestamp not null
+	starts_at timestamp not null,
+	active number(1,0) not null
 );
 create sequence sq_displays;
 alter table displays add constraint fk_displays_movie foreign key(movie_id) references movies on delete restrict;            

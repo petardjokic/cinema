@@ -5,9 +5,11 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import rs.ac.bg.fon.cinema.domain.Ticket;
+import rs.ac.bg.fon.cinema.service.dto.TicketSearchRequest;
 
 @Mapper
 public interface TicketMapper extends BaseMapper<Ticket> {
+	
 	public Long count();
 
 	public Ticket getById(Long id);
@@ -18,11 +20,9 @@ public interface TicketMapper extends BaseMapper<Ticket> {
 
 	public int deleteById(Long id);
 	
-	public List<Ticket> getByDisplayId(Long displayId);
-	
-	public List<Ticket> getByInvoiceId(Long invoiceId);
-	
 	public Ticket findActiveByDisplayAndSeat(Ticket ticket);
-
+	
 	public int freezeTicketsByInvoiceId(Long invoiceId);
+	
+	public List<Ticket> searchTickets(TicketSearchRequest request);
 }

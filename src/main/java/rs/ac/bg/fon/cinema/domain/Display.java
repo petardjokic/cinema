@@ -20,6 +20,7 @@ public class Display implements BaseEntity {
 
 	private Long id;
 	private LocalDateTime startsAt;
+	private Boolean active;
 	private Movie movie;
 	private Hall hall;
 	private DisplayCategory category;

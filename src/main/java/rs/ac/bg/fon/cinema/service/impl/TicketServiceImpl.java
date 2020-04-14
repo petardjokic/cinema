@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 import rs.ac.bg.fon.cinema.domain.Ticket;
 import rs.ac.bg.fon.cinema.mapper.TicketMapper;
 import rs.ac.bg.fon.cinema.service.TicketService;
+import rs.ac.bg.fon.cinema.service.dto.TicketSearchRequest;
+import rs.ac.bg.fon.cinema.service.dto.TicketSearchResponse;
 
 @Service
 public class TicketServiceImpl implements TicketService {
@@ -19,16 +21,6 @@ public class TicketServiceImpl implements TicketService {
 	@Override
 	public Ticket getTicketById(Long ticketId) {
 		return ticketMapper.getById(ticketId);
-	}
-
-	@Override
-	public List<Ticket> getTicketByDisplayId(Long displayId) {
-		return ticketMapper.getByDisplayId(displayId);
-	}
-
-	@Override
-	public List<Ticket> getTicketByInvoiceId(Long invoiceId) {
-		return ticketMapper.getByInvoiceId(invoiceId);
 	}
 
 	@Override
@@ -51,5 +43,12 @@ public class TicketServiceImpl implements TicketService {
 	public int freezeTicketsByByInvoiceId(Long invoiceId) {
 		return ticketMapper.freezeTicketsByInvoiceId(invoiceId);
 	}
+
+	@Override
+	public TicketSearchResponse searchTickets(TicketSearchRequest request) {
+		List<Ticket> tickets = ticketMapper.searchTickets(request);
+		return new TicketSearchResponse(tickets);
+	}
+
 
 }

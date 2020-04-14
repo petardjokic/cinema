@@ -45,7 +45,7 @@ class DisplayMapperTest extends BaseMapperTest{
 		
 		log.info("Adding a new display");
 		LocalDateTime startsAt =LocalDateTime.now();
-		Display display = Display.builder().movie(movie1).hall(hall1).category(category1).startsAt(startsAt).build();
+		Display display = Display.builder().movie(movie1).hall(hall1).category(category1).startsAt(startsAt).active(true).build();
 		assertEquals(1, displayMapper.insert(display));
 		
 		log.info("Getting display");

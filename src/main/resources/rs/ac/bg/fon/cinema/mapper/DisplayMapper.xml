@@ -6,6 +6,7 @@
 	<resultMap type="Display" id="DisplayMap">
 		<id column="id" property="id" />
 		<result column="starts_at" property="startsAt" />
+		<result column="active" property="active" />
 		<association property="movie">
 			<id column="movie_id" property="id" />
 			<result column="movie_title" property="title" />
@@ -57,8 +58,8 @@
 		<selectKey order="BEFORE" resultType="long" keyProperty="id">
 			select sq_displays.nextval from dual
 		</selectKey>
-		INSERT INTO displays(id, movie_id, hall_id, category_id,starts_at)
-					VALUES (#{id}, #{movie.id}, #{hall.id}, #{category.id}, #{startsAt})
+		INSERT INTO displays(id, movie_id, hall_id, category_id,starts_at, active)
+					VALUES (#{id}, #{movie.id}, #{hall.id}, #{category.id}, #{startsAt}, #{active})
 	</insert>
 
 	<!-- public int update(Display entity); -->
@@ -68,7 +69,8 @@
 		movie_id = #{movie.id},
 		hall_id = #{hall.id},
 		category_id = #{category.id},
-		starts_at = #{startsAt}
+		starts_at = #{startsAt},
+		active = #{active}
 		WHERE
 		id = #{id}
 	</update>
@@ -80,6 +82,14 @@
 		WHERE
 		id = #{id}
 	</delete>
+	
+	<update id="deactivateDisplay" parameterType="Long">
+		UPDATE displays
+		SET
+		active = 0
+		WHERE
+		id = #{id}
+	</update>
 
 
 </mapper>

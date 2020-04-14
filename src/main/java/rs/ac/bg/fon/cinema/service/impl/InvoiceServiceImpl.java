@@ -1,6 +1,5 @@
 package rs.ac.bg.fon.cinema.service.impl;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -24,6 +23,8 @@ import rs.ac.bg.fon.cinema.service.DisplayService;
 import rs.ac.bg.fon.cinema.service.HallService;
 import rs.ac.bg.fon.cinema.service.InvoiceService;
 import rs.ac.bg.fon.cinema.service.TicketService;
+import rs.ac.bg.fon.cinema.service.dto.TicketSearchRequest;
+import rs.ac.bg.fon.cinema.service.dto.TicketSearchResponse;
 
 @Service
 @Slf4j
@@ -48,7 +49,8 @@ public class InvoiceServiceImpl implements InvoiceService {
 		Optional.ofNullable(invoice).orElseThrow(() ->
 			new ServiceException(String.format("Invoice with ID  %s does not exist", invoiceId)));
 		
-		List<Ticket> tickets = ticketService.getTicketByInvoiceId(invoice.getId());
+		TicketSearchResponse searchResponse = ticketService.searchTickets(TicketSearchRequest.builder().invoiceId(invoiceId).build());
+		List<Ticket> tickets = searchResponse.getTickets();
 		invoice.setTickets(tickets);
 		return invoice;
 	}
