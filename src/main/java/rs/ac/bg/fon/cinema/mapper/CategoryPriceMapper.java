@@ -9,8 +9,6 @@ import rs.ac.bg.fon.cinema.domain.CategoryPrice;
 @Mapper
 public interface CategoryPriceMapper extends BaseMapper<CategoryPrice> {
 
-	public Long count();
-
 	public CategoryPrice getById(Long id);
 
 	public int insert(CategoryPrice entity);

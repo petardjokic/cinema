@@ -21,6 +21,6 @@ public class MovieProductionCompany implements BaseEntity {
 	@EqualsAndHashCode.Include
 	private Long movieId;
 	@EqualsAndHashCode.Include
-	private Long productionCompanyId;
+	private ProductionCompany productionCompany;
 
 }

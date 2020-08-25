@@ -7,26 +7,21 @@
 		<id column="id" property="id" />
 		<result column="name" property="name" />
 	</resultMap>
-
-	<!-- public long count(); -->
-	<select id="count" resultType="Long">
-		SELECT count(*) FROM halls
-	</select>
 	
 	<sql id="sqlHall">
 		SELECT h.*
 		FROM halls h
 	</sql>
+	
+	<!-- public List<Hall> getAll(); -->
+	<select id="getAll" resultMap="HallMap">
+		<include refid="sqlHall"></include>
+	</select>
 
 	<!-- public Hall getById(Long id); -->
 	<select id="getById" parameterType="long" resultMap="HallMap">
 		<include refid="sqlHall"></include>
 		WHERE h.id = #{id}
-	</select>
-	
-	<!-- public List<Hall> getAll(); -->
-	<select id="getAll" resultMap="HallMap">
-		<include refid="sqlHall"></include>
 	</select>
 	
 	<!-- public int insert(Hall entity); -->

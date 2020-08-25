@@ -38,9 +38,9 @@ public class GenreServiceImpl implements GenreService {
 	@Override
 	public List<Genre> getGenresByMovieId(Long movieId) {
 		List<MovieGenre> movieGenres = movieGenreMapper.getByMovieId(movieId);
-		return movieGenres.stream().map(movieGenre -> {
-			return genreMapper.getById(movieGenre.getGenreId());
-		}).collect(Collectors.toList());
+		return movieGenres.stream()
+				.map(movieGenre -> movieGenre.getGenre())
+				.collect(Collectors.toList());
 	}
 
 	@Override
@@ -52,27 +52,11 @@ public class GenreServiceImpl implements GenreService {
 	@Override
 	@Transactional
 	public void saveMovieGenres(Movie movie) {
-		List<MovieGenre> movieGenresDb = movieGenreMapper.getByMovieId(movie.getId());
-		
-		List<MovieGenre> movieGenresParam = movie.getGenres().stream()
-				.map(genre -> (new MovieGenre(null, movie.getId(), genre.getId())))
-				.collect(Collectors.toList());
-
-		// delete removed Genres
-		movieGenresDb.stream()
-			.filter(movieGenreDb -> !movieGenresParam.contains(movieGenreDb))
-			.forEach(movieGenre -> {
-				log.info("Deleting movie genre: {}", movieGenre);
-				movieGenreMapper.deleteById(movieGenre.getId());
-				});
-
-		// save added Genres
-		movieGenresParam.stream()
-			.filter(movieGenre -> !movieGenresDb.contains(movieGenre))
-			.forEach(movieGenre -> { 
-				log.info("Adding movie genre: {}", movieGenre);
-				movieGenreMapper.save(movieGenre);
-				});
+		movie.getGenres().stream().forEach(movieGenre -> {
+			movieGenre.setMovieId(movie.getId());
+			log.info("Adding movie genre: {}", movieGenre);
+			movieGenreMapper.save(movieGenre);
+		});
 	}
 
 }

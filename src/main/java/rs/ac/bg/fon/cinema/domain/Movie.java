@@ -23,6 +23,6 @@ public class Movie implements BaseEntity {
 	private String description;
 	private int duration;
 	private int releaseYear;
-	private List<Genre> genres;
-	private List<ProductionCompany> productionCompanies;
+	private List<MovieGenre> genres;
+	private List<MovieProductionCompany> productionCompanies;
 }

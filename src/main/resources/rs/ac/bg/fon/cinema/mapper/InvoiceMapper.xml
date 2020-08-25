@@ -7,6 +7,7 @@
 		<id column="id" property="id" />
 		<result column="issued_at" property="issuedAt" />
 		<result column="active" property="active" />
+		<result column="total_price" property="totalPrice" />
 	</resultMap>
 
 	<!-- public long count(); -->
@@ -14,18 +15,37 @@
 		SELECT count(*) FROM invoices
 	</select>
 
+	<sql id="getInvoice">
+		SELECT i.*
+		FROM invoices i
+	</sql>
+
 
 	<!-- public Invoice getById(Long id); -->
 	<select id="getById" parameterType="long" resultMap="InvoiceMap">
-		SELECT i.*
-		FROM invoices i
+		<include refid="getInvoice"></include>
 		WHERE i.id = #{id}
 	</select>
-	
+
 	<!-- public List<Invoice> getAll(); -->
 	<select id="getAll" resultMap="InvoiceMap">
-		SELECT i.*
-		FROM invoices i
+		<include refid="getInvoice"></include>
+	</select>
+
+	<!-- public List<Invoice> search(request); -->
+	<select id="search" resultMap="InvoiceMap">
+		<include refid="getInvoice"></include>
+		<where>
+			<if test="invoiceId != null">
+				i.id = #{invoiceId}
+			</if>
+			<if test="dateFrom != null">
+				AND i.issued_at &gt;= #{dateFrom}
+			</if>
+			<if test="dateTo != null">
+				AND i.issued_at &lt;= #{dateTo}
+			</if>
+		</where>
 	</select>
 
 	<!-- public int insert(Invoice entity); -->
@@ -33,21 +53,23 @@
 		<selectKey order="BEFORE" resultType="long" keyProperty="id">
 			select sq_invoices.nextval from dual
 		</selectKey>
-		INSERT INTO invoices(id, issued_at, active)
-				VALUES (#{id}, current_timestamp, #{active})
+		INSERT INTO invoices(id, issued_at, active, total_price)
+		VALUES (#{id}, current_timestamp, #{active}, #{totalPrice})
 	</insert>
 
 	<!-- public int update(Invoice entity); -->
 	<update id="update" parameterType="Invoice">
 		UPDATE invoices
 		SET
-		issued_at = #{issuedAt},
-		active = #{active}
+		issued_at =
+		#{issuedAt},
+		active = #{active},
+		total_price = #{totalPrice}
 		WHERE
 		id = #{id}
 	</update>
-	
-	
+
+
 	<!-- public void freezeInvoice(Long id); -->
 	<update id="freezeInvoice" parameterType="Long">
 		UPDATE invoices
@@ -60,7 +82,7 @@
 	<!-- public int deleteById(Long id); -->
 	<delete id="deleteById" parameterType="long">
 		DELETE
-		FROM invoices 
+		FROM invoices
 		WHERE
 		id = #{id}
 	</delete>

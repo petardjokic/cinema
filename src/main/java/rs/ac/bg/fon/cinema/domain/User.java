@@ -9,7 +9,11 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-public class SeatType implements BaseEntity{
-	private Long id;
-	private String name;
+public class User {
+
+	public Long id;
+	public String username;
+	public String password;
+	public String name;
+	
 }

@@ -21,5 +21,5 @@ public class MovieGenre implements BaseEntity{
 	@EqualsAndHashCode.Include
 	private Long movieId;
 	@EqualsAndHashCode.Include
-	private Long genreId;
+	private Genre genre;
 }

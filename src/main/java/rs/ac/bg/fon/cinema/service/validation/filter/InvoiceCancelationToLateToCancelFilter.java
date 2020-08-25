@@ -17,8 +17,8 @@ public class InvoiceCancelationToLateToCancelFilter extends ValidationFilter<Inv
 
 	@Override
 	protected void action(Invoice invoice) {
-		boolean anyDisplayStarted = invoice.getTickets().stream()
-		.map(ticket -> displayService.getDisplayByIdEager(ticket.getDisplayId()))
+		boolean anyDisplayStarted = invoice.getItems().stream()
+		.map(item -> displayService.getDisplayById(item.getDisplayId()))
 		.anyMatch(display -> display.getStartsAt().isBefore(LocalDateTime.now()));
 		if(anyDisplayStarted)
 			throw new ServiceException("Freezing after some display from invoice started is not allowed.");

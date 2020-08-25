@@ -1,18 +1,19 @@
 package rs.ac.bg.fon.cinema.service;
 
-import rs.ac.bg.fon.cinema.domain.Cart;
+import java.util.List;
+
 import rs.ac.bg.fon.cinema.domain.Invoice;
-import rs.ac.bg.fon.cinema.domain.InvoiceDto;
+import rs.ac.bg.fon.cinema.service.dto.InvoiceSearchRequest;
 
 public interface InvoiceService {
 	
 	public Invoice getInvoiceById(Long invoiceId);
 	
-	public InvoiceDto getInvoiceDtoById(Long invoiceId);
+	public Invoice saveInvoice(Invoice invoice);
 	
-	public Invoice saveInvoice(Invoice invoiceDto);
-	
-	public Cart checkAndSave(Cart cart);
+	public Invoice freeze(Long id);
 
-	public InvoiceDto freeze(Long id);
+	public List<Invoice> getAll();
+	
+	public List<Invoice> search(InvoiceSearchRequest request);
 }

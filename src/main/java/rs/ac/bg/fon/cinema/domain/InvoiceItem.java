@@ -1,17 +1,20 @@
 package rs.ac.bg.fon.cinema.domain;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
 @SuperBuilder
-public class CartItem {
+public class InvoiceItem implements BaseEntity{
+	
+	private Long id;
+	private Long invoiceId;
 	private Long displayId;
-	private Long seatId;
+	private Seat seat;
+	private Boolean active;
+	private Double price;
 }

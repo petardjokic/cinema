@@ -1,5 +1,7 @@
 package rs.ac.bg.fon.cinema.rest;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -10,10 +12,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import rs.ac.bg.fon.cinema.domain.Cart;
 import rs.ac.bg.fon.cinema.domain.Invoice;
-import rs.ac.bg.fon.cinema.domain.InvoiceDto;
+import rs.ac.bg.fon.cinema.exception.ServiceException;
 import rs.ac.bg.fon.cinema.service.InvoiceService;
+import rs.ac.bg.fon.cinema.service.dto.InvoiceSearchRequest;
 
 @RestController
 @CrossOrigin
@@ -28,18 +30,31 @@ public class InvoiceApi {
 		return invoiceService.getInvoiceById(id);
 	}
 	
-	@GetMapping(path = "/dto/{id}")
-	public InvoiceDto getInvoiceDtoById(@PathVariable Long id) {
-		return invoiceService.getInvoiceDtoById(id);
+	@GetMapping(path = "/")
+	public List<Invoice> getAllInvoices() {
+		return invoiceService.getAll();
+	}
+	
+	@GetMapping(path = "/{id}/items")
+	public Invoice getInvoiceItems(@PathVariable Long id) {
+		return invoiceService.getInvoiceById(id);
 	}
 	
 	@PostMapping
-	public Cart saveInvoice(@RequestBody Cart cart) {
-		return invoiceService.checkAndSave(cart);
+	public Invoice saveInvoice(@RequestBody Invoice invoice) {
+		return invoiceService.saveInvoice(invoice);
+	}
+	
+	@PostMapping(path = "/search")
+	public List<Invoice> searchInvoices(@RequestBody InvoiceSearchRequest request) {
+		List<Invoice> invoices = invoiceService.search(request);
+		if(invoices.isEmpty()) 
+			throw new ServiceException("No invoices found!");
+		return invoices;
 	}
 	
 	@DeleteMapping(path = "/{id}")
-	public InvoiceDto freezeInvoice(@PathVariable Long id) {
+	public Invoice freezeInvoice(@PathVariable Long id) {
 		return invoiceService.freeze(id);
 	}
 

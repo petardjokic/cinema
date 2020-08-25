@@ -9,9 +9,9 @@
 		<result column="seat_row" property="row" />
 		<result column="seat_column" property="column" />
 		<association property="type">
-				<id column="seat_type_id" property="id" />
-				<result column="seat_type_name" property="name" />
-			</association>
+			<id column="seat_type_id" property="id" />
+			<result column="seat_type_name" property="name" />
+		</association>
 	</resultMap>
 
 	<!-- public long count(); -->
@@ -23,15 +23,16 @@
 		SELECT hs.*, st.id seat_type_id, st.name seat_type_name
 		FROM hall_seats hs INNER JOIN seat_types st ON hs.seat_type_id = st.id
 	</sql>
-	
+
 	<!-- public Seat getById(Long id); -->
 	<select id="getById" parameterType="long" resultMap="SeatMap">
 		<include refid="getSeat"></include>
 		WHERE hs.id = #{id}
 	</select>
-	
+
 	<!-- public List<Seat> getByHallId(Long hallId); -->
-	<select id="getByHallId" parameterType="long" resultMap="SeatMap">
+	<select id="getByHallId" parameterType="long"
+		resultMap="SeatMap">
 		<include refid="getSeat"></include>
 		WHERE hs.hall_id = #{hallId}
 	</select>
@@ -41,18 +42,21 @@
 		<selectKey order="BEFORE" resultType="long" keyProperty="id">
 			select sq_hall_seats.nextval from dual
 		</selectKey>
-		INSERT INTO hall_seats(id, hall_id, seat_type_id, seat_row, seat_column)
-				VALUES (#{id}, #{hallId}, #{type.id}, #{row}, #{column})
+		INSERT INTO hall_seats(id, hall_id, seat_type_id, seat_row,
+		seat_column)
+		VALUES (#{id}, #{hallId}, #{type.id}, #{row}, #{column})
 	</insert>
 
 	<!-- public int update(Seat entity); -->
 	<update id="update" parameterType="Seat">
 		UPDATE hall_seats
 		SET
-		hall_id = #{hallId},
+		hall_id =
+		#{hallId},
 		seat_type_id = #{type.id},
 		seat_row = #{row},
-		seat_column = #{column}
+		seat_column =
+		#{column}
 		WHERE
 		id = #{id}
 	</update>
@@ -60,7 +64,7 @@
 	<!-- public int deleteById(Long id); -->
 	<delete id="deleteById" parameterType="long">
 		DELETE
-		FROM hall_seats 
+		FROM hall_seats
 		WHERE
 		id = #{id}
 	</delete>

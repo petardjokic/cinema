@@ -17,18 +17,30 @@
 		SELECT count(*) FROM movies
 	</select>
 
+	<sql id="getMovie">
+		SELECT m.*
+		FROM movies m
+	</sql>
 
 	<!-- public Movie getById(Long id); -->
 	<select id="getById" parameterType="long" resultMap="MovieMap">
-		SELECT m.*
-		FROM movies m
+		<include refid="getMovie"></include>
 		WHERE m.id = #{id}
 	</select>
 	
 	<!-- public List<Movie> getAll(); -->
 	<select id="getAll" resultMap="MovieMap">
-		SELECT m.*
-		FROM movies m
+		<include refid="getMovie"></include>
+	</select>
+	
+	<!-- public List<Movie> search(MovieSearchRequest request); -->
+	<select id="search" resultMap="MovieMap">
+		<include refid="getMovie"></include>
+		<where>
+			<if test="title != null">
+				AND lower(m.title) LIKE lower('%' || #{title} || '%')
+			</if>
+		</where>
 	</select>
 
 	<!-- public int insert(Movie entity); -->

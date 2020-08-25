@@ -23,25 +23,17 @@ public class TicketServiceImpl implements TicketService {
 		return ticketMapper.getById(ticketId);
 	}
 
-	@Override
-	@Transactional
-	public void saveInvoiceTickets(Long invoiceId, List<Ticket> tickets) {
-		tickets.stream().forEach(ticket -> {
-			ticket.setActive(true);
-			ticket.setInvoiceId(invoiceId);
-			ticketMapper.save(ticket);
-		});
-	}
+
 
 	@Override
 	public Ticket findActiveByDisplayAndSeat(Ticket ticket) {
-		return ticketMapper.findActiveByDisplayAndSeat(ticket);
+		return new Ticket(); //ticketMapper.findActiveByDisplayAndSeat(ticket);
 	}
 
 	@Override
 	@Transactional
 	public int freezeTicketsByByInvoiceId(Long invoiceId) {
-		return ticketMapper.freezeTicketsByInvoiceId(invoiceId);
+		return 0; //ticketMapper.freezeTicketsByInvoiceId(invoiceId);
 	}
 
 	@Override

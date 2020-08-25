@@ -94,7 +94,8 @@ alter table displays add constraint fk_displays_category foreign key(category_id
 create table invoices(
 	id number primary key,
 	issued_at timestamp not null,
-	active number(1,0) not null
+	active number(1,0) not null,
+	total_price number not null
 );
 create sequence sq_invoices;
             
@@ -103,7 +104,8 @@ create table tickets(
 	invoice_id number not null,
 	display_id number not null,
 	seat_id number not null,
-	active number(1,0) not null
+	active number(1,0) not null,
+	price number not null
 );
 create sequence sq_tickets;
 alter table tickets add constraint fk_tickets_invoice foreign key(invoice_id) references invoices on delete cascade;            

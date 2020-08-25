@@ -3,7 +3,6 @@ package rs.ac.bg.fon.cinema.rest;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,13 +26,8 @@ public class HallApi {
 	}
 
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<Hall> getHallById(@PathVariable Long id) {
-		try {
-			Hall hall = hallService.getHallById(id);
-			return ResponseEntity.ok(hall);
-		} catch (IllegalStateException e) {
-			return ResponseEntity.badRequest().build();
-		}
+	public Hall getHallById(@PathVariable Long id) {
+		return hallService.getHallById(id);
 	}
 
 }

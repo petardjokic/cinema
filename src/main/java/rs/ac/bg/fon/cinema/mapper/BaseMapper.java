@@ -6,8 +6,6 @@ import rs.ac.bg.fon.cinema.domain.BaseEntity;
 
 public interface BaseMapper<E extends BaseEntity> {
 
-	public Long count();
-
 	public E getById(Long id);
 	
 	public List<E> getAll();

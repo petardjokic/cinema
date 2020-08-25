@@ -8,13 +8,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.extern.slf4j.Slf4j;
-import rs.ac.bg.fon.cinema.domain.Genre;
 import rs.ac.bg.fon.cinema.domain.Movie;
-import rs.ac.bg.fon.cinema.domain.ProductionCompany;
+import rs.ac.bg.fon.cinema.exception.ServiceException;
 import rs.ac.bg.fon.cinema.mapper.MovieMapper;
 import rs.ac.bg.fon.cinema.service.GenreService;
 import rs.ac.bg.fon.cinema.service.MovieService;
 import rs.ac.bg.fon.cinema.service.ProductionCompanyService;
+import rs.ac.bg.fon.cinema.service.dto.MovieSearchRequest;
+import rs.ac.bg.fon.cinema.service.validation.MovieDeleteValidation;
 
 @Service
 @Slf4j
@@ -28,6 +29,9 @@ public class MovieServiceImpl implements MovieService {
 
 	@Autowired
 	private ProductionCompanyService prodCompanyService;
+	
+	@Autowired
+	private MovieDeleteValidation movieDeleteValidation;
 
 	@Override
 	@Transactional
@@ -43,32 +47,27 @@ public class MovieServiceImpl implements MovieService {
 
 	@Override
 	public Movie getMovieById(Long movieId) {
+		log.info("Getting movie with id: {}", movieId);
 		Movie movieDb = movieMapper.getById(movieId);
-		Optional.ofNullable(movieDb)
-			.ifPresent(movie -> {
-				List<Genre> genres = genreService.getGenresByMovieId(movie.getId());
-				List<ProductionCompany> productionCompanies = prodCompanyService.getProductionCompaniesByMovieId(movie.getId());
-				movie.setGenres(genres);
-				movie.setProductionCompanies(productionCompanies);
-			});
-		return movieDb;
+		return Optional.ofNullable(movieDb)
+				.orElseThrow(() -> new ServiceException(String.format("Movie with ID %s dont exist", movieId)));
 	}
 
 	@Override
 	public List<Movie> getAllMovies() {
 		List<Movie> movies = movieMapper.getAll();
-//		movies.forEach(movie -> {
-//			List<Genre> genres = genreService.getGenresByMovieId(movie.getId());
-//			List<ProductionCompany> productionCompanies = prodCompanyService.getProductionCompaniesByMovieId(movie.getId());
-//			movie.setGenres(genres);
-//			movie.setProductionCompanies(productionCompanies);
-//		});
 		return movies;
 	}
 
 	@Override
 	public int deleteMovie(Long movieId) {
+		movieDeleteValidation.validate(Movie.builder().id(movieId).build());
 		return movieMapper.deleteById(movieId);
+	}
+
+	@Override
+	public List<Movie> searchMovies(MovieSearchRequest request) {
+		return movieMapper.search(request);
 	}
 
 }

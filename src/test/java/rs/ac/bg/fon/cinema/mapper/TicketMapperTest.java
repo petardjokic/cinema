@@ -34,7 +34,6 @@ class TicketMapperTest extends BaseMapperTest{
 		
 		log.info("Adding a new ticket");
 		Ticket ticket = Ticket.builder()
-				.invoiceId(invoice.getId())
 				.displayId(display.getId())
 				.seat(display.getHall().getSeats().get(0))
 				.active(new Boolean(true)).build();
@@ -44,7 +43,6 @@ class TicketMapperTest extends BaseMapperTest{
 		Ticket ticketDb = ticketMapper.getById(ticket.getId());
 		assertEquals(ticket.getId(), ticketDb.getId());
 		assertEquals(ticket.getDisplayId(), ticketDb.getDisplayId());
-		assertEquals(ticket.getInvoiceId(), ticketDb.getInvoiceId());
 		assertEquals(ticket.getActive(), ticketDb.getActive());
 		assertEquals(ticket.getSeat().getId(), ticketDb.getSeat().getId());
 		assertEquals(ticket.getSeat().getRow(), ticketDb.getSeat().getRow());
@@ -59,7 +57,6 @@ class TicketMapperTest extends BaseMapperTest{
 		ticketDb = ticketMapper.getById(ticket.getId());
 		assertEquals(ticket.getId(), ticketDb.getId());
 		assertEquals(ticket.getDisplayId(), ticketDb.getDisplayId());
-		assertEquals(ticket.getInvoiceId(), ticketDb.getInvoiceId());
 		assertEquals(ticket.getActive(), ticketDb.getActive());
 		assertEquals(ticket.getSeat().getId(), ticketDb.getSeat().getId());
 		assertEquals(ticket.getSeat().getRow(), ticketDb.getSeat().getRow());

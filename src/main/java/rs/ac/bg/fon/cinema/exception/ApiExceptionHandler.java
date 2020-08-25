@@ -16,4 +16,10 @@ public class ApiExceptionHandler {
 		ApiException apiException = new ApiException(ex.getMessage(), badRequest, LocalDateTime.now());
 		return new ResponseEntity<Object>(apiException, badRequest);
 	}
+	@ExceptionHandler(value = AuthException.class)
+	public ResponseEntity<Object> handleAuthException(AuthException ex) {
+		HttpStatus badRequest = HttpStatus.UNAUTHORIZED;
+		ApiException apiException = new ApiException(ex.getMessage(), badRequest, LocalDateTime.now());
+		return new ResponseEntity<Object>(apiException, badRequest);
+	}
 }

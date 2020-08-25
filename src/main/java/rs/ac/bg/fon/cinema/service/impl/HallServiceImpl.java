@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import lombok.extern.slf4j.Slf4j;
 import rs.ac.bg.fon.cinema.domain.Hall;
 import rs.ac.bg.fon.cinema.domain.Seat;
 import rs.ac.bg.fon.cinema.exception.ServiceException;
@@ -14,6 +15,7 @@ import rs.ac.bg.fon.cinema.mapper.SeatMapper;
 import rs.ac.bg.fon.cinema.service.HallService;
 
 @Service
+@Slf4j
 public class HallServiceImpl implements HallService {
 
 	@Autowired
@@ -41,6 +43,7 @@ public class HallServiceImpl implements HallService {
 	
 	@Override
 	public List<Seat> getSeatsByHallId(Long hallId) {
+		log.info(seatMapper.getByHallId(hallId).toString());
 		return seatMapper.getByHallId(hallId);
 	}
 

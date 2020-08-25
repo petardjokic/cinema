@@ -6,26 +6,31 @@
 	<resultMap type="MovieProductionCompany" id="MovieProductionCompanyMap">
 		<id column="id" property="id" />
 		<result column="movie_id" property="movieId" />
-		<result column="production_company_id" property="productionCompanyId" />
+		<association property="productionCompany">
+			<id column="production_company_id" property="id" />
+			<result column="production_company_name" property="name" />
+		</association>
 	</resultMap>
 
 	<!-- public long count(); -->
 	<select id="count" resultType="Long">
 		SELECT count(*) FROM movie_production_companies
 	</select>
-
+	
+	<sql id="getMovieProductionCompany">
+		SELECT mpc.*, pc.name production_company_name
+		FROM movie_production_companies mpc INNER JOIN production_companies pc ON mpc.production_company_id=pc.id
+	</sql>
 
 	<!-- public MovieProductionCompany getById(Long id); -->
 	<select id="getById" parameterType="long" resultMap="MovieProductionCompanyMap">
-		SELECT mpc.*
-		FROM movie_production_companies mpc
+		<include refid="getMovieProductionCompany"></include>
 		WHERE mpc.id = #{id}
 	</select>
 	
 	<!-- public List<MovieProductionCompany> getByMovieId(Long movieId); -->
 	<select id="getByMovieId" parameterType="long" resultMap="MovieProductionCompanyMap">
-		SELECT mpc.*
-		FROM movie_production_companies mpc
+		<include refid="getMovieProductionCompany"></include>
 		WHERE mpc.movie_id = #{movieId}
 	</select>
 
@@ -35,7 +40,7 @@
 			select sq_movie_production_companies.nextval from dual
 		</selectKey>
 		INSERT INTO movie_production_companies(id, movie_id, production_company_id)
-						VALUES (#{id}, #{movieId}, #{productionCompanyId})
+						VALUES (#{id}, #{movieId}, #{productionCompany.id})
 	</insert>
 
 	<!-- public int update(MovieProductionCompany entity); -->
@@ -43,7 +48,7 @@
 		UPDATE movie_production_companies
 		SET
 		movie_id = #{movieId},
-		production_company_id = #{productionCompanyId}
+		production_company_id = #{productionCompany.id}
 		WHERE
 		id = #{id}
 	</update>

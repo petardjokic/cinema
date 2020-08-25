@@ -8,11 +8,6 @@
 		<result column="name" property="name" />
 	</resultMap>
 
-	<!-- public long count(); -->
-	<select id="count" resultType="Long">
-		SELECT count(*) FROM display_categories
-	</select>
-	
 	<sql id="sqlDisplayCategory">
 		SELECT dc.*
 		FROM display_categories dc

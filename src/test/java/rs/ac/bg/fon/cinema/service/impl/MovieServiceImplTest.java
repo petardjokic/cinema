@@ -38,14 +38,14 @@ class MovieServiceImplTest extends BaseMapperTest {
 				.description("Movie 1 desc")
 				.duration(123)
 				.releaseYear(2020)
-				.genres(new ArrayList<Genre>(Arrays.asList(
-						genreSetup.genreAction(),
-						genreSetup.genreComedy()
-						)))
-				.productionCompanies(new ArrayList<ProductionCompany>(Arrays.asList(
-						productionCompanySetup.productionCompanyFirstPC(),
-						productionCompanySetup.productionCompanySecondPC()
-						)))
+//				.genres(new ArrayList<Genre>(Arrays.asList(
+//						genreSetup.genreAction(),
+//						genreSetup.genreComedy()
+//						)))
+//				.productionCompanies(new ArrayList<ProductionCompany>(Arrays.asList(
+//						productionCompanySetup.productionCompanyFirstPC(),
+//						productionCompanySetup.productionCompanySecondPC()
+//						)))
 				.build();
 		
 		log.info("Inserting movie");
@@ -67,9 +67,9 @@ class MovieServiceImplTest extends BaseMapperTest {
 		movie.setDuration(124);
 		movie.setReleaseYear(2021);
 		movie.getGenres().remove(0);
-		movie.getGenres().add(genreSetup.genreHorror());
+//		movie.getGenres().add(genreSetup.genreHorror());
 		movie.getProductionCompanies().remove(0);
-		movie.getProductionCompanies().add(productionCompanySetup.productionCompanyThirdPC());
+//		movie.getProductionCompanies().add(productionCompanySetup.productionCompanyThirdPC());
 		
 		log.info("Updating movie");
 		movieService.saveMovie(movie);

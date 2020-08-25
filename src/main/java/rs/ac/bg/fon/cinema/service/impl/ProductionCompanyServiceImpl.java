@@ -38,33 +38,20 @@ public class ProductionCompanyServiceImpl implements ProductionCompanyService {
 	@Override
 	public List<ProductionCompany> getProductionCompaniesByMovieId(Long movieId) {
 		List<MovieProductionCompany> movieProductionCompanies = movieProductionCompanyMapper.getByMovieId(movieId);
-		return movieProductionCompanies.stream().map(movieProductionCompany -> {
-			return productionCompanyMapper.getById(movieProductionCompany.getProductionCompanyId());
-		}).collect(Collectors.toList());
+		return movieProductionCompanies.stream()
+				.map(movieProductionCompany -> movieProductionCompany.getProductionCompany())
+				.collect(Collectors.toList());
 	}
 
 	@Override
 	@Transactional
 	public void saveMovieProductionCompanies(Movie movie) {
-		List<MovieProductionCompany> movieProductionCompaniesDb = movieProductionCompanyMapper.getByMovieId(movie.getId());
-		
-		List<MovieProductionCompany> movieProductionCompaniesParam = movie.getProductionCompanies().stream()
-				.map(productionCompany -> new MovieProductionCompany(null, movie.getId(), productionCompany.getId()))
-				.collect(Collectors.toList());
-
-		movieProductionCompaniesDb.stream()
-				.filter(movieProductionCompanyDb -> !movieProductionCompaniesParam.contains(movieProductionCompanyDb))
-				.forEach(movieProductionCompany -> {
-					log.info("Deleting movie production company: {}", movieProductionCompany);
-					movieProductionCompanyMapper.deleteById(movieProductionCompany.getId());
-				});
-		
-		 movieProductionCompaniesParam.stream()
-				.filter(productionCompany -> !movieProductionCompaniesDb.contains(productionCompany))
-				.forEach(movieProductionCompany -> {
-					log.info("Adding movie production company: {}", movieProductionCompany);
-					movieProductionCompanyMapper.save(movieProductionCompany);
-				});
+		movie.getProductionCompanies().stream()
+		.forEach(movieProductionCompany -> {
+			movieProductionCompany.setMovieId(movie.getId());
+			log.info("Adding movie production company: {}", movieProductionCompany);
+			movieProductionCompanyMapper.save(movieProductionCompany);
+		});
 	}
 
 	@Override

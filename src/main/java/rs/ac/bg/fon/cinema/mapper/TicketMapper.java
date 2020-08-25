@@ -20,9 +20,5 @@ public interface TicketMapper extends BaseMapper<Ticket> {
 
 	public int deleteById(Long id);
 	
-	public Ticket findActiveByDisplayAndSeat(Ticket ticket);
-	
-	public int freezeTicketsByInvoiceId(Long invoiceId);
-	
 	public List<Ticket> searchTickets(TicketSearchRequest request);
 }

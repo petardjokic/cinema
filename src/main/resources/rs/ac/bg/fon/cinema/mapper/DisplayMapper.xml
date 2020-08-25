@@ -52,6 +52,25 @@
 	<select id="getAll" resultMap="DisplayMap">
 		<include refid="getDisplay"></include>
 	</select>
+	
+	<!-- public List<Display> search(request); -->
+	<select id="search" resultMap="DisplayMap">
+		<include refid="getDisplay"></include>
+		<where>
+			<if test="movieId != null">
+				AND m.id = #{movieId}
+			</if>
+			<if test="movieTitle != null">
+				AND lower(m.title) LIKE lower('%' || #{movieTitle} || '%')
+			</if>
+			<if test="dateFrom != null">
+				AND d.starts_at &gt;= #{dateFrom}
+			</if>
+			<if test="dateTo != null">
+				AND d.starts_at &lt;= #{dateTo}
+			</if>
+		</where>
+	</select>
 
 	<!-- public int insert(Display entity); -->
 	<insert id="insert" parameterType="Display">

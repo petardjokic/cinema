@@ -6,7 +6,10 @@
 	<resultMap type="MovieGenre" id="MovieGenreMap">
 		<id column="id" property="id" />
 		<result column="movie_id" property="movieId" />
-		<result column="genre_id" property="genreId" />
+		<association property="genre">
+			<id column="genre_id" property="id" />
+			<result column="genre_name" property="name" />
+		</association>
 	</resultMap>
 
 	<!-- public long count(); -->
@@ -14,17 +17,20 @@
 		SELECT count(*) FROM movie_genres
 	</select>
 
+	<sql id="getMovieGenre">
+		SELECT mg.*, g.name genre_name
+		FROM movie_genres mg INNER JOIN genres g ON mg.genre_id=g.id
+	</sql>
+	
 	<!-- public MovieGenre getById(Long id); -->
 	<select id="getById" parameterType="long" resultMap="MovieGenreMap">
-		SELECT mg.*
-		FROM movie_genres mg
+		<include refid="getMovieGenre"></include>
 		WHERE mg.id = #{id}
 	</select>
 	
 	<!-- public List<MovieGenre> getByMovieId(Long movieId); -->
 	<select id="getByMovieId" parameterType="long" resultMap="MovieGenreMap">
-		SELECT mg.*
-		FROM movie_genres mg
+		<include refid="getMovieGenre"></include>
 		WHERE mg.movie_id = #{movieId}
 	</select>
 
@@ -34,7 +40,7 @@
 			select sq_movie_genres.nextval from dual
 		</selectKey>
 		INSERT INTO movie_genres(id, movie_id, genre_id)
-						VALUES (#{id}, #{movieId}, #{genreId})
+						VALUES (#{id}, #{movieId}, #{genre.id})
 	</insert>
 
 	<!-- public int update(MovieGenre entity); -->
@@ -42,7 +48,7 @@
 		UPDATE movie_genres
 		SET
 		movie_id = #{movieId},
-		genre_id = #{genreId}
+		genre_id = #{genre.id}
 		WHERE
 		id = #{id}
 	</update>

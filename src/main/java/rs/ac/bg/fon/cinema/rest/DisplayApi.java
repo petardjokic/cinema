@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.extern.slf4j.Slf4j;
 import rs.ac.bg.fon.cinema.domain.Display;
+import rs.ac.bg.fon.cinema.exception.ServiceException;
 import rs.ac.bg.fon.cinema.service.DisplayService;
+import rs.ac.bg.fon.cinema.service.dto.DisplaySearchRequest;
 
 @RestController
 @CrossOrigin
@@ -27,7 +29,7 @@ public class DisplayApi {
 	
 	@GetMapping(value = "/{id}")
 	public Display getDisplayById(@PathVariable Long id) {
-		return displayService.getDisplayByIdEager(id);
+		return displayService.getDisplayById(id);
 	}
 	
 	@PostMapping
@@ -38,6 +40,14 @@ public class DisplayApi {
 	@GetMapping
 	public List<Display> getAllDisplays() {
 		return displayService.getAllDisplays();
+	}
+	
+	@PostMapping(path = "/search")
+	public List<Display> searchDisplays(@RequestBody DisplaySearchRequest request) {
+		List<Display> displays = displayService.searchDisplays(request);
+		if(displays.isEmpty())
+			throw new ServiceException("No displays found!");
+		return displays;
 	}
 	
 	@DeleteMapping(value = "/{id}")

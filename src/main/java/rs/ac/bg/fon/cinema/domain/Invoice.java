@@ -21,6 +21,6 @@ public class Invoice implements BaseEntity {
 	private Long id;
 	private LocalDateTime issuedAt;
 	private Boolean active;
-	private List<Ticket> tickets;
-	
+	private List<InvoiceItem> items;
+	private Double totalPrice;
 }

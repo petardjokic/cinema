@@ -9,8 +9,6 @@ import rs.ac.bg.fon.cinema.domain.DisplayCategory;
 @Mapper
 public interface DisplayCategoryMapper extends BaseMapper<DisplayCategory> {
 	
-	public Long count();
-
 	public DisplayCategory getById(Long id);
 	
 	public List<DisplayCategory> getAll();

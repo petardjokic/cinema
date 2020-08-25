@@ -1,8 +1,11 @@
 package rs.ac.bg.fon.cinema.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import rs.ac.bg.fon.cinema.domain.Invoice;
+import rs.ac.bg.fon.cinema.service.dto.InvoiceSearchRequest;
 
 @Mapper
 public interface InvoiceMapper extends BaseMapper<Invoice>{
@@ -19,4 +22,5 @@ public interface InvoiceMapper extends BaseMapper<Invoice>{
 
 	public int freezeInvoice(Long id);
 
+	public List<Invoice> search(InvoiceSearchRequest request);
 }

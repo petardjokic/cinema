@@ -21,10 +21,8 @@ public class Display implements BaseEntity {
 	private Long id;
 	private LocalDateTime startsAt;
 	private Boolean active;
+	private DisplayCategory category;
 	private Movie movie;
 	private Hall hall;
-	private DisplayCategory category;
 	private List<Ticket> tickets;
-	private List<SeatAvailability> seatsAvailability;
-	
 }

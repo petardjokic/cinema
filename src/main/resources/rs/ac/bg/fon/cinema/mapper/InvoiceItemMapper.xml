@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="rs.ac.bg.fon.cinema.mapper.TicketMapper">
+<mapper namespace="rs.ac.bg.fon.cinema.mapper.InvoiceItemMapper">
 
-	<resultMap type="Ticket" id="TicketMap">
+	<resultMap type="InvoiceItem" id="InvoiceItemMap">
 		<id column="ticket_id" property="id" />
+		<result column="invoice_id" property="invoiceId" />
 		<result column="display_id" property="displayId" />
 		<result column="active" property="active" />
+		<result column="price" property="price" />
 		<association property="seat">
 			<id column="seat_id" property="id" />
 			<result column="seat_hall_id" property="hallId" />
@@ -24,8 +26,8 @@
 		SELECT count(*) FROM tickets
 	</select>
 
-	<sql id="getTicket">
-		SELECT t.id ticket_id, t.display_id display_id, t.invoice_id invoice_id, t.active active,
+	<sql id="getInvoiceItem">
+		SELECT t.id ticket_id, t.display_id display_id, t.invoice_id invoice_id, t.active active, t.price price, 
 		hs.id seat_id, hs.hall_id seat_hall_id, hs.seat_row seat_row, hs.seat_column seat_column, 
 		st.id seat_type_id, st.name seat_type_name
 		FROM tickets t 
@@ -33,15 +35,15 @@
 		INNER JOIN seat_types st ON hs.seat_type_id = st.id
 	</sql>
 
-	<!-- public Ticket getById(Long id); -->
-	<select id="getById" parameterType="long" resultMap="TicketMap">
-		<include refid="getTicket"></include>
+	<!-- public InvoiceItem getById(Long id); -->
+	<select id="getById" parameterType="long" resultMap="InvoiceItemMap">
+		<include refid="getInvoiceItem"></include>
 		WHERE t.id = #{id}
 	</select>
 	
 	
-	 <select id="searchTickets" resultMap="TicketMap">
-         <include refid="getTicket"></include>
+	 <select id="searchInvoiceItems" resultMap="InvoiceItemMap">
+         <include refid="getInvoiceItem"></include>
          <where>
             <if test="displayId != null">
                	t.display_id = #{displayId}
@@ -57,20 +59,14 @@
             </if>
           </where>
     </select>
-	
-	<!-- public Ticket findActiveByDisplayAndSeat(Ticket ticket); -->
-	<select id="findActiveByDisplayAndSeat" parameterType="Ticket" resultMap="TicketMap">
-		<include refid="getTicket"></include>
-		WHERE t.display_id = #{displayId} AND t.seat_id = #{seat.id} AND t.active = 1
-	</select>
 
 	<!-- public int insert(Ticket entity); -->
-	<insert id="insert" parameterType="Ticket">
+	<insert id="insert" parameterType="InvoiceItem">
 		<selectKey order="BEFORE" resultType="long" keyProperty="id">
 			select sq_tickets.nextval from dual
 		</selectKey>
-		INSERT INTO tickets(id, invoice_id, display_id, seat_id, active)
-		VALUES (#{id}, #{invoiceId} , #{displayId}, #{seat.id}, #{active})
+		INSERT INTO tickets(id, invoice_id, display_id, seat_id, active, price)
+		VALUES (#{id}, #{invoiceId} , #{displayId}, #{seat.id}, #{active}, #{price})
 	</insert>
 
 	<!-- public int update(Ticket entity); -->
@@ -80,10 +76,21 @@
 		invoice_id = #{invoiceId},
 		display_id = #{displayId},
 		seat_id = #{seat.id},
-		active = #{active}
+		active = #{active},
+		price = #{price}
 		WHERE
 		id = #{id}
 	</update>
+	
+	<!-- public int update(Ticket entity); -->
+	<update id="freezeByInvoiceId">
+		UPDATE tickets
+		SET 
+		active = false
+		WHERE
+		invoice_id = #{invoiceId}
+	</update>
+	
 	
 	<!-- public int freezeTicketsByInvoiceId(Long invoiceId); -->
 	<update id="freezeTicketsByInvoiceId" parameterType="Long">

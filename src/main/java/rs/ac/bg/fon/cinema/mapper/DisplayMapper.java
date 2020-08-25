@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import rs.ac.bg.fon.cinema.domain.Display;
+import rs.ac.bg.fon.cinema.service.dto.DisplaySearchRequest;
 
 @Mapper
 public interface DisplayMapper extends BaseMapper<Display> {
@@ -22,5 +23,7 @@ public interface DisplayMapper extends BaseMapper<Display> {
 	public List<Display> getAll();
 
 	public int deactivateDisplay(Long id);
+	
+	public List<Display> search(DisplaySearchRequest request);
 
 }

@@ -64,10 +64,10 @@ insert into displays(id, movie_id, hall_id, category_id, starts_at, active) valu
 insert into displays(id, movie_id, hall_id, category_id, starts_at, active) values((select sq_displays.nextval from dual), 2, 1, 2, current_timestamp, 1);
 insert into displays(id, movie_id, hall_id, category_id, starts_at, active) values((select sq_displays.nextval from dual), 3, 1, 3, current_timestamp, 1);
 
-insert into invoices(id, issued_at, active) values((select sq_invoices.nextval from dual), current_timestamp, 1);
-insert into tickets(id, invoice_id, display_id, seat_id, active) values((select sq_tickets.nextval from dual), 1, 1, 2, 1);
-insert into tickets(id, invoice_id, display_id, seat_id, active) values((select sq_tickets.nextval from dual), 1, 1, 3, 1);
-insert into tickets(id, invoice_id, display_id, seat_id, active) values((select sq_tickets.nextval from dual), 1, 2, 3, 1);
-insert into tickets(id, invoice_id, display_id, seat_id, active) values((select sq_tickets.nextval from dual), 1, 2, 4, 1);
-insert into tickets(id, invoice_id, display_id, seat_id, active) values((select sq_tickets.nextval from dual), 1, 2, 5, 1);
+insert into invoices(id, issued_at, active, total_price) values((select sq_invoices.nextval from dual), current_timestamp, 1, 1000);
+insert into tickets(id, invoice_id, display_id, seat_id, active, price) values((select sq_tickets.nextval from dual), 1, 1, 2, 1, 200);
+insert into tickets(id, invoice_id, display_id, seat_id, active, price) values((select sq_tickets.nextval from dual), 1, 1, 3, 1, 200);
+insert into tickets(id, invoice_id, display_id, seat_id, active, price) values((select sq_tickets.nextval from dual), 1, 2, 3, 1, 200);
+insert into tickets(id, invoice_id, display_id, seat_id, active, price) values((select sq_tickets.nextval from dual), 1, 2, 4, 1, 200);
+insert into tickets(id, invoice_id, display_id, seat_id, active, price) values((select sq_tickets.nextval from dual), 1, 2, 5, 1, 200);
 

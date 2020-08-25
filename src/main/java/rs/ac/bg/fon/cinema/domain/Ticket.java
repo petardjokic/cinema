@@ -16,7 +16,6 @@ import lombok.experimental.SuperBuilder;
 public class Ticket implements BaseEntity {
 	
 	private Long id;
-	private Long invoiceId;
 	private Long displayId;
 	private Boolean active;
 	private Seat seat;

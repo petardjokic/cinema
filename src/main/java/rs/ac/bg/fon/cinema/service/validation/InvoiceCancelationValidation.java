@@ -2,11 +2,12 @@ package rs.ac.bg.fon.cinema.service.validation;
 
 import org.springframework.stereotype.Component;
 
+import rs.ac.bg.fon.cinema.domain.Invoice;
 import rs.ac.bg.fon.cinema.service.validation.filter.InvoiceCancelationAlreadyFreezedFilter;
 import rs.ac.bg.fon.cinema.service.validation.filter.InvoiceCancelationToLateToCancelFilter;
 
 @Component
-public class InvoiceCancelationValidation {
+public class InvoiceCancelationValidation implements Validation<Invoice>{
 	private final InvoiceCancelationAlreadyFreezedFilter alreadyFreezedFilter;
 	private final InvoiceCancelationToLateToCancelFilter toLateToCancelFilter;
 	
@@ -16,6 +17,11 @@ public class InvoiceCancelationValidation {
 		this.toLateToCancelFilter = toLateToCancelFilter;
 		
 		this.alreadyFreezedFilter.setSuccessor(this.toLateToCancelFilter);
+	}
+
+	@Override
+	public void validate(Invoice t) {
+		alreadyFreezedFilter.doFilter(t);
 	}
 	
 	
