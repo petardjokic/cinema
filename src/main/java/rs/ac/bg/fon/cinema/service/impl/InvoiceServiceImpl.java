@@ -2,6 +2,7 @@ package rs.ac.bg.fon.cinema.service.impl;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import rs.ac.bg.fon.cinema.domain.Invoice;
 import rs.ac.bg.fon.cinema.domain.InvoiceItem;
+import rs.ac.bg.fon.cinema.exception.ServiceException;
 import rs.ac.bg.fon.cinema.mapper.InvoiceItemMapper;
 import rs.ac.bg.fon.cinema.mapper.InvoiceMapper;
 import rs.ac.bg.fon.cinema.service.DisplayService;
@@ -50,9 +52,9 @@ public class InvoiceServiceImpl implements InvoiceService {
 	public Invoice getInvoiceById(Long invoiceId) {
 		Invoice invoice = invoiceMapper.getById(invoiceId);
 		
-//		Optional.ofNullable(invoice).orElseThrow(() ->
-//			new ServiceException(String.format("Invoice with ID  %s does not exist", invoiceId)));
-//		
+		Optional.ofNullable(invoice).orElseThrow(() ->
+			new ServiceException(String.format("Invoice with ID  %s does not exist", invoiceId)));
+	
 		List<InvoiceItem> items = invoiceItemMapper.searchInvoiceItems(TicketSearchRequest.builder().invoiceId(invoiceId).build());
 		invoice.setItems(items);
 		return invoice;

@@ -30,6 +30,7 @@
 	<!-- public List<Invoice> getAll(); -->
 	<select id="getAll" resultMap="InvoiceMap">
 		<include refid="getInvoice"></include>
+		ORDER BY i.issued_at DESC
 	</select>
 
 	<!-- public List<Invoice> search(request); -->
@@ -46,6 +47,7 @@
 				AND i.issued_at &lt;= #{dateTo}
 			</if>
 		</where>
+		ORDER BY i.issued_at DESC
 	</select>
 
 	<!-- public int insert(Invoice entity); -->

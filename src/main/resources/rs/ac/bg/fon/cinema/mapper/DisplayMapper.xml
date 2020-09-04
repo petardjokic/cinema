@@ -51,6 +51,7 @@
 	<!-- public List<Display> getAll(); -->
 	<select id="getAll" resultMap="DisplayMap">
 		<include refid="getDisplay"></include>
+		ORDER BY starts_at DESC
 	</select>
 	
 	<!-- public List<Display> search(request); -->

@@ -31,6 +31,7 @@
 	<!-- public List<Movie> getAll(); -->
 	<select id="getAll" resultMap="MovieMap">
 		<include refid="getMovie"></include>
+		ORDER BY m.title ASC
 	</select>
 	
 	<!-- public List<Movie> search(MovieSearchRequest request); -->
@@ -41,6 +42,7 @@
 				AND lower(m.title) LIKE lower('%' || #{title} || '%')
 			</if>
 		</where>
+		ORDER BY m.title ASC
 	</select>
 
 	<!-- public int insert(Movie entity); -->

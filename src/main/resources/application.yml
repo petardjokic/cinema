@@ -6,6 +6,11 @@ spring:
   liquibase:
     change-log: classpath:db/changelog/db.changelog-master.yml
     drop-first: false
+  datasource:
+    url: jdbc:oracle:thin:@192.168.182.122:1521/ORCLCDB.localdomain
+    driver-class-name: oracle.jdbc.OracleDriver
+    username: dummy
+    password: dummy
 mybatis:
   type-aliases-package: rs.ac.bg.fon.cinema
   configuration:
@@ -19,10 +24,10 @@ cinema:
 spring:
   profiles: development-w
   datasource:
-    url: jdbc:h2:mem:db;DB_CLOSE_DELAY=-1
-    driver-class-name: org.h2.Driver
-    username: sa
-    password: sa
+    url: jdbc:oracle:thin:@192.168.182.122:1521/ORCLCDB.localdomain
+    driver-class-name: oracle.jdbc.OracleDriver
+    username: dummy
+    password: dummy
   logging: 
     level: 
       rs.ac.bg.fon.cinema.mapper: TRACE

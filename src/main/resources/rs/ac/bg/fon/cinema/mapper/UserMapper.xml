@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="rs.ac.bg.fon.cinema.mapper.UserMapper">
+
+	<resultMap type="User" id="UserMap">
+		<id column="id" property="id" />
+		<result column="username" property="username" />
+		<result column="password" property="password" />
+		<result column="name" property="name" />
+	</resultMap>
+
+	<!-- public long count(); -->
+	<select id="count" resultType="Long">
+		SELECT count(*) FROM app_users
+	</select>
+
+	<sql id="getUser">
+		SELECT au.*
+		FROM app_users au
+	</sql>
+
+	<!-- public User getById(Long id); -->
+	<select id="getById" parameterType="long" resultMap="UserMap">
+		<include refid="getUser"></include>
+		WHERE au.id = #{id}
+	</select>
+	
+	<!-- public List<User> getAll(); -->
+	<select id="getAll" resultMap="UserMap">
+		<include refid="getUser"></include>
+	</select>
+	
+	<!-- public List<USer> search(UserSearchRequest request); -->
+	<select id="search" resultMap="UserMap">
+		<include refid="getUser"></include>
+		<where>
+			<if test="username != null">
+				AND au.username = #{username}
+			</if>
+			<if test="password != null">
+				AND au.password = #{password}
+			</if>
+		</where>
+	</select>
+
+	<!-- public int insert(User entity); -->
+	<insert id="insert" parameterType="User">
+		<selectKey order="BEFORE" resultType="long" keyProperty="id">
+			select sq_app_users.nextval from dual
+		</selectKey>
+		INSERT INTO app_users(id, username, password, name)
+				VALUES (#{id}, #{username}, #{password}, #{name})
+	</insert>
+
+	<!-- public int update(User entity); -->
+	<update id="update" parameterType="User">
+		UPDATE app_users
+		SET
+		username = #{username},
+		password = #{password},
+		name = #{name}
+		WHERE
+		id = #{id}
+	</update>
+
+	<!-- public int deleteById(Long id); -->
+	<delete id="deleteById" parameterType="long">
+		DELETE
+		FROM app_users 
+		WHERE
+		id = #{id}
+	</delete>
+
+</mapper>

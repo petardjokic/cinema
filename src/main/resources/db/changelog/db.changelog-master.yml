@@ -6,7 +6,7 @@ databaseChangeLog:
  - changeSet:
     id: 1.1
     author: petar.djokic
-    comment: basic, movie-display-invoice
+    comment: basic, movie-projection-invoice
     changes:
      - sqlFile:
         path: sql/v1/1.1.sql
@@ -14,7 +14,7 @@ databaseChangeLog:
  - changeSet:
     id: 1.2
     author: petar.djokic
-    comment: genre and production company data
+    comment: genre and production company init
     changes:
      - sqlFile:
         path: sql/v1/1.2.sql
@@ -22,7 +22,7 @@ databaseChangeLog:
  - changeSet:
     id: 1.3
     author: petar.djokic
-    comment: display and hall data
+    comment: projection and hall init 
     changes:
      - sqlFile:
         path: sql/v1/1.3.sql

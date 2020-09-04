@@ -13,6 +13,7 @@ public class DisplaySearchRequest {
 	
 	private Long movieId;
 	private String movieTitle;
+	private Long hallId;
 	private LocalDate dateFrom;
 	private LocalDate dateTo;
 	
