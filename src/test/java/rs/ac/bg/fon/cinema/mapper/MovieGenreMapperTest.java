@@ -34,7 +34,7 @@ class MovieGenreMapperTest extends BaseMapperTest {
 		Movie movie2 = movieSetup.moviePulpFiction();
 		
 		log.info("Adding a new movie genre");
-		MovieGenre movieGenre = MovieGenre.builder().movieId(movie1.getId()).build();
+		MovieGenre movieGenre = MovieGenre.builder().movieId(movie1.getId()).genre(genre1).build();
 		assertEquals(1, movieGenreMapper.insert(movieGenre));
 		
 		log.info("Getting movie genre");
@@ -45,7 +45,7 @@ class MovieGenreMapperTest extends BaseMapperTest {
 		
 		log.info("Updating movie genre");
 		movieGenre.setMovieId(movie2.getId());
-//		movieGenre.setGenreId(genre2.getId());
+		movieGenre.setGenre(genre2);
 		assertEquals(1, movieGenreMapper.update(movieGenre));
 		
 		log.info("Getting movie genre");
@@ -67,7 +67,7 @@ class MovieGenreMapperTest extends BaseMapperTest {
 		Movie movie = movieSetup.movieTheShawshankRedemption();
 				
 		log.info("Adding a new movie genre");
-		MovieGenre movieGenre = MovieGenre.builder().movieId(movie.getId()).build();
+		MovieGenre movieGenre = MovieGenre.builder().movieId(movie.getId()).genre(genre).build();
 		assertEquals(1, movieGenreMapper.insert(movieGenre));
 		
 		log.info("Deleting genre");

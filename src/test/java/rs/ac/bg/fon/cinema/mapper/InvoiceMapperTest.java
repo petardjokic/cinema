@@ -25,7 +25,7 @@ class InvoiceMapperTest extends BaseMapperTest{
 	void testCRUD() {
 
 		log.info("Adding a new invoice");
-		Invoice invoice = Invoice.builder().issuedAt(LocalDateTime.now()).active(new Boolean(true)).build();
+		Invoice invoice = Invoice.builder().issuedAt(LocalDateTime.now()).totalPrice(100D).active(new Boolean(true)).build();
 		assertEquals(1, invoiceMapper.insert(invoice));
 		
 		log.info("Getting invoice");
@@ -46,23 +46,6 @@ class InvoiceMapperTest extends BaseMapperTest{
 		log.info("Deleting invoice");
 		assertEquals(1, invoiceMapper.deleteById(invoice.getId()));
 
-	}
-	
-	@Test
-	public void testSet() {
-		List<Ticket> tickets = Arrays.asList(
-				Ticket.builder().displayId(1L).build(),
-				Ticket.builder().displayId(1L).build(),
-				Ticket.builder().displayId(2L).build(),
-				Ticket.builder().displayId(3L).build(),
-				Ticket.builder().displayId(4L).build(),
-				Ticket.builder().displayId(5L).build(),
-				Ticket.builder().displayId(4L).build()
-				);
-		Set<Long> set = tickets.stream()
-		.map(ticket -> ticket.getDisplayId())
-		.collect(Collectors.toSet());
-		System.out.println(set);
 	}
 
 }

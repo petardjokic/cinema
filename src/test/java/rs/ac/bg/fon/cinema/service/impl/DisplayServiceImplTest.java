@@ -53,7 +53,6 @@ class DisplayServiceImplTest extends BaseMapperTest{
 		Movie m = Movie.builder().duration(120).build();
 		Display display = Display.builder().movie(m).startsAt(LocalDateTime.now().plusDays(1)).build();
 		displaySaveValidation.validate(display);
-		System.out.println("Continue with execution");
 	}
 
 }

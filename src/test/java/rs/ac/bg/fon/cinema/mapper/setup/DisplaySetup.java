@@ -32,7 +32,9 @@ public class DisplaySetup {
 				.movie(movie)
 				.hall(hall)
 				.category(category)
-				.startsAt(LocalDateTime.now()).build();
+				.startsAt(LocalDateTime.now())
+				.active(true)
+				.build();
 		DisplayMapper.save(display);
 		log.info("Display {} saved!", display);
 		return display;

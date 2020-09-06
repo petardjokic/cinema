@@ -14,7 +14,7 @@ public class InvoiceSetup {
 	private InvoiceMapper invoiceMapper;
 	
 	private Invoice saveInvoice(Boolean active) {
-		Invoice invoice = Invoice.builder().active(active).build();
+		Invoice invoice = Invoice.builder().totalPrice(100D).active(active).build();
 		invoiceMapper.save(invoice);
 		log.info("Invoice {} saved!", invoice);
 		return invoice;
