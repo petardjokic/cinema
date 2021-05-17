@@ -30,6 +30,7 @@ public class AuthServiceImpl implements AuthService {
 	public User login(User userArg) {
 		UserSearchRequest request = UserSearchRequest.builder().username(userArg.getUsername())
 				.password(userArg.getPassword()).build();
+//		List<User> users = userMapper.search(request);
 		List<User> users = userMapper.search(request);
 		log.info("LOGIN: {} ",userArg);
 		log.info("RESULT: {}", users);

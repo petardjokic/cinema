@@ -1,3 +1,5 @@
+insert into app_users(id, username, password, name) values((select sq_app_users.nextval from dual), 'pera', 'Pera.brat123', 'Petar Djokic');
+
 insert into genres(id, name) values((select sq_genres.nextval from dual), 'Absurdist');
 insert into genres(id, name) values((select sq_genres.nextval from dual), 'Action');
 insert into genres(id, name) values((select sq_genres.nextval from dual), 'Adventure');
